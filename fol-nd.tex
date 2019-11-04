@@ -1,3 +1,65 @@
 \section{Dedução Natural}
+Como visto na seção anterior, devemos estabelecer as regras de dedução para os quantificadores e para a igualdade. Listamos elas inicialmente:
+\newline \textbf{Quantificador universal:}
+ \newline 
+ \begin{center}
+    \AxiomC{$A(y)$}
+    \RightLabel{\scriptsize $\forall I$}
+    \UnaryInfC{$\forall x A(x)$}
+    \DisplayProof
+   
+    \AxiomC{$\forall x A(x)$}
+    \RightLabel{\scriptsize $\forall E$}
+    \UnaryInfC{$A(t)$}
+    \DisplayProof   
+ \end{center}
 
-TODO
+
+ \textbf{Quantificador existencial:}
+ \begin{center}
+     \AxiomC{$A(t)$}
+     \RightLabel{\scriptsize $\exists I$}
+     \UnaryInfC{$\exists x A(x)$}
+     \DisplayProof
+
+     \AxiomC{$\exists x A(x)$}
+        \AxiomC{}
+        \UnaryInfC{$A(t)$}
+        \alwaysNoLine
+        \UnaryInfC{$\vdots$}
+        \UnaryInfC{$B$}
+        \alwaysSingleLine
+        \RightLabel{\scriptsize $\exists E$}
+        \BinaryInfC{$B$}
+     \DisplayProof
+\end{center}
+
+\textbf{Igualdade:}
+\begin{center}
+    \AxiomC{}
+    \RightLabel{\scriptsize refl}
+    \UnaryInfC{$t=t$}
+    \DisplayProof
+
+    \AxiomC{$t=s$}
+    \RightLabel{\scriptsize sim}
+    \UnaryInfC{$s=t$}
+    \DisplayProof
+
+    \AxiomC{$t=s$}
+    \AxiomC{$s=v$}
+    \RightLabel{\scriptsize trans}
+    \BinaryInfC{$t=v$}
+    \DisplayProof
+
+    \AxiomC{$t=s$}
+    \RightLabel{\scriptsize subs}
+    \UnaryInfC{$r(t) = r(s)$}
+    \DisplayProof
+
+    \AxiomC{$t=s$}
+    \AxiomC{$P(t)$}
+    \RightLabel{\scriptsize subs}
+    \BinaryInfC{$P(s)$}
+    \DisplayProof
+\end{center}
