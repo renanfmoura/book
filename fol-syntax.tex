@@ -6,15 +6,15 @@
 
         Dentro de Lógica de Primeira Ordem, funções, predicados e relações são mapeamentos que, dado algum elemento do domínio, retornam uma proposição ou outro elemento do domínio. Parece confuso? Vamos olhar um exemplo.
 
-        \begin{itemize}
-            \item $x$ natural é par ou ímpar.
-        \end{itemize}
+        \begin{center}
+            $x$ natural é par ou ímpar.            
+        \end{center}
 
         Nosso domínio, neste caso, são os números naturais ($\mathbb{N}$). Dizemos que \textit{par} é "algo" que recebe um número e retorna $V$ ou $F$. Chamamos isso de \textbf{predicado}. Sendo assim, podemos escrever:
 
-        \begin{itemize}
-            \item $par(x) \lor impar(x)$.
-        \end{itemize}
+        \begin{center}
+            $par(x) \lor impar(x)$.
+        \end{center}
 
         A partir deste exemplo, podemos extrair alguns símbolos para exemplificar a construção de um sistema lógico de primeira ordem.
 
@@ -28,7 +28,7 @@
 
         Os objetos pertencentes ao domínio, chamados constantes, como o $1$ e o $4x$, no caso do domínio dos naturais, podem ser considerados funções que tomam zero elementos. Além disso, podemos considerar predicados que tomam zero elementos como os valores lógicos $\top$ e $\bot$.
 
-        Em geral, elementos do domínio (incluindo funções de elementos) são chamados de \textbf{termos}. Alguns exemplos:
+        Em geral, expressões que representam elementos do domínio (incluindo funções de elementos) são chamados de \textbf{termos}. Alguns exemplos:
 
         \begin{itemize}
             \item $5$
@@ -36,7 +36,7 @@
             \item $33+44$
         \end{itemize}
 
-        Expressões do tipo $V$ ou $F$ são chamadas \textbf{fórmulas}:
+        Expressões que retornam $V$ ou $F$ são chamadas \textbf{fórmulas}:
 
         \begin{itemize}
             \item $maiorDoQue(1,2)$ ($1 > 2$)
@@ -44,4 +44,41 @@
             \item $2=2$
         \end{itemize}
 
-        
+        O Lean é muito eficiente em expressar Lógica de Primeira Ordem. Vejamos nosso exemplo:
+
+        \begin{lstlisting}
+    constant U : Type
+
+    constant zero : U
+    constant par : U → Prop
+    constant primo : U → Prop
+    constant igual : U → U → Prop
+    constant adicao : U → U → U
+        \end{lstlisting}
+
+        Por causa do fato de que o Lean é baseado em \textit{Teoria dos Tipos}, declaramos um novo tipo \lstinline{U}. Podemos intuitivamente considerá-lo como "universo" ou "domínio". Por exemplo, o conjunto dos naturais.
+
+        Foi declarado um objeto chamado \lstinline{zero} do tipo \lstinline{U} (nossa analogia com o zero natural).
+        \lstinline{par} é um predicado, pois toma um elemento do tipo \lstinline{U} e retona um elemento do tipo proposição (\lstinline{Prop}).
+
+        \lstinline{adicao} é uma função que toma dois elementos do tipo \lstinline{U} e retorna outro do mesmo tipo. Ora, podemos constatar:
+
+        \begin{lstlisting}
+    #check adicao zero zero
+    #check par zero
+    #check igual zero zero
+    #check par (adicao zero zero)
+        \end{lstlisting}
+
+        \lstinline{#check} informa que a primeira expressão tem tipo \lstinline{U}, enquanto as restantes têm tipo \lstinline{Prop}. Importante observar o papel dos parênteses acima, para que \lstinline{par} receba apenas um elemento.
+
+        A notação para predicados (\lstinline{U → Prop}) e relações (\lstinline{U → U → Prop}) funciona como se ambas fossem funções, porém retornassem \lstinline{Prop}. Além disso, uma função (ou relação) que recebe mais de um elemento tem notação \lstinline{U → U → U}.
+
+        Observe que vários conjuntos são estão nas bibliotecas padrão do Lean, como os naturais, utilizados nos exemplos anteriores. O comando para o símbolo \lstinline{ℕ} é \lstinline{\nat} ou \lstinline{\N}.
+
+        \begin{lstlisting}
+    constant zero : ℕ
+    #check zero + zero
+        \end{lstlisting}
+
+        O \lstinline{#check} acima retorna algo do tipo \lstinline{ℕ}.
