@@ -11,7 +11,7 @@
 
 \subsection{Conjunção}
 
-Introdução do "e":
+Introdução do ``e'':
  \begin{prooftree}
      \AxiomC{A}
      \AxiomC{B}
@@ -19,21 +19,56 @@ Introdução do "e":
 \end{prooftree}
 
 
-Exclusão do "e":
+
+Código Lean de introdução do ``e'':
+\begin{lstlisting} 
+variables A B : Prop
+
+example (h1 : A) (h2 : B) : A ∧ B :=
+and.intro h1 h2
+\end{lstlisting}
+
+
+Exclusão do ``e'':
  \begin{prooftree}
      \AxiomC{$A \land B$}
      \UnaryInfC{A}
 \end{prooftree}
 
+Código Lean de exclusão do ``e'': 
+\begin{lstlisting} 
+variables A B : Prop
+
+example (h1 : A ∧ B): A :=
+h1.left
+\end{lstlisting}
+
+Alternativamente, é possível realizar a mesma operação da seguinte forma: 
+\begin{lstlisting} 
+variables A B : Prop
+
+example (h1 : A ∧ B): A :=
+and.left h1
+\end{lstlisting}
 \subsection{Disjunção}
 
-Introdução do "ou":
+Introdução do ``ou'':
 \begin{prooftree}
      \AxiomC{A}
      \UnaryInfC{$A \lor B$}
 \end{prooftree}
 
-Exclusão do "ou": 
+Código Lean de introdução do ``ou'':
+\begin{lstlisting} 
+variables A B : Prop
+
+example (h1 : A): A ∨ B :=
+or.inl h1
+\end{lstlisting} 
+
+Exclusão do ``ou'': 
+%melhorar prova
+%como adicionar "3 pontinhos" entre o A e o C na árvore da exclusão do "ou"?
 
   \begin{prooftree}
         \AxiomC{$A \lor B$}
@@ -43,8 +78,10 @@ Exclusão do "ou":
                    \UnaryInfC{$C$}
               \TrinaryInfC{$C$}
      \end{prooftree}
+     
+Código Lean de exclusão do ``ou'':
+%adicionar código
 
-%como adicionar "3 pontinhos" entre o A e o C na árvore da exclusão do "ou"?
 
 \subsection{Negação}
 %Cristiana
