@@ -1,22 +1,58 @@
 \chapter{Funções}
 
-No final do século XIX, diversas áreas da matemática 
-estudam consistentemente conjuntos, relações, já apresentadas
+Desde o final do século XIX, diversas áreas da matemática 
+estudam consistentemente \textit{\hyperlink{chapter.4}{conjuntos}}, 
+\textit{\hyperlink{chapter.5}{relações}}, já apresentadas 
 nesse texto, e funções. Neste capítulo, debruçaremos nossa 
 atenção nas propriedades dessa terceira área. 
 
 Entende-se que uma função $f$ é um mapeamento entre um 
 domínio $X$ e um domínio $Y$, este que será conhecido como 
-contra domínio, posteriormente. Entretanto, para teóricos 
-de conjuntos, esses domínios são considerados conjuntos. 
-Vimos que Lean é uma linguagem baseada em Tipos. Dessa forma, 
-estabelece-se uma diferença clara entre os Tipos, que são
-os Domínios, enquanto podemos dizer que $A$ é do tipo conjunto
-de $X$ (Lembre, em Lean: $A : set~ X$). 
+contradomínio, posteriormente. Entretanto, para teóricos 
+de conjuntos, esses domínios são simplesmente considerados 
+conjuntos. Vimos que \textit{\hyperlink{chapter.2}{Lean}} é uma 
+linguagem baseada em Tipos. Dessa forma, estabelece-se uma 
+diferença clara entre o Domínio $X$, caracterizado pelos Tipos, e
+o Conjunto $A$, que é do tipo (sub)conjunto de $X$. Em Lean: 
+\begin{lstlisting}
+    variable X : Type
+    variable A : set X    
+\end{lstlisting}
 
 Entretanto, a visão da função como mapeamento entre conjuntos
 é comum entre os matemáticos e será considerada nesse texto,
 fazendo as devidas comparações com a linguagem de referência, 
 o Lean. 
 
+\section{O Conceito de Função}
 
+Considere dois conjuntos quaisquer $X$ e $Y$ e um mapeamento $f$ 
+do conjunto $X$ para o conjunto $Y$. Se $f$ atribui um e apenas 
+um valor para cada elemento de $X$, dizemos que $f$ é uma função, e
+escrevemos $f: X \to Y$. Chamamos $X$ de domínio de $f$, enquanto 
+$Y$ é o contradomínio de $f$ e $\forall x, (x \in X  \Rightarrow f(x) \in Y)$. 
+
+As funções podem ser escritas explicitamente para cada elemento 
+do domínio. Por exempl, podemos escrever as seguintes expressões:
+
+\begin{itemize}
+    \item Seja $f: \mathbb{N} \to \mathbb{N}$ definida por 
+    $f(n) = 2\cdot n + 1$
+    \item Seja $g : \mathbb{N} \to \mathbb{R}$ definida por 
+    $g(n) = \frac{n}{n+1}$
+    \item Seja $h : \mathbb{R} \to \{0,1\}$ definida por 
+    $$\left \{ \begin{array}{c}
+    h(x) = 1 ~if~x \in \mathbb{Q} \\
+    h(x) = 0 ~ if ~ x \not \in \mathbb{Q} \\
+    \end{array}
+    \right. $$
+ \end{itemize}
+
+ A questão que se levanta é o que torna uma expressão explícita 
+ legítima? Nesse momento, não discutiremos esse problema e 
+ aceitaremos que a matemática é confortável com esse tipo de definição. 
+ Todavia, isso está em desacordo com a ideia de funções serem 
+ objetos que são computáveis. No último exemplo, não fica claro 
+ em como, algorimiticamente, dado um real como entrada, decidiremos
+ se ele é racional ou não é. Em um capítulo a frente, voltaremos a 
+ essa questão novamente. 
