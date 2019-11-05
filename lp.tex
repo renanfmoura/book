@@ -8,10 +8,44 @@
 %Vitoria
 \subsection{Se e somente se}
 %Vitoria
+
 \subsection{Conjunção}
-%Alessandra
+
+Introdução do "e":
+ \begin{prooftree}
+     \AxiomC{A}
+     \AxiomC{B}
+     \BinaryInfC{$A \land B$}
+\end{prooftree}
+
+
+Exclusão do "e":
+ \begin{prooftree}
+     \AxiomC{$A \land B$}
+     \UnaryInfC{A}
+\end{prooftree}
+
 \subsection{Disjunção}
-%Alessandra
+
+Introdução do "ou":
+\begin{prooftree}
+     \AxiomC{A}
+     \UnaryInfC{$A \lor B$}
+\end{prooftree}
+
+Exclusão do "ou": 
+
+  \begin{prooftree}
+        \AxiomC{$A \lor B$}
+              \AxiomC{$A$}
+              \UnaryInfC{$C$}
+                   \AxiomC{$B$}
+                   \UnaryInfC{$C$}
+              \TrinaryInfC{$C$}
+     \end{prooftree}
+
+%como adicionar "3 pontinhos" entre o A e o C na árvore da exclusão do "ou"?
+
 \subsection{Negação}
 %Cristiana
 \subsection{Prova por contradição}
