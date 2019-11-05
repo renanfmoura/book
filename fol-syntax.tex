@@ -1,3 +1,47 @@
 \section{Sintaxe}
 
-TODO
+    A sintaxe de um sistema lógico aborda basicamente os símbolos que são utilizados para representá-lo. Portanto, nesta seção, serão abordados funções, predicados, relações e quantificadores, dentre eles $\forall$ e $\exists$.
+
+    \subsection{Funções, Predicados e Relações}
+
+        Dentro de Lógica de Primeira Ordem, funções, predicados e relações são mapeamentos que, dado algum elemento do domínio, retornam uma proposição ou outro elemento do domínio. Parece confuso? Vamos olhar um exemplo.
+
+        \begin{itemize}
+            \item $x$ natural é par ou ímpar.
+        \end{itemize}
+
+        Nosso domínio, neste caso, são os números naturais ($\mathbb{N}$). Dizemos que \textit{par} é "algo" que recebe um número e retorna $V$ ou $F$. Chamamos isso de \textbf{predicado}. Sendo assim, podemos escrever:
+
+        \begin{itemize}
+            \item $par(x) \lor impar(x)$.
+        \end{itemize}
+
+        A partir deste exemplo, podemos extrair alguns símbolos para exemplificar a construção de um sistema lógico de primeira ordem.
+
+        \begin{itemize}
+            \item O domínio são os naturais;
+            \item Os objetos são os números $0$, $1$, $2$ etc.;
+            \item Existem \textbf{funções}, como \textit{adição} e \textit{subtração}, que recebem (zero ou mais) números e retornam outros números;
+            \item Existem \textbf{predicados}, como \textit{par} e \textit{ímpar}, que recebem um número e retornam $V$ ou $F$;
+            \item Existem \textbf{relações}, como \textit{igual} e \textit{menor}, que recebem dois números e retornam $V$ ou $F$.
+        \end{itemize}
+
+        Os objetos pertencentes ao domínio, chamados constantes, como o $1$ e o $4x$, no caso do domínio dos naturais, podem ser considerados funções que tomam zero elementos. Além disso, podemos considerar predicados que tomam zero elementos como os valores lógicos $\top$ e $\bot$.
+
+        Em geral, elementos do domínio (incluindo funções de elementos) são chamados de \textbf{termos}. Alguns exemplos:
+
+        \begin{itemize}
+            \item $5$
+            \item $sucessor(10)$ (função sucessora, retorna o elemento acrescido de $1$)
+            \item $33+44$
+        \end{itemize}
+
+        Expressões do tipo $V$ ou $F$ são chamadas \textbf{fórmulas}:
+
+        \begin{itemize}
+            \item $maiorDoQue(1,2)$ ($1 > 2$)
+            \item $par(10) \lor impar(5)$
+            \item $2=2$
+        \end{itemize}
+
+        
