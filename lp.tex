@@ -47,6 +47,18 @@ Exclusão do ``e'':
      \UnaryInfC{A}
 \end{prooftree}
 
+Tabela verdade do ``e'':
+\begin{table}[htb]
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{A} & \textbf{B} & \textbf{A$\land$B} \\ \hline
+V          & V          & V                  \\ \hline
+V          & F          & F                  \\ \hline
+F          & V          & F                  \\ \hline
+F          & F          & F                  \\ \hline
+\end{tabular}
+\end{table}
+
 Código Lean de exclusão do ``e'': 
 \begin{lstlisting} 
 variables A B : Prop
@@ -82,6 +94,7 @@ Exclusão do ``ou'':
 %melhorar prova
 %como adicionar "3 pontinhos" entre o A e o C na árvore da exclusão do "ou"?
 
+
   \begin{prooftree}
         \AxiomC{$A \lor B$}
               \AxiomC{$A$}
@@ -93,6 +106,22 @@ Exclusão do ``ou'':
      
 Código Lean de exclusão do ``ou'':
 %adicionar código
+
+Tabela verdade do ``ou'':
+
+
+\begin{table}[htb]
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{A} & \textbf{B} & \textbf{A$\lor$B} \\ \hline
+V          & V          & V                 \\ \hline
+V          & F          & V                 \\ \hline
+F          & V          & V                 \\ \hline
+F          & F          & F                 \\ \hline
+\end{tabular}
+\end{table}
+
+
 
 
 \subsection{Negação}
