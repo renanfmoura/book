@@ -95,14 +95,14 @@ Exclusão do ``ou'':
 %como adicionar "3 pontinhos" entre o A e o C na árvore da exclusão do "ou"?
 
 
-  \begin{prooftree}
-        \AxiomC{$A \lor B$}
-              \AxiomC{$A$}
-              \UnaryInfC{$C$}
-                   \AxiomC{$B$}
-                   \UnaryInfC{$C$}
-              \TrinaryInfC{$C$}
-     \end{prooftree}
+\begin{prooftree}
+    \AxiomC{$A \lor B$}
+    \AxiomC{$A$}
+    \UnaryInfC{$C$}
+    \AxiomC{$B$}
+    \UnaryInfC{$C$}
+    \TrinaryInfC{$C$}
+\end{prooftree}
      
 Código Lean de exclusão do ``ou'':
 %adicionar código
@@ -120,9 +120,6 @@ F          & V          & V                 \\ \hline
 F          & F          & F                 \\ \hline
 \end{tabular}
 \end{table}
-
-
-
 
 \subsection{Negação}
 %Cristiana
