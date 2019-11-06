@@ -22,36 +22,22 @@ Apesar das duas sentenças terem a mesma estrutura com "Se... então" podemos pe
 %Vitoria
 
 \subsection{Conjunção}
+A regra da conjunção se refere ao uso ``e'' na linguagem informal, de forma que juntamos duas informações. Podemos ter frases como:
+\begin{center}
+\textbf{Santiago é a capital do Chile e o deserto do Atacama está localizado no Chile.}\\
+\end{center}
 
-Introdução do ``e'':
- \begin{prooftree}
-     \AxiomC{A}
-     \AxiomC{B}
-     \BinaryInfC{$A \land B$}
-\end{prooftree}
+Ao mesmo tempo, podemos utilizar o ``e'' para conectar duas informações que nem mesmo possuem relação entre si. Por exemplo, podemos dizer que:
+\begin{center}
+\textbf{Santiago é a capital do Chile e Bolsonaro é o presidente do Brasil.}\\
+\end{center}
+Quando utilizamos o ``e'', representado pelo símbolo $\land$ na lógica, o que de fato importa é estarmos unindo duas informações que são verdadeiras. Isso fica claro na tabela verdade abaixo, na qual é possível ver que quando $A$ ou quando $B$ são falsos, $A\land B$ é falso:
 
-
-
-Código Lean de introdução do ``e'':
-\begin{lstlisting} 
-variables A B : Prop
-
-example (h1 : A) (h2 : B) : A ∧ B :=
-and.intro h1 h2
-\end{lstlisting}
-
-
-Exclusão do ``e'':
- \begin{prooftree}
-     \AxiomC{$A \land B$}
-     \UnaryInfC{A}
-\end{prooftree}
-
-Tabela verdade do ``e'':
 \begin{table}[htb]
+\centering
 \begin{tabular}{|l|l|l|}
 \hline
-\textbf{A} & \textbf{B} & \textbf{A$\land$B} \\ \hline
+\textbf{A} & \textbf{B} & \textbf{A $\land$ B} \\ \hline
 V          & V          & V                  \\ \hline
 V          & F          & F                  \\ \hline
 F          & V          & F                  \\ \hline
@@ -59,21 +45,61 @@ F          & F          & F                  \\ \hline
 \end{tabular}
 \end{table}
 
-Código Lean de exclusão do ``e'': 
+Dessa forma, na dedução natural, podemos introduzir um ``e'', quando temos $A$ e também temos $B$. Assim, se $A$ e $B$ forem verdadeiros, $A \land B$ também vai ser. 
+
+ \begin{prooftree}
+     \AxiomC{A}
+     \AxiomC{B}
+     \BinaryInfC{$A \land B$}
+\end{prooftree}
+
+No Lean, representamos essa operação pela função $and.intro$, conforme o exemplo abaixo:
+\vspace{5mm}
 \begin{lstlisting} 
 variables A B : Prop
 
-example (h1 : A ∧ B): A :=
-h1.left
+example (h1 : A) (h2 : B) : A ∧ B :=
+and.intro h1 h2
 \end{lstlisting}
+\vspace{5mm}
 
-Alternativamente, é possível realizar a mesma operação da seguinte forma: 
+Seguindo esse raciocínio, é possível observar que sempre que temos $A \land B$, teremos $A$ e $B$ separadamente. Essa é a operação chamada de exclusão do ``e''.
+
+Para excluir o $B$ de, por exemplo, $A \land B$, temos a chamada exclusão pela esquerda, conforme descrita abaixo:
+
+ \begin{prooftree}
+     \AxiomC{$A \land B$}
+     \UnaryInfC{A}
+\end{prooftree}
+
+No Lean, essa operação pode ser feita utilizando a função $and.left$, conforme o código a seguir: 
+\vspace{5mm}
 \begin{lstlisting} 
 variables A B : Prop
 
 example (h1 : A ∧ B): A :=
 and.left h1
 \end{lstlisting}
+\vspace{5mm}
+
+Alternativamente, é possível realizar a mesma operação da seguinte forma:
+\vspace{5mm}
+\begin{lstlisting} 
+variables A B : Prop
+
+example (h1 : A ∧ B): A :=
+h1.left
+\end{lstlisting}
+\vspace{5mm}
+Para excluir o $A$, temos a chamada exclusão pela direita:
+
+ \begin{prooftree}
+     \AxiomC{$A \land B$}
+     \UnaryInfC{B}
+\end{prooftree}
+
+No Lean, essa operação é realizada utilizando a função $and.right$, de maneira semelhante ao que foi descrito anteriormente para o $and.left$. 
+
 \subsection{Disjunção}
 
 Introdução do ``ou'':
