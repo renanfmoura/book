@@ -76,6 +76,8 @@ propriamente para matemáticos. Em Lean, definimos da seguinte forma:
 
 Lembre-se que diferenciamos o tipo $X$ do tipo $set~X$ em Lean.
 
+\section{Primeiras Definições}
+
 \textit{Definição:} Seja um conjunto $X$. A função identidade de $A$ é a função 
 $i_A : A \rightarrow A$ definida para todos os valores $x \in A$ tal que $i_A(x) = x$.
 
@@ -116,10 +118,39 @@ a comutativade da soma.
     #check @id
 \end{lstlisting} 
 
-
-
 \newtheorem{theorem}{Proposição}
 
 \begin{theorem}
-    
+    Para todo $f: X \to Y$, $f \circ i_X = f$ e $i_Y \circ f = f$
 \end{theorem}
+\begin{proof}
+    Seja $x$ um elemento qualquer de $X$. Então $(f \circ i_X)(x) = f(i_X(x)) = f(x)$
+     e $(i_Y \circ f)(x) = i_Y(f(x)) = f(x)$, o que mostra a igualdade. 
+\end{proof}
+
+\textit{Definição:} Suponha $f:X \to Y$ e $g : Y \to X$ satisfaz $g \circ f = i_X$. Assim, 
+$g(f(x)) = i_X(x) = x$, para todos os elementos de $X$. Neste caso $g$ é dita inversa à esquerda
+de $f$ e $f$ é dita inversa à direita de $g$.
+
+\vspace{3mm}
+
+\textit{Exemplos}
+
+\begin{itemize}
+    \item Defina $f,g : \mathbb{R} \to \mathbb{R}$ por $f(x) = x + 1$ e $g(x) = x - 1$. Então $g$ 
+    é inversa à direita e à esquerda de $f$ e vice-versa.
+    \item $\mathbb{R}^{+}$ denota os reais não negativos. Defina $f : \mathbb{R} \to \mathbb{R}^{+}$ 
+    por $f(x) = x^2$ e defina $g : \mathbb{R}^2 \to \mathbb{R}$ por $g(x) = \sqrt{x}$. Então 
+    $f(g(x)) = (\sqrt{x})^2 = x$, para todo $x$ no domínio de $g$. Então $f$ é inversa à esquerda de $g$
+    e $g$ inversa à direita de $f$. Por outro lado, $g(f(x)) = \sqrt{x^2} = |x|$. Logo $g$ não é inversa à 
+    esqueda de $f$ e $f$ não é inversa à direita de $g$. 
+\end{itemize}
+
+\begin{theorem}
+    Suponha que $f : X \to Y $ tem inversa à esquerda, $h : Y \to X $ e uma inversa à direita, $k : Y \to X $.
+    Então $h = k$. 
+\end{theorem}
+\begin{proof}
+    Seja $y \in Y$. $h(f(k(y))) = k(y)$, pois $h$ é uma inversa à esquerda de $f$. 
+    Por outro lado, $f(k(y)) = y$ e, portanto $h(f(k(y))) = h(y)$. Assim $k(y) = h(y) $ e as funções são iguais. 
+\end{proof}
