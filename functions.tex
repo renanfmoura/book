@@ -7,10 +7,9 @@ nesse texto, e funções. Neste capítulo, debruçaremos nossa
 atenção nas propriedades dessa terceira área. 
 
 Entende-se que uma função $f$ é um mapeamento entre um 
-domínio $X$ e um domínio $Y$, este que será conhecido como 
-contradomínio, posteriormente. Entretanto, para teóricos 
-de conjuntos, esses domínios são simplesmente considerados 
-conjuntos. Vimos que \textit{\hyperlink{chapter.2}{Lean}} é uma 
+domínio $X$ e um domínio $Y$. Entretanto, para teóricos de 
+conjuntos, esses domínios são simplesmente considerados conjuntos. 
+Vimos que \textit{\hyperlink{chapter.2}{Lean}} é uma 
 linguagem baseada em Tipos. Dessa forma, estabelece-se uma 
 diferença clara entre o Domínio $X$, caracterizado pelos Tipos, e
 o Conjunto $A$, que é do tipo (sub)conjunto de $X$. Em Lean: 
@@ -19,7 +18,7 @@ o Conjunto $A$, que é do tipo (sub)conjunto de $X$. Em Lean:
     variable A : set X    
 \end{lstlisting}
 
-Entretanto, a visão da função como mapeamento entre conjuntos
+Entretanto a visão da função como mapeamento entre conjuntos
 é comum entre os matemáticos e será considerada nesse texto,
 fazendo as devidas comparações com a linguagem de referência, 
 o Lean. 
@@ -28,12 +27,16 @@ o Lean.
 
 Considere dois conjuntos quaisquer $X$ e $Y$ e um mapeamento $f$ 
 do conjunto $X$ para o conjunto $Y$. Se $f$ atribui um e apenas 
-um valor para cada elemento de $X$, dizemos que $f$ é uma função, e
-escrevemos $f: X \to Y$. Chamamos $X$ de domínio de $f$, enquanto 
+um valor para cada elemento de $X$, dizemos que $f$ é uma função total, e
+escrevemos $f: X \to Y$.  Chamamos $X$ de domínio de $f$, enquanto 
 $Y$ é o contradomínio de $f$ e $\forall x, (x \in X  \Rightarrow f(x) \in Y)$. 
+Nesse sentido, $\forall x_1 \in X, \forall x_2 \in X, x_1 = x_2 \Rightarrow f(x_1) = f(x_2)$.
+Uma função também pode ser parcial quando ela não é definida para alguns valores 
+do domínio. Como toda função parcial é total ao restringir o domínio, trateremos 
+nesse texto das funções totais. 
 
-As funções podem ser escritas explicitamente para cada elemento 
-do domínio. Por exempl, podemos escrever as seguintes expressões:
+A maneira mais simples de se representar uma função é escrevê-la explicitamente 
+para cada elemento do domínio. Por exemplo, podemos escrever as seguintes expressões:
 
 \begin{itemize}
     \item Seja $f: \mathbb{N} \to \mathbb{N}$ definida por 
@@ -48,11 +51,11 @@ do domínio. Por exempl, podemos escrever as seguintes expressões:
     \right. $$
  \end{itemize}
 
- A questão que se levanta é o que torna uma expressão explícita 
- legítima? Nesse momento, não discutiremos esse problema e 
- aceitaremos que a matemática é confortável com esse tipo de definição. 
- Todavia, isso está em desacordo com a ideia de funções serem 
- objetos que são computáveis. No último exemplo, não fica claro 
- em como, algorimiticamente, dado um real como entrada, decidiremos
- se ele é racional ou não é. Em um capítulo a frente, voltaremos a 
- essa questão novamente. 
+A questão que se levanta é: o que torna uma expressão explícita legítima? 
+Neste momento, deixaremos essa questão de lado e entenderemos que a matemática 
+é confortável com diversos tipos de definições, como, por exemplo, a definição 
+de $h(x)$ no exemplo acima. Nesse mesmo exemplo, não fica claro em como podemos 
+definir algoritmicamente se um número real de entrada é um número racional ou não.
+Porém, esse não é o objetivo do capítulo.
+
+
