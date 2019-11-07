@@ -52,10 +52,74 @@ para cada elemento do domínio. Por exemplo, podemos escrever as seguintes expre
  \end{itemize}
 
 A questão que se levanta é: o que torna uma expressão explícita legítima? 
-Neste momento, deixaremos essa questão de lado e entenderemos que a matemática 
+Neste momento, deixaremos essa questão de lado e notaremos que a matemática 
 é confortável com diversos tipos de definições, como, por exemplo, a definição 
 de $h(x)$ no exemplo acima. Nesse mesmo exemplo, não fica claro em como podemos 
 definir algoritmicamente se um número real de entrada é um número racional ou não.
 Porém, esse não é o objetivo do capítulo.
 
+Note que a escolha das variáveis $x$ e $n$ são arbitrárias. 
+Isto nos leva à definição no capítulo de \textit{\hyperlink{chapter.2}{FOL}} de 
+variável ligada (\textit{bound}), visto que se renomearmos $x$ com $y$, os valores
+continuam os mesmos. 
 
+Lógicos frequentemente utilizam a notação $\lambda x e(x)$ para denotar a função
+que mapeia $x$ para $e(x)$. Essa notação chama-se \textit{notação lambda} e pode 
+ser usada da seguinte forma: $f = \lambda x(x + 1)$, que significa $f(x) = x + 1$. 
+Essa notação é mais interessante para cientistas da computação e lógicos do que 
+propriamente para matemáticos. Em Lean, definimos da seguinte forma: 
+
+\begin{lstlisting}
+    variables X Y : Type
+    variable f : X → Y    
+\end{lstlisting}
+
+Lembre-se que diferenciamos o tipo $X$ do tipo $set~X$ em Lean.
+
+\textit{Definição:} Seja um conjunto $X$. A função identidade de $A$ é a função 
+$i_A : A \rightarrow A$ definida para todos os valores $x \in A$ tal que $i_A(x) = x$.
+
+\textit{Definição:} Sejam $f : X \rightarrow Y$ e $g : Y \rightarrow Z$ funções. 
+Defina $k : X \rightarrow Z$ por $k(x) = g(f(x))$. A função $k$ é chamada de composição
+de $f$ e $g$ ou $f$ composta com $g$ e é escrita $g \circ f$. Desta forma, para cada elemento, 
+primeiro  avaliamos $f(x) \in Y$ e depois avaliamos $g(f(x)) \in Z$. 
+
+\begin{lstlisting}
+    namespace hidden
+        variables {X Y Z : Type}
+
+        def comp (f : Y → Z) (g : X → Y) : X → Z :=
+        λx, f (g x)
+
+        infixr  ` ∘ ` := comp
+        #check @comp
+
+        def id (x : X) : X := x
+        
+    end hidden
+\end{lstlisting}
+
+\textit{Definição:} Considere $f,g : X \to Y$. Dizemos que essas funções são iguais, 
+quando para todos os valores do domínio $X$, a correspondência no contradomínio $Y$ é a 
+mesma. Em lógica simbólica, $\forall x (x \in X \to (f(x) = g(x)) \iff f = g $. 
+
+Obseve que em termos de lógica formal de tipos, poderíamos reescrever como 
+$\forall x : X (f(x) = g(x)) \iff f = g$. Escrevemos essa equivalência entre lógica e funções 
+utilizando a extensionalidade das funções, muito semelhante à descrita no capítulo de 
+\textit{\hyperlink{chapter.5}{conjuntos}}. Por exemplo, se $f, g : \mathbb{R} \to \mathbb{R}$ 
+definidas por $f(x) = x + 1$ e $g(x) = x + 1$, então $f = g$, pois para cada valor de $x$, vale 
+a comutativade da soma. 
+
+\textit{Observação: colocamos dentro de um namespace hidden, pois id já é definido.}
+
+\begin{lstlisting}
+    #check @id
+\end{lstlisting} 
+
+
+
+\newtheorem{theorem}{Proposição}
+
+\begin{theorem}
+    
+\end{theorem}
