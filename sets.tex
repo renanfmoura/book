@@ -1,9 +1,28 @@
 \chapter{Conjuntos}
 
-Intro...
+\section{Introdução}
 
-\section{}
+    Para tratar de conjuntos iremos tentar uma abordagem que que não deixe de lado o rigor matemático necessário, mas que ao mesmo tempo permita utilizar o Lean e contextualizar exemplos para o dia a dia. 
+    Caro leitor, como você definiria conjunto? Vamos pense um pouco. No século XIX, o matemático Georg Cantor, no jornal acadêmico Mathematische Annalen, descreveu um conjunto (ou utilizando sua terminologia, Menge) como, em tradução direta: "Por conjunto nós entendemos qualquer coleção M de objetos deteminados e distintos (chamados de elementos de M) da nossa intução ou do nosso pensamento em um todo."
+    Ou seja, mesmo um conjunto podendo ser algo tão abstrato quanto os números naturais ($\N$), os números reais ($\R$) e #exemplo#, podemos ter coisas menos abstratas como o conjunto das palavras desse texto, o dos planetas do Sistema Solar ou até dos alunos de sua turma. A questão é, todos esses conjuntos podem ser mais intuitivos ou abstratos que os outros variando de pessoa para pessoa, por exemplo o conjunto dos naturais pode ser definido como $\nat = {1,2,3,...}$ ou $\nat={0,1,2,3,...}$ (para não desagradar ninguém), o planetas do Sistema Solar $Planetas_Solar={Mercúrio, Vênus, Terra,Marte, Jupiter, Saturno Urano, Netuno}$ (lembramos que se este livro fosse escrito a uns 15 anos Plutão, na época ainda um planeta, estaria na lisa), assim também vemos que a interpretação do que realmente determinado conjunto representa varia de pessoa para pessoa, mesmo que a ideia/propriedades principais continuem a mesma.
+    Nosso intuito, durante essa aventura pelo mundo dos conjuntos será entender melhor certos conceitos e definições (como o fato do conjunto vazio estar contido em todos os conjuntos, ou se chegarmos até lá, porque o intervalo [0,1] nos reais não é enumerável), através de demosntrações, exemplos e exercícios, aumentando sua capacidade de abstração e a nossa também, já que para escrever esse capitulo nós teremos que ir além, pois não queremos apenas entender o que está aqui, mas queremos que você entenda e aprenda. Não queremos apenas chegar ao final, queremos que você chegue conosco.
 
-\section{}
-
-
+\section{Fundamentações}
+    \subsection{Notações}
+    Nesta seção iremos começar a introduzir notações matemáticas e algumas definições sobre conjuntos.
+    
+    Quando um determinado elemento $x$ faz parte de determinado conjunto $A$, nós dizemos que $x$ pertence a $A$ (denotamos $x \in A$). Caso $x$ não faça parte de $A$, diz-se que $x$ não pertence a $A$ (denota-se  $x \notin A$).
+    
+    Já quando um conjunto $A$ faz parte de outro conjunto $B$ e $B$ possua, pelo menos, um objeto que $A$ não possua, dizemos que $A$ está contido em $B$ ($\space A \cont B$) ou que $B$ contém $A$. Se não sabemos se $B$ possui um objeto que $A$ não possua, denotamos $A \conteq B$, que quer dizer que $A$ está contido em $B$ ou $A=B$, de modo equivalente $B \contemeq A$, significa que $B$ contém $A$ ou $A=B$. Se $A$ possui pelo menos um elemento que $B$ não possua, dizemos que $A$ não está contido em $B$ ($A \notcontido B$) ou que $B$ não contém $B\notcontem A$, outra consequência é que $A \dif B$. 
+    
+    Se estamos interessados em conjuntos/elementos que pertencem simultaneamente a dois conjuntos $A$ e $B$, dizemos que estamos interessados na interseção de $A$ e $B$ (denotada como $A \inter B$).
+    
+    Já se estamos interessados nos conjuntos/elementos que fazem parte de $A$ ou de $B$ dizemos que, nosso objetivo é a união de $A$ e $B$ ($A \union B$)
+    
+    Definição de Universo : Quando estamos trabalhando com conjuntos é comum definirmos quem é nosso universo ($U$), isto é, o conjunto que conterá todos os conjuntos/elementos que estaremos trabalhando em um contexto. Por exemplo, na reta real nosso universo é $\Real$.
+    
+    Definição de Conjunto Complementar: Sendo $A$ um conjunto, dizemos que o conjunto $A$ complementar (denotado $A^C$)contém todos os conjuntos/elementos que não estão contidos/pertencem a $A$, mas fazem parte de nosso universo ($U$).
+    
+    Caso estejemos interessados nos conjuntos/elementos que não façam parte de $A$ 
+    
+    
