@@ -7,6 +7,10 @@ Como visto na seção anterior, devemos estabelecer as regras de dedução para 
     \RightLabel{\scriptsize $\forall I$}
     \UnaryInfC{$\forall x A(x)$}
     \DisplayProof
+\end{center}
+    Para inserir o quantificador universal devemos ter que a variável $y$ não deve estar atrelada em nenhuma hipótese, isto é, em todas as hipóteses não canceladas ela não pode ser livre. 
+\begin{center}
+
    
     \AxiomC{$\forall x A(x)$}
     \RightLabel{\scriptsize $\forall E$}
@@ -33,6 +37,8 @@ Como visto na seção anterior, devemos estabelecer as regras de dedução para 
         \BinaryInfC{$B$}
      \DisplayProof
 \end{center}
+
+Para retirarmmos o quantificador existencial, a variável $t$ não pode estar livre em $B$, isto é, ela não deve estar livre em qualquer hipótese não cancelada.
 
 \textbf{Igualdade:}
 \begin{center}
@@ -61,5 +67,61 @@ Como visto na seção anterior, devemos estabelecer as regras de dedução para 
     \AxiomC{$P(t)$}
     \RightLabel{\scriptsize subs}
     \BinaryInfC{$P(s)$}
+    \DisplayProof
+\end{center}
+Iremos passar por cada um destas regras para apresentá-las com o auxílio de exemplos.
+
+\subsection{Quantificador universal}
+Como primeiro exemplo segue abaixo uma dedução natural de $(\forall x P(x) \to \forall x Q(x)) \to \forall x (P ( x) \to Q (x))$. Note que apesar de parecer uma implicação de duas fórmulas idênticas, na premissa a propriedade $P$ recebe uma variável e a propriedade $Q$ pode receber outra variável, enquanto que na conclusão o valor que $x$ assume é o mesmo para $P$ e $Q$.
+
+\begin{center}
+    \AxiomC{}
+    \RightLabel{\scriptsize 1}
+    \UnaryInfC{$\forall x P(x) \to \forall x Q(x)$}
+    \RightLabel{\scriptsize $\forall E$}
+    \UnaryInfC{$P(t) \to \forall x Q(x)$}
+    \RightLabel{\scriptsize $\forall E$}
+    \UnaryInfC{$P(t) \to Q(t)$}
+    \RightLabel{\scriptsize $\forall I$}
+    \UnaryInfC{$\forall x (P(x) \to Q(x))$}
+    \RightLabel{\scriptsize 1}
+    \UnaryInfC{$\forall x P(x) \to \forall x Q(x) \to \forall x (P(x) \to Q(x))$}
+    \DisplayProof
+\end{center}
+
+O primeiro passo da demonstração será a exclusão da implicação (a implicação principal da fórmula), assumindo $\forall x P(x) \to \forall x Q(x)$ como nossa hipótese. Aplicamos uma primeira exclusão do universal em $\forall x P(x)$ e novamente aplicamos a exclusão do universal em $\forall x Q(x)$. Note que ao definirmos a variável com o mesmo nome $t$ em ambas as exclusões do universal foi o que permitiu inserir um universal que englobe ambas variáveis, que é o passa seguinte.
+\newline Vamos para um outro exemplo, utilizando as hipóteses $\forall x (\neg Q(x) \to R(x))$ e $\forall x(P(x) \land \neg Q(x))$ provaremos $\forall x R(x)$:
+
+\begin{center}
+    \AxiomC{$\forall x(P(x) \land \neg Q(x))$}
+    \RightLabel{\scriptsize $\forall E_1$}
+    \UnaryInfC{$P(t) \land \neg Q(t)$}
+    \RightLabel{\scriptsize $\land E_2$}
+    \UnaryInfC{$\neg Q(t)$}
+    \AxiomC{$\forall x (\neg Q(x) \to R(x))$}
+    \RightLabel{\scriptsize $\forall E_3$}
+    \UnaryInfC{$\neg Q(t) \to R(t)$}
+    \RightLabel{\scriptsize $\to E_4$}
+    \BinaryInfC{$R(t)$}
+    \RightLabel{\scriptsize $\forall I_5$}
+    \UnaryInfC{$\forall x R(x)$}
+    \DisplayProof
+\end{center}
+Vamos inicialmente utilizar de nossas hipóteses, em $\forall E_1$ nós executamos a primeira exclusão do universal, utilizando a variável $t$ e em seguida executamos a exclusão do $\land$ visto que não é necessário o $P(t)$ na dedução. Do outro lado executamos mais uma exclusão do universal em $\forall E_3$ e atribuímos novamente a mesma variável $t$. Com $\neg Q(t)$ e $\neg Q(t) \to R(t)$ podemos realizar uma exclusão da implicação em $\to E_4$ e por fim incluímos o universal em $\forall I_5$.
+
+\subsection{Quantificador existencial}
+Utilizando as propriedades $homem$, $mortal$, $socrates$ e as premissas $\forall x (homem(x) \to mortal(x)$ e $\exists x(socrates(x) \land homem(x))$ para provar $\exists x socrates(x) \land mortal(x)$.
+\begin{center}
+    \AxiomC{$\forall x (homem (x) \to mortal(x))$}
+    \UnaryInfC{$homem(t) \to mortal(t)$}
+    \AxiomC{$\exists x (socrates(x) \land homem(x))$}
+    \UnaryInfC{$ socrates(t) \land homem(t)$}
+    \UnaryInfC{$homem(t)$}
+    \BinaryInfC{$mortal(t)$}
+    \AxiomC{$\exists x (socrates(x) \land homem(x))$}
+    \UnaryInfC{$socrates(t) \land homem(t)$}
+    \UnaryInfC{$socrates(t)$}
+    \BinaryInfC{$mortal(t) \land socrates(t)$}
+    \UnaryInfC{$\exists x (mortal(x) \land socrates(x))$}
     \DisplayProof
 \end{center}
