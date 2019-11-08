@@ -107,3 +107,48 @@
     Através desse axioma fica mais claro de entender certa propriedades dos conjuntos. Deste axioma, vem a explicação do motivo de que a ordem dos elementos de um conjunto não importa, pois dado dois conjuntos com os mesmos elemento, mas em ordem diferente (por exemplo, $X=\{a,b,c,d,e,f\}$ e o conjunto $Y=\{e,c,f,b,a,d\}$) eles ainda satisfazem a propriedade de que se $t$ pertence a um deles implica $t$ pertencer ao outro. Outra coisa interessante é que não importa se um conjunto possui elementos repetidos ele continuará igual ao que possui apenas um elemento, isto é, $X=\{a,b,d,e\}$ é igual ao $Y=\{b,a,d,a,e,b,b\}$. Ou seja, em um conjunto não importa a ordem dos elementos, nem as repetições de elementos.
     
     \textbf{Axioma da Existencia do Conjunto Vazio}
+
+\section{Conjuntos em Lean}
+    
+    Ao longo deste capítulo, observamos que, embora na teoria axiomática dos conjuntos se considere conjuntos de objetos distintos, em matemática é mais comum considerar subconjuntos de algum dominio fixo ($\mathcal U $). É assim que os conjuntos são tratados no Lean. Para qualquer dado do tipo $U$, Lean nos retorna um novo dado tipo $conjunto$ $U$, que consiste nos conjuntos dos elementos de $U$. Assim, por exemplo, podemos raciocinar sobre conjuntos de números naturais, conjuntos de números inteiro ou conjuntos de pares de números naturais.
+
+\subsection{Primeiros Passos}
+    Dado $A$ : $set$ $U$ e $x : U$, é possível escrever $x \in A$ para afirmar que $x$ é um elemento do conjunto $A$. O carácter $\in$ pode ser escrito em Lean usando $\backslash$in .
+    
+
+\begin{lstlisting}
+
+import data.set
+    open set
+
+    variable {U : Type}
+    variables A B C : set U
+    variable x : U
+
+    #check x ∈ A
+    #check A ∪ B
+    #check B \ C
+    #check C ∩ A
+    #check -C
+    #check ∅ ⊆ A
+    #check B ⊆ univ
+    
+ \end{lstlisting}
+
+
+Abaixo temos uma pequena lista de como se representa os principais caractéres da parte de conjuntos no Lean: 
+
+\begin{itemize}
+    \item \in \rightarrow $\backslash$in
+    \item \notin \rightarrow $\backslash$notin
+    \item \subset \rightarrow $\backslash$subset
+    \item \subseteq \rightarrow $\backslash$sub
+    \item \emptyset \rightarrow $\backslash$empty
+    \item $\cup$ \rightarrow $\backslash$un \ ou \ $\backslash$cup \ ou \ $\backslash$union
+    \item $\cap$ \rightarrow $\backslash$i \ ou \ $\backslash$cap \ ou \ $\backslash$intersction
+\end{itemize}
+ \  \ \ \  Obs$^{1}$.: O conjunto universal é denotado $univ$.
+
+Obs$^{2}$.: O complementar de um conjunto é denotada com um símbolo de negação antes de seu símbolo, assim: 
+
+Noções básicas da teoria dos conjuntos são definidas na biblioteca principal do Lean, mas teoremas e notações adicionais estão disponíveis em uma biblioteca auxiliar que é carregada com o comando 'import data.set', que deve aparecer no início do arquivo.
