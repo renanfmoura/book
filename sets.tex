@@ -2,27 +2,108 @@
 
 \section{Introdução}
 
-    Para tratar de conjuntos iremos tentar uma abordagem que que não deixe de lado o rigor matemático necessário, mas que ao mesmo tempo permita utilizar o Lean e contextualizar exemplos para o dia a dia. 
-    Caro leitor, como você definiria conjunto? Vamos pense um pouco. No século XIX, o matemático Georg Cantor, no jornal acadêmico Mathematische Annalen, descreveu um conjunto (ou utilizando sua terminologia, Menge) como, em tradução direta: "Por conjunto nós entendemos qualquer coleção M de objetos deteminados e distintos (chamados de elementos de M) da nossa intução ou do nosso pensamento em um todo."
-    Ou seja, mesmo um conjunto podendo ser algo tão abstrato quanto os números naturais ($\N$), os números reais ($\R$) e #exemplo#, podemos ter coisas menos abstratas como o conjunto das palavras desse texto, o dos planetas do Sistema Solar ou até dos alunos de sua turma. A questão é, todos esses conjuntos podem ser mais intuitivos ou abstratos que os outros variando de pessoa para pessoa, por exemplo o conjunto dos naturais pode ser definido como $\nat = {1,2,3,...}$ ou $\nat={0,1,2,3,...}$ (para não desagradar ninguém), o planetas do Sistema Solar $Planetas_Solar={Mercúrio, Vênus, Terra,Marte, Jupiter, Saturno Urano, Netuno}$ (lembramos que se este livro fosse escrito a uns 15 anos Plutão, na época ainda um planeta, estaria na lisa), assim também vemos que a interpretação do que realmente determinado conjunto representa varia de pessoa para pessoa, mesmo que a ideia/propriedades principais continuem a mesma.
-    Nosso intuito, durante essa aventura pelo mundo dos conjuntos será entender melhor certos conceitos e definições (como o fato do conjunto vazio estar contido em todos os conjuntos, ou se chegarmos até lá, porque o intervalo [0,1] nos reais não é enumerável), através de demosntrações, exemplos e exercícios, aumentando sua capacidade de abstração e a nossa também, já que para escrever esse capitulo nós teremos que ir além, pois não queremos apenas entender o que está aqui, mas queremos que você entenda e aprenda. Não queremos apenas chegar ao final, queremos que você chegue conosco.
+    Para tratar de conjuntos iremos tentar uma abordagem que que não deixe de lado o rigor matemático necessário, mas que ao mesmo tempo permita utilizar o Lean e contextualizar exemplos do dia a dia. 
+    
+    Caro leitor, como você definiria conjunto? Vamos, pense um pouco. No século XIX, o matemático Georg Cantor, no jornal acadêmico Mathematische Annalen, descreveu um conjunto (ou utilizando sua terminologia, \textit{Menge}) como, em tradução livre: “Por conjunto nós entendemos qualquer coleção $M$ de objetos deteminados e distintos (chamados de elementos de $M$) da nossa intuição ou do nosso pensamento em um todo."
+    
+    Ou seja, mesmo um conjunto podendo ser algo tão abstrato quanto os números naturais ($\mathbb{N}$), os números reais ($\mathbb{R}$) e o Conjuntor de Cantor, podemos ter coisas menos abstratas como o conjunto das palavras desse texto, o dos planetas do Sistema Solar ou até dos alunos de sua turma. A questão é, todos esses conjuntos podem ser mais intuitivos ou abstratos (além de como são definidos) dependendo da pessoa que irá interpretá-los, por exemplo o conjunto dos naturais pode ser definido como $\mathbb{N} = \{1,2,3,...\}$ ou $\mathbb{N}=\{0,1,2,3,...\}$ (para não desagradar ninguém), o planetas do Sistema Solar $ P = \{ Mercurio, Venus, Terra, \\ Marte, Jupiter, Saturno, Urano, Netuno \}$ (lembramos que se este livro fosse escrito a uns 15 anos Plutão, na época, ainda seria considerado como um planeta, isto é, estaria no conjunto), por consequência, vemos que a interpretação do que determinado conjunto representa varia de pessoa para pessoa, mesmo que a ideia principal continue a mesma.
+    
+    Nosso intuito, durante essa aventura pelo mundo dos conjuntos será entender melhor certos conceitos e definições (como o fato do conjunto vazio estar contido em todos os conjuntos, ou se chegarmos até lá, porque o intervalo [0,1] nos reais não é enumerável), através de demosntrações, exemplos e exercícios, aumentando sua capacidade de abstração e a nossa também, já que para escrever esse capítulo nós teremos que ir além, pois não queremos apenas entender o que está aqui, mas que você entenda e aprenda também.
 
 \section{Fundamentações}
     \subsection{Notações}
     Nesta seção iremos começar a introduzir notações matemáticas e algumas definições sobre conjuntos.
     
-    Quando um determinado elemento $x$ faz parte de determinado conjunto $A$, nós dizemos que $x$ pertence a $A$ (denotamos $x \in A$). Caso $x$ não faça parte de $A$, diz-se que $x$ não pertence a $A$ (denota-se  $x \notin A$).
+    \textbf{Pertence e Não Pertence:} Quando um determinado elemento $x$ faz parte de determinado conjunto $A$, nós dizemos que $x$ pertence a $A$ (denotamos $x \in A$). Caso $x$ não faça parte de $A$, diz-se que $x$ não pertence a $A$ (denota-se  $x \notin A$).
     
-    Já quando um conjunto $A$ faz parte de outro conjunto $B$ e $B$ possua, pelo menos, um objeto que $A$ não possua, dizemos que $A$ está contido em $B$ ($\space A \cont B$) ou que $B$ contém $A$. Se não sabemos se $B$ possui um objeto que $A$ não possua, denotamos $A \conteq B$, que quer dizer que $A$ está contido em $B$ ou $A=B$, de modo equivalente $B \contemeq A$, significa que $B$ contém $A$ ou $A=B$. Se $A$ possui pelo menos um elemento que $B$ não possua, dizemos que $A$ não está contido em $B$ ($A \notcontido B$) ou que $B$ não contém $B\notcontem A$, outra consequência é que $A \dif B$. 
+    \textbf{Contém, Contido e similares:} Já quando um conjunto $B$ possui todos os elementos que $A$ possui e, $B$ tem, pelo menos, um objeto que $A$ não possua, dizemos que $A$ está contido em $B$ ($\space A \subset B$) ou que $B$ contém $A$ ($B \supset A$)$^{\ref{fig:sets-02-00}}$. Se não sabemos se $B$ possui um objeto que $A$ não possua (e $B$ ainda possui todos os elementos que $A$), denotamos $A \subseteq B$, que quer dizer que $A \subset B$ ou $A=B$, de modo equivalente $B \supseteq A$, significa que $B \supset A$ ou $A=B$. Se $A$ possui pelo menos um elemento que $B$ não possua, dizemos que $A$ não está contido em $B$ ($A \not\subset B$) ou que $B$ não contém $B\not\supset A$, assim $A \neq B$. 
     
-    Se estamos interessados em conjuntos/elementos que pertencem simultaneamente a dois conjuntos $A$ e $B$, dizemos que estamos interessados na interseção de $A$ e $B$ (denotada como $A \inter B$).
+    \begin{figure}[hbt!]
+        \centering      
+        \includegraphics[width = 7.5 cm]{figures/sets/fig-sets-02-00.png}
+        \caption{O conjunto $A$ está contido no conjunto $B$, equivalentemente, $B$ contém $A$.}
+        \label{fig:sets-02-00}
+    \end{figure}
+
+    \textbf{Interseção:} Se estamos interessados em conjuntos/elementos que pertencem simultaneamente a dois conjuntos $A$ e $B$, dizemos que estamos interessados na interseção de $A$ e $B$ (denotada como $A \cap B$)$^{\ref{fig:sets-02-01}}$.
     
-    Já se estamos interessados nos conjuntos/elementos que fazem parte de $A$ ou de $B$ dizemos que, nosso objetivo é a união de $A$ e $B$ ($A \union B$)
+    \begin{figure}[hbt!]
+        \centering      
+        \includegraphics[width = 7.5 cm]{figures/sets/fig-sets-02-01.png}
+        \caption{A região azul representa a visualização da interseção dos conjuntos $A$ e $B$.}
+        \label{fig:sets-02-01}
+    \end{figure}
     
-    Definição de Universo : Quando estamos trabalhando com conjuntos é comum definirmos quem é nosso universo ($U$), isto é, o conjunto que conterá todos os conjuntos/elementos que estaremos trabalhando em um contexto. Por exemplo, na reta real nosso universo é $\Real$.
+    \textbf{União :}Já se estamos interessados nos conjuntos/elementos que fazem parte de $A$ ou de $B$ dizemos que, nosso objetivo é a união de $A$ e $B$ ($A \cup B$)$^{\ref{fig:sets-02-02}}$.
     
-    Definição de Conjunto Complementar: Sendo $A$ um conjunto, dizemos que o conjunto $A$ complementar (denotado $A^C$)contém todos os conjuntos/elementos que não estão contidos/pertencem a $A$, mas fazem parte de nosso universo ($U$).
+    \begin{figure}[hbt!]
+        \centering      
+        \includegraphics[width = 7.5 cm]{figures/sets/fig-sets-02-02.png}
+        \caption{A região azul representa a visualização da união dos conjuntos $A$ e $B$.}
+        \label{fig:sets-02-02}
+    \end{figure}
     
-    Caso estejemos interessados nos conjuntos/elementos que não façam parte de $A$ 
+    \textbf{Universo:} Quando estamos trabalhando com conjuntos é comum definirmos quem é nosso universo ($ \mathcal U $), isto é, o conjunto que conterá todos os conjuntos/elementos que estaremos trabalhando em um contexto$^{\ref{fig:sets-02-03}}$. Por exemplo, na reta real nosso universo é $\mathcal U = \mathbb{R}$.
+    
+    \begin{figure}[hbt!]
+        \centering      
+        \includegraphics[width = 7.5 cm]{figures/sets/fig-sets-02-03.png}
+        \caption{A região azul representa a visualização do nosso Universo.}
+        \label{fig:sets-02-03}
+    \end{figure}
+    
+    \textbf{Conjunto Complementar:} Sendo $A$ um conjunto, dizemos que o conjunto $A$ complementar ou complemento de $A$ (denotado como $\overline A$ ou $A^C$)contém todos os conjuntos/elementos que não estão contidos/pertencem a $A$, mas fazem parte de nosso universo ($\mathcal U$)$^{\ref{fig:sets-02-04}}$.
+    
+    \begin{figure}[hbt!]
+        \centering      
+        \includegraphics[width = 7.5 cm]{figures/sets/fig-sets-02-04.png}
+        \caption{A região azul representa a visualização do complemento de $A$.}
+        \label{fig:sets-02-04}
+    \end{figure}
+    
+    \textbf{Diferença de Conjuntos :} Quando temos dois conjuntos e nosso objetivo são os conjuntos/elementos que pertencem a um destes conjuntos, mas não do outro dizemos que estamos interessados na diferença destes conjuntos. No caso, se quero os conjuntos/elementos de $B$, mas não queremos pegar os que também pertencem a $A$, queremos os elementos/conjuntos que pertencem a diferença de $B$ com $A$ (denotamos como $B-A$ ou $B \backslash A$)$^{\ref{fig:sets-02-05}}$.
+    
+    \begin{figure}[hbt!]
+        \centering      
+        \includegraphics[width = 8 cm]{figures/sets/fig-sets-02-05.png}
+        \caption{A região azul representa a visualização da diferença entre os conjuntos $B$ e $A$, isto é, a área onde estão os elementos que pertencem a $B$, mas não pertencem a $A$.}
+        \label{fig:sets-02-05}
+    \end{figure}
+    
+    Lembre-se: os diagramas apresentados servem como ferramenta auxiliar para ajudar a entender os conceitos, mas não devem ser vistos como a única ferramenta para compreender as definições e  a teoria exposta.
+    
+    \newpage
+    \subsection{Diagrama de Venn}
+    A maneira mais simples de entender a Teoria de Conjuntos, talvez seja o Diagrama de Venn. Criado por John Venn em 1880, esse sistema de representar graficamente conjuntos auxilia imensamente quem está começando a aprender esse assunto, principalmente para entender sobre a parte inicial de notações. Basicamente, consiste em representar num plano, o universo $\mathcal U$ como sendo um retângulo e cada conjunto $A,B,...$ como uma curva fechada simples (geralmente, círculo). Começando com a ideia mais simples, a imagem abaixo representa o conjunto $A$ dentro do univero $\mathcal U$:
+    
+    %\begin{figure}[h!]
+        %\centering
+        %\includegraphics{}
+        %\caption{Conjunto $A$ dentro de $\mathcal U$}
+        %\label{fig:figure_set_01_01}
+    %\end{figure}
+    
+    Para representar que um elemento pertence ao conjunto $A$, simplesmente colocamos ele dentro do espaço delimitado pelo círculo que representa o conjunto, e para representar que um elemento nāo pertence ao conjunto $A$, fazemos o inverso.
     
     
+    %\begin{figure}[h!]
+    %    \centering
+    %    \includegraphics{}
+    %    \caption{$a \in A$ e $b \notin A$}
+    %    \label{fig:figure_set_01_02}
+    %\end{figure}
+    
+    Quando vamos representar mais de um conjunto em um diagrama de Venn, devemos necessariamente ter todas as possíveis relações, mas o que isso significa? Por exemplo, quando temos $2$ conjuntos $A$ e $B$, significa que devemos ter $4$ regiões representando respectivamente: elementos que pertencem somente à $A$, elementos que pertencem somente à $B$, elementos que pertencem à $A$ e à $B$ simultaneamente e elementos que não pertencem a nenhum dos conjuntos. Precisamos disso, para que tudo que provarmos para dois conjuntos $A$ e $B$, possa ser generalizado para dois conjuntos quaisquer, isso será explicado melhor num exemplo posterior.
+    Utilizando esse artífiico, podemos representar todas as definições de intersecçāo, uniāo e diferença de $2$ conjuntos, introduzidas na seçāo anterior, veja nas figuras abaixo:
+    
+    \subsection{Axiomas}
+    
+    Agora iremos apresentar alguns axiomas que servirão como base para todo o desenvolvimento dos conteúdos aqui propostos.
+    
+    \textbf{Axioma da Completude :} Dois conjuntos são iguais, se e somente se, todo elemento que pertence ao primeiro conjunto pertence ao segundo e, todo elemento que pertence ao segundo também pertence ao primeiro, ou seja:
+    
+    \[\forall A \hspace{1.5mm} \forall B \hspace{1.5mm} (A=B) \iff (\forall x \hspace{1.5mm} (x \in A \iff x \in B))\]
+    
+    Através desse axioma fica mais claro de entender certa propriedades dos conjuntos. Deste axioma, vem a explicação do motivo de que a ordem dos elementos de um conjunto não importa, pois dado dois conjuntos com os mesmos elemento, mas em ordem diferente (por exemplo, $X=\{a,b,c,d,e,f\}$ e o conjunto $Y=\{e,c,f,b,a,d\}$) eles ainda satisfazem a propriedade de que se $t$ pertence a um deles implica $t$ pertencer ao outro. Outra coisa interessante é que não importa se um conjunto possui elementos repetidos ele continuará igual ao que possui apenas um elemento, isto é, $X=\{a,b,d,e\}$ é igual ao $Y=\{b,a,d,a,e,b,b\}$. Ou seja, em um conjunto não importa a ordem dos elementos, nem as repetições de elementos.
+    
+    \textbf{Axioma da Existencia do Conjunto Vazio}

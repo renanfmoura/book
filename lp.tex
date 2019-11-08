@@ -1,0 +1,287 @@
+\section{Introdução}
+
+\section{Regras de Inferência}
+Quando nos comunicamos, é habitual utilizar diferentes estruturas de linguagem que nos aproximem do sentido que queremos dar a alguma sentença. Na lógica proposicional, esses padrões são também amplamente utilizados e importantes para a construção de fórmulas e serão melhor aprofundados a seguir.
+%Sugestões
+%Acho que poderíamos juntar a parte de semântica do capítulo 6 
+%(na qual ele discute o que é algo ser verdadeiro ou falso e introduz as tabelas verdade) 
+%com os capítulos anteriores (caps 2-5), 
+%onde ele introduz as regras de inferência, a dedução natural e o Lean. 
+%Então introduziríamos as regras, mostrando o seu equivalente na tabela verdade e também no Lean. 
+%Depois dessa seção mostraríamos as árvores mais complexas de dedução natural tb dessa forma. 
+
+\subsection{Implicação} 
+
+A implicação é essencial para o condicionamento de sentenças. Se na lingua falada utilizamos a estrutura "Se ... então" para nos referirmos a acontecimentos que dependem de outros, na logica a ideia é muito semelhante.\\
+Retornando aos primeiros problemas do capítulo, relembramos um dos problemas descritos:
+
+\begin{center}
+
+\textbf{Se Ana viajar para o Chile, conhecerá o Atacama}\\
+\textbf{Se a família real não tivesse vindo ao Brasil, então o território se desintegraria}
+
+\end{center}
+
+Apesar das duas sentenças terem a mesma estrutura com "Se... então" podemos perceber que as duas tem suas diferenças. Em particular, chamamos a segunda proposição de implicação contrafactual, pois ela afirma como o mundo possivelmente seria caso as coisas fossem diferentes do que elas realmente são. Esse assunto é discutido por filósofos há seculos, Spinoza e Saul Kripke são nomes de destaque nesses estudos, entretanto, a lógica matemática se debruça mais especialmente na primeira sentença.\\
+Dessa forma, tomando a primeira sentença como objeto de estudo, como podemos valorar essa implicação?
+Para começar a analisar a valoração dessa implicação pensemos em A correspondendo o evento "Ana viaja para o Chile" e B ao evento "Ana irá conhecer o Atacama". Temos, então, dois casos e uma tabela verdade correpondente: \\
+
+\begin{center}
+
+Caso 1: Ana viaja para o Chile \\
+Caso 2: Ana não viaja para o Chile \\   
+
+\end{center}
+
+\begin{table}[htb]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+
+\textbf{A} & \textbf{B} & \textbf{A $\to$ B} \\ \hline
+V          & V          & V                  \\ \hline
+V          & F          & F                  \\ \hline
+F          & V          & V                  \\ \hline
+F          & F          & V                  \\ \hline
+
+\end{tabular}
+\end{table}
+
+No primeiro caso, Ana viaja para o Chile e A é verdadeiro. Dessa forma, para a implicação ser verdadeira, B precisa ver também verdadeiro.\\
+No segundo caso, Ana não viaja para o Chile e A é falso.
+Dessa forma, nada podemos dizer sobre o evento B e qualquer valor atribuído a ele torna a implicação verdadeira. A esse tipo de afirmação, chamamos de \textbf{verdadeira por vacuidade}.\\
+A implicação é protagonista da regra chamada "regra da exclusão da implicação" ou \textit{Modus Ponens}("A maneira que afirma afirmando" ), ou seja:
+
+\begin{center}
+
+Se Ana viajar para o Chile, conhecerá o Atacama \\
+Ana viajou para o Chile \\
+Ana conheceu o Atacama
+
+\end{center}
+
+Escrito em dedução natural como:
+
+\begin{prooftree}
+    \AxiomC{$A \rightarrow B$}
+    \AxiomC{A}
+    \BinaryInfC{B}
+\end{prooftree}
+
+E com seu correspondente no Lean, sendo:\\
+\vspace{5mm}
+\begin{lstlisting} 
+
+section
+variable h1 : A → B
+variable h2 : A
+
+example : B := h1 h2
+end
+
+\end{lstlisting}
+\vspace{5mm}
+
+Por outro lado, existe também a "regra de inclusão da implicação". Uma vez que temos uma variável A e conseguimos derivar uma variável B, dizemos que \textbf{A implica em B}. E utilizamos em nossas árvores de dedução natural de tal forma:
+
+\begin{prooftree}
+    \AxiomC{$A$}
+    \noLine
+    \UnaryInfC{$\vdots$}
+    \noLine
+    \UnaryInfC{$B$}
+    \UnaryInfC{$A \rightarrow B$}
+\end{prooftree}\\
+
+Enquanto no Lean:\\
+
+\vspace{5mm}
+\begin{lstlisting} 
+
+example : A → B :=
+assume h : A,
+show B, from sorry
+
+\end{lstlisting}
+\vspace{5mm}
+\subsection{Se e somente se}
+%Vitoria
+
+\subsection{Conjunção}
+A regra da conjunção se refere ao uso ``e'' na linguagem informal, de forma que juntamos duas informações. Podemos ter frases como:
+\begin{center}
+\textbf{Santiago é a capital do Chile e o deserto do Atacama está localizado no Chile.}\\
+\end{center}
+
+Ao mesmo tempo, podemos utilizar o ``e'' para conectar duas informações que nem mesmo possuem relação entre si. Por exemplo, podemos dizer que:
+\begin{center}
+\textbf{Santiago é a capital do Chile e Bolsonaro é o presidente do Brasil.}\\
+\end{center}
+Quando utilizamos o ``e'', representado pelo símbolo $\land$ na lógica, o que de fato importa é estarmos unindo duas informações que são verdadeiras. Isso fica claro na tabela verdade abaixo, na qual é possível ver que quando $A$ ou quando $B$ são falsos, $A\land B$ é falso:
+
+\begin{table}[htb]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{A} & \textbf{B} & \textbf{A $\land$ B} \\ \hline
+V          & V          & V                  \\ \hline
+V          & F          & F                  \\ \hline
+F          & V          & F                  \\ \hline
+F          & F          & F                  \\ \hline
+\end{tabular}
+\end{table}
+
+Dessa forma, na dedução natural, podemos introduzir um ``e'', quando temos $A$ e também temos $B$. Assim, se $A$ e $B$ forem verdadeiros, $A \land B$ também vai ser. 
+
+ \begin{prooftree}
+     \AxiomC{A}
+     \AxiomC{B}
+     \BinaryInfC{$A \land B$}
+\end{prooftree}
+
+No Lean, representamos essa operação pela função $and.intro$, conforme o exemplo abaixo:
+\vspace{5mm}
+\begin{lstlisting} 
+variables A B : Prop
+
+example (h1 : A) (h2 : B) : A ∧ B :=
+and.intro h1 h2
+\end{lstlisting}
+\vspace{5mm}
+
+Seguindo esse raciocínio, é possível observar que sempre que temos $A \land B$, teremos $A$ e $B$ separadamente. Essa é a operação chamada de exclusão do ``e''.
+
+Para excluir o $B$ de, por exemplo, $A \land B$, temos a chamada exclusão pela esquerda, conforme descrita abaixo:
+
+ \begin{prooftree}
+     \AxiomC{$A \land B$}
+     \UnaryInfC{A}
+\end{prooftree}
+
+No Lean, essa operação pode ser feita utilizando a função $and.left$, conforme o código a seguir: 
+\vspace{5mm}
+\begin{lstlisting} 
+variables A B : Prop
+
+example (h1 : A ∧ B): A :=
+and.left h1
+\end{lstlisting}
+\vspace{5mm}
+
+Alternativamente, é possível realizar a mesma operação da seguinte forma:
+\vspace{5mm}
+\begin{lstlisting} 
+variables A B : Prop
+
+example (h1 : A ∧ B): A :=
+h1.left
+\end{lstlisting}
+\vspace{5mm}
+Para excluir o $A$, temos a chamada exclusão pela direita:
+
+ \begin{prooftree}
+     \AxiomC{$A \land B$}
+     \UnaryInfC{B}
+\end{prooftree}
+
+No Lean, essa operação é realizada utilizando a função $and.right$, de maneira semelhante ao que foi descrito anteriormente para o $and.left$. 
+
+\subsection{Disjunção}
+
+Introdução do ``ou'':
+\begin{prooftree}
+     \AxiomC{A}
+     \UnaryInfC{$A \lor B$}
+\end{prooftree}
+
+Código Lean de introdução do ``ou'':
+\begin{lstlisting} 
+variables A B : Prop
+
+example (h1 : A): A ∨ B :=
+or.inl h1
+\end{lstlisting} 
+
+Exclusão do ``ou'': 
+
+\begin{prooftree}
+    \AxiomC{$A \lor B$}
+    \AxiomC{$A$}
+    \noLine
+    \UnaryInfC{$\vdots$}
+    \noLine
+    \UnaryInfC{$C$}
+    \AxiomC{$B$}
+    \noLine
+    \UnaryInfC{$\vdots$}
+    \noLine
+    \UnaryInfC{$C$}
+    \TrinaryInfC{$C$}
+\end{prooftree}
+     
+Código Lean de exclusão do ``ou'':
+\begin{lstlisting} 
+variables A B C D : Prop
+
+example (h1 : A → C) (h2 : B → C) (h3: A ∨ B): C :=
+or.elim h3
+(assume h4: A,
+show C, from h1 h4)
+(assume h4: B, 
+show C, from h2 h4)
+\end{lstlisting} 
+Tabela verdade do ``ou'':
+
+
+\begin{table}[htb]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{A} & \textbf{B} & \textbf{A $\lor$ B} \\ \hline
+V          & V          & V                 \\ \hline
+V          & F          & V                 \\ \hline
+F          & V          & V                 \\ \hline
+F          & F          & F                 \\ \hline
+\end{tabular}
+\end{table}
+
+\subsection{Negação}
+%Incluir um exemplo de algum "quebra-cabeça"
+A negação de $A$ é  representada  em  símbolos por $\neg A $. 
+Mostrar que $\neg A $ ocorre, em termos lógicos, é o mesmo que mostrar que $A $ leva a uma contradição. Em dedução natural, temos uma prova que tem a seguinte árvore, na qual $\bot$ é o símbolo para falso, contradição ou absurdo:
+\begin{prooftree}
+    \AxiomC{A}
+    \noLine
+    \UnaryInfC{$\vdots$}
+    \noLine
+    \UnaryInfC{$\bot$}
+    \UnaryInfC{$\neg A$}
+\end{prooftree}
+
+Começamos supondo $A$. Em seguida, continuamos a prova aplicando as regras  já apresentadas, representadas pelos três pontinhos na árvore de dedução natural, até chegarmos a uma contradição. 
+
+A pergunta a se fazer em seguida é: de que forma uma contradição aparece numa prova, ou seja, como a encontramos? Suponha, por exemplo, que ao construir uma prova temos uma hipótese $A$ que nos leva a concluir que uma outra hipotése $B$ ocorre ao mesmo tempo que $\neg B$ também ocorre, no entanto se temos $B$ e  $ \neg B $, então temos uma contradição.
+Em dedução natural, representamos essa ideia por:
+
+%Completar a árvore incluindo A E \not A
+\begin{prooftree}
+    \AxiomC{$\neg B$}
+    \AxiomC{B}
+    \BinaryInfC{$\bot$}
+\end{prooftree}
+
+%Falar de false.elim e show false, from 
+
+Uma vez apresentado o símbolo para \textit{falso}, a seguir apresentamos o símbolo para \textit{verdadeiro}. No entanto,  \textit{verdadeiro} ou \textit{true} não possui regra de eliminação, apenas a regra de introdução:
+
+%Árvore da regra de introdução do true
+
+No lean, obtemos $\neg A$ com o comando \verb| \not A|.
+\subsection{Prova por contradição}
+Existe um estilo de fazer matemático conhecido como "matemática construtivista" que nega a equivalência de $\neg \neg A$ e $ A$. Uma prova de que algo é verdadeiro deveria fornecer evidências explícitas de que uma declaração é falsa, em vez de evidências de que ela não pode ser falsa. 
+
+Antes de utilizar a prova por absurdo precisamos abrir o modo clássico do lLean.
+
+\section{Dedução Natural}
+
+\section{Exercícios}
