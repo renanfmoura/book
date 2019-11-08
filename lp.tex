@@ -2,6 +2,7 @@
 
 \section{Regras de Inferência}
 Quando nos comunicamos, é habitual utilizar diferentes estruturas de linguagem que nos aproximem do sentido que queremos dar a alguma sentença. Na lógica proposicional, esses padrões são também amplamente utilizados e importantes para a construção de fórmulas e serão melhor aprofundados a seguir.
+%Sugestões
 %Acho que poderíamos juntar a parte de semântica do capítulo 6 
 %(na qual ele discute o que é algo ser verdadeiro ou falso e introduz as tabelas verdade) 
 %com os capítulos anteriores (caps 2-5), 
@@ -16,91 +17,7 @@ Retornando aos primeiros problemas do capítulo, relembramos um dos problemas de
 \textbf{Se Ana viajar para o Chile, conhecerá o Atacama}\\
 \textbf{Se a família real não tivesse vindo ao Brasil, então o território se desintegraria}
 \end{center}
-
 Apesar das duas sentenças terem a mesma estrutura com "Se... então" podemos perceber que as duas tem suas diferenças. Em particular, chamamos a segunda proposição de implicação contrafactual, pois ela afirma como o mundo possivelmente seria caso as coisas fossem diferentes do que elas realmente são. Esse assunto é discutido por filósofos há seculos, Spinoza e Saul Kripke são nomes de destaque nesses estudos, entretanto, a lógica matemática se debruça mais especialmente na primeira sentença.
-
-Dessa forma, tomando a primeira sentença como objeto de estudo, como podemos valorar essa implicação?
-Para começar a analisar a valoração dessa implicação pensemos em A correspondendo o evento "Ana viaja para o Chile" e B ao evento "Ana irá conhecer o Atacama". Temos, então, dois casos e uma tabela verdade correpondente:
-
-\begin{center}
-
-Caso 1: Ana viaja para o Chile \\
-Caso 2: Ana não viaja para o Chile \\   
-
-\end{center}
-
-\begin{table}[htb]
-\centering
-\begin{tabular}{|l|l|l|}
-\hline
-
-\textbf{A} & \textbf{B} & \textbf{A $\to$ B} \\ \hline
-V          & V          & V                  \\ \hline
-V          & F          & F                  \\ \hline
-F          & V          & V                  \\ \hline
-F          & F          & V                  \\ \hline
-
-\end{tabular}
-\end{table}
-
-No primeiro caso, Ana viaja para o Chile e A é verdadeiro. Dessa forma, para a implicação ser verdadeira, B precisa ver também verdadeiro.\\
-No segundo caso, Ana não viaja para o Chile e A é falso.
-Dessa forma, nada podemos dizer sobre o evento B e qualquer valor atribuído a ele torna a implicação verdadeira. A esse tipo de afirmação, chamamos de \textbf{verdadeira por vacuidade}.\\
-A implicação é protagonista da regra chamada "regra da exclusão da implicação" ou \textit{Modus Ponens}("A maneira que afirma afirmando" ), ou seja:
-
-\begin{center}
-
-Se Ana viajar para o Chile, conhecerá o Atacama \\
-Ana viajou para o Chile \\
-Ana conheceu o Atacama
-
-\end{center}
-
-Escrito em dedução natural como:
-
-\begin{prooftree}
-    \AxiomC{$A \rightarrow B$}
-    \AxiomC{A}
-    \BinaryInfC{B}
-\end{prooftree}
-
-E com seu correspondente no Lean, sendo:\\
-\vspace{5mm}
-\begin{lstlisting} 
-
-section
-variable h1 : A → B
-variable h2 : A
-
-example : B := h1 h2
-end
-
-\end{lstlisting}
-\vspace{5mm}
-
-Por outro lado, existe também a "regra de inclusão da implicação". Uma vez que temos uma variável A e conseguimos derivar uma variável B, dizemos que \textbf{A implica em B}. E utilizamos em nossas árvores de dedução natural de tal forma:
-
-\begin{prooftree}
-    \AxiomC{$A$}
-    \noLine
-    \UnaryInfC{$\vdots$}
-    \noLine
-    \UnaryInfC{$B$}
-    \UnaryInfC{$A \rightarrow B$}
-\end{prooftree}
-
-Enquanto no Lean:
-
-\vspace{5mm}
-\begin{lstlisting} 
-
-example : A → B :=
-assume h : A,
-show B, from sorry
-
-\end{lstlisting}
-\vspace{5mm}
-
 \subsection{Se e somente se}
 %Vitoria
 
@@ -185,58 +102,18 @@ No Lean, essa operação é realizada utilizando a função $and.right$, de mane
 
 \subsection{Disjunção}
 
-A regra da disjunção se refere ao uso do ``ou''. Na linguagem informal, podemos utilizá-lo para expressar situações excludentes, como da seguinte forma:
-\begin{center}
-\textbf{Alexandre vai viajar para o Atacama ou Alexandre vai viajar para Santiago.}\\
-\end{center}
-Nesse caso, é possível que uma pessoa compreenda que somente uma das duas situações vai ocorrer, ou seja, que Alexandre somente vai para um dos dois lugares no Chile. Contudo, quando utilizamos o  ``ou'' na lógica, representado pelo símbolo $\lor$, também estamos levando em consideração situações nas quais ambas as proposições são verdadeiras. Dessa forma, conforme indicado na tabela verdade a seguir, a sentença formada pelo ``ou'' será verdadeira quando somente $A$ for verdadeiro, quando somente $B$ for verdadeiro ou quando ambos forem verdadeiros. 
-
-\begin{table}[htb]
-\centering
-\begin{tabular}{|l|l|l|}
-\hline
-\textbf{A} & \textbf{B} & \textbf{A $\lor$ B} \\ \hline
-V          & V          & V                 \\ \hline
-V          & F          & V                 \\ \hline
-F          & V          & V                 \\ \hline
-F          & F          & F                 \\ \hline
-\end{tabular}
-\end{table}
-
-Não só o ``ou'' formará uma sentença verdadeira quando uma ou ambas as situações forem verdadeiras, como também quando ambas as situações forem verdadeiras, mas não possuírem nenhuma relação entre si. Por exemplo, a seguinte sentença é verdadeira: 
-\begin{center}
-\textbf{Santiago é a capital do Chile ou Bolsonaro é o presidente do Brasil.}\\
-\end{center}
-
-É verdadeiro que Santiago é a capital do Chile e que Bolsonaro é o presidente do Brasil. Logo, toda a sentença é verdadeira, apesar de não soar de forma natural na linguagem informal.
-
-Como o ``ou'' é verdadeiro mesmo que somente um de seus elementos seja verdadeiro, na dedução natural, é possível introduzir um ``ou'' tendo somente $A$ ou somente $B$. Logo, pode-se formar $A \lor B$ da seguinte forma:
+Introdução do ``ou'':
 \begin{prooftree}
      \AxiomC{A}
      \UnaryInfC{$A \lor B$}
 \end{prooftree}
 
-No Lean, essa operação de introdução do ``ou'' é realizada utilizando a função $or.inl$. Essa função indica que queremos adicionar o $A$ do lado esquerdo do $\lor$ (por isso, ``or include left''). Dessa forma, teremos o seguinte código: 
+Código Lean de introdução do ``ou'':
 \begin{lstlisting} 
 variables A B : Prop
 
 example (h1 : A): A ∨ B :=
 or.inl h1
-\end{lstlisting} 
-
-Alternativamente, é possível realizar a introdução do $\lor$ a partir do $B$:
-\begin{prooftree}
-     \AxiomC{B}
-     \UnaryInfC{$A \lor B$}
-\end{prooftree}
-
-Nesse caso, como o $B$ está sendo adicionado à direita do $\lor$ utilizamos a função $or.inr$ no Lean (ou seja,  ``or include right''). 
-
-\begin{lstlisting} 
-variables A B : Prop
-
-example (h1 : B): A ∨ B :=
-or.inr h1
 \end{lstlisting} 
 
 Exclusão do ``ou'': 
@@ -267,6 +144,20 @@ show C, from h1 h4)
 (assume h4: B, 
 show C, from h2 h4)
 \end{lstlisting} 
+Tabela verdade do ``ou'':
+
+
+\begin{table}[htb]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{A} & \textbf{B} & \textbf{A $\lor$ B} \\ \hline
+V          & V          & V                 \\ \hline
+V          & F          & V                 \\ \hline
+F          & V          & V                 \\ \hline
+F          & F          & F                 \\ \hline
+\end{tabular}
+\end{table}
 
 \subsection{Negação}
 %Incluir um exemplo de algum "quebra-cabeça"
