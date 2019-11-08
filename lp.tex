@@ -11,13 +11,99 @@ Quando nos comunicamos, é habitual utilizar diferentes estruturas de linguagem 
 %Depois dessa seção mostraríamos as árvores mais complexas de dedução natural tb dessa forma. 
 
 \subsection{Implicação} 
+
 A implicação é essencial para o condicionamento de sentenças. Se na lingua falada utilizamos a estrutura "Se ... então" para nos referirmos a acontecimentos que dependem de outros, na logica a ideia é muito semelhante.\\
 Retornando aos primeiros problemas do capítulo, relembramos um dos problemas descritos:
+
 \begin{center}
+
 \textbf{Se Ana viajar para o Chile, conhecerá o Atacama}\\
 \textbf{Se a família real não tivesse vindo ao Brasil, então o território se desintegraria}
+
 \end{center}
-Apesar das duas sentenças terem a mesma estrutura com "Se... então" podemos perceber que as duas tem suas diferenças. Em particular, chamamos a segunda proposição de implicação contrafactual, pois ela afirma como o mundo possivelmente seria caso as coisas fossem diferentes do que elas realmente são. Esse assunto é discutido por filósofos há seculos, Spinoza e Saul Kripke são nomes de destaque nesses estudos, entretanto, a lógica matemática se debruça mais especialmente na primeira sentença.
+
+Apesar das duas sentenças terem a mesma estrutura com "Se... então" podemos perceber que as duas tem suas diferenças. Em particular, chamamos a segunda proposição de implicação contrafactual, pois ela afirma como o mundo possivelmente seria caso as coisas fossem diferentes do que elas realmente são. Esse assunto é discutido por filósofos há seculos, Spinoza e Saul Kripke são nomes de destaque nesses estudos, entretanto, a lógica matemática se debruça mais especialmente na primeira sentença.\\
+Dessa forma, tomando a primeira sentença como objeto de estudo, como podemos valorar essa implicação?
+Para começar a analisar a valoração dessa implicação pensemos em A correspondendo o evento "Ana viaja para o Chile" e B ao evento "Ana irá conhecer o Atacama". Temos, então, dois casos e uma tabela verdade correpondente: \\
+
+\begin{center}
+
+Caso 1: Ana viaja para o Chile \\
+Caso 2: Ana não viaja para o Chile \\   
+
+\end{center}
+
+\begin{table}[htb]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+
+\textbf{A} & \textbf{B} & \textbf{A $\to$ B} \\ \hline
+V          & V          & V                  \\ \hline
+V          & F          & F                  \\ \hline
+F          & V          & V                  \\ \hline
+F          & F          & V                  \\ \hline
+
+\end{tabular}
+\end{table}
+
+No primeiro caso, Ana viaja para o Chile e A é verdadeiro. Dessa forma, para a implicação ser verdadeira, B precisa ver também verdadeiro.\\
+No segundo caso, Ana não viaja para o Chile e A é falso.
+Dessa forma, nada podemos dizer sobre o evento B e qualquer valor atribuído a ele torna a implicação verdadeira. A esse tipo de afirmação, chamamos de \textbf{verdadeira por vacuidade}.\\
+A implicação é protagonista da regra chamada "regra da exclusão da implicação" ou \textit{Modus Ponens}("A maneira que afirma afirmando" ), ou seja:
+
+\begin{center}
+
+Se Ana viajar para o Chile, conhecerá o Atacama \\
+Ana viajou para o Chile \\
+Ana conheceu o Atacama
+
+\end{center}
+
+Escrito em dedução natural como:
+
+\begin{prooftree}
+    \AxiomC{$A \rightarrow B$}
+    \AxiomC{A}
+    \BinaryInfC{B}
+\end{prooftree}
+
+E com seu correspondente no Lean, sendo:\\
+\vspace{5mm}
+\begin{lstlisting} 
+
+section
+variable h1 : A → B
+variable h2 : A
+
+example : B := h1 h2
+end
+
+\end{lstlisting}
+\vspace{5mm}
+
+Por outro lado, existe também a "regra de inclusão da implicação". Uma vez que temos uma variável A e conseguimos derivar uma variável B, dizemos que \textbf{A implica em B}. E utilizamos em nossas árvores de dedução natural de tal forma:
+
+\begin{prooftree}
+    \AxiomC{$A$}
+    \noLine
+    \UnaryInfC{$\vdots$}
+    \noLine
+    \UnaryInfC{$B$}
+    \UnaryInfC{$A \rightarrow B$}
+\end{prooftree}\\
+
+Enquanto no Lean:\\
+
+\vspace{5mm}
+\begin{lstlisting} 
+
+example : A → B :=
+assume h : A,
+show B, from sorry
+
+\end{lstlisting}
+\vspace{5mm}
 \subsection{Se e somente se}
 %Vitoria
 
