@@ -117,29 +117,41 @@ or.inl h1
 \end{lstlisting} 
 
 Exclusão do ``ou'': 
-%melhorar prova
-%como adicionar "3 pontinhos" entre o A e o C na árvore da exclusão do "ou"?
-
 
 \begin{prooftree}
     \AxiomC{$A \lor B$}
     \AxiomC{$A$}
+    \noLine
+    \UnaryInfC{$\vdots$}
+    \noLine
     \UnaryInfC{$C$}
     \AxiomC{$B$}
+    \noLine
+    \UnaryInfC{$\vdots$}
+    \noLine
     \UnaryInfC{$C$}
     \TrinaryInfC{$C$}
 \end{prooftree}
      
 Código Lean de exclusão do ``ou'':
-%adicionar código
+\begin{lstlisting} 
+variables A B C D : Prop
 
+example (h1 : A → C) (h2 : B → C) (h3: A ∨ B): C :=
+or.elim h3
+(assume h4: A,
+show C, from h1 h4)
+(assume h4: B, 
+show C, from h2 h4)
+\end{lstlisting} 
 Tabela verdade do ``ou'':
 
 
 \begin{table}[htb]
+\centering
 \begin{tabular}{|l|l|l|}
 \hline
-\textbf{A} & \textbf{B} & \textbf{A$\lor$B} \\ \hline
+\textbf{A} & \textbf{B} & \textbf{A $\lor$ B} \\ \hline
 V          & V          & V                 \\ \hline
 V          & F          & V                 \\ \hline
 F          & V          & V                 \\ \hline
@@ -150,7 +162,7 @@ F          & F          & F                 \\ \hline
 \subsection{Negação}
 %Incluir um exemplo de algum "quebra-cabeça"
 A negação de $A$ é  representada  em  símbolos por $\neg A $. 
-Mostrar que $\neg A $ ocorre, em termos logícos, é o mesmo que mostrar que $A $ leva à uma contradição. Em dedução natural, temos uma prova que tem a seguinte árvore, onde $\bot$ é o símbolo para falso, contradição ou absurdo:
+Mostrar que $\neg A $ ocorre, em termos lógicos, é o mesmo que mostrar que $A $ leva a uma contradição. Em dedução natural, temos uma prova que tem a seguinte árvore, na qual $\bot$ é o símbolo para falso, contradição ou absurdo:
 \begin{prooftree}
     \AxiomC{A}
     \noLine
@@ -160,9 +172,9 @@ Mostrar que $\neg A $ ocorre, em termos logícos, é o mesmo que mostrar que $A 
     \UnaryInfC{$\neg A$}
 \end{prooftree}
 
-Começamos supondo $A$, em seguida continuamos a prova aplicando as regras anteriores já apresentadas representadas pelos três pontinhos na árvore de dedução natural até chegarmos à uma contradição. 
+Começamos supondo $A$. Em seguida, continuamos a prova aplicando as regras  já apresentadas, representadas pelos três pontinhos na árvore de dedução natural, até chegarmos a uma contradição. 
 
-A pergunta a se fazer em seguida é: de que forma uma contradição aparece numa prova, como a encontramos? Suponha, por exemplo, que ao construir uma prova temos uma hipotese $A$ que nos leva à concluir que uma outra hipotése $B$ ocorre ao mesmo tempo que $\neg B$ também ocorre, no entanto se temos $B$ e  $ \neg B $, então temos uma contradição.
+A pergunta a se fazer em seguida é: de que forma uma contradição aparece numa prova, ou seja, como a encontramos? Suponha, por exemplo, que ao construir uma prova temos uma hipótese $A$ que nos leva a concluir que uma outra hipotése $B$ ocorre ao mesmo tempo que $\neg B$ também ocorre, no entanto se temos $B$ e  $ \neg B $, então temos uma contradição.
 Em dedução natural, representamos essa ideia por:
 
 %Completar a árvore incluindo A E \not A
@@ -180,9 +192,9 @@ Uma vez apresentado o símbolo para \textit{falso}, a seguir apresentamos o sím
 
 No lean, obtemos $\neg A$ com o comando \verb| \not A|.
 \subsection{Prova por contradição}
-Existe um estilo de fazer matemático connhecido como "matemática construtivista" que nega a equivalência de $\neg \neg A$ e $ A$. Uma prova de que algo é verdadeiro deveria fornecer evidências explicítas que uma declaração é falsa, ao invés de evidências que ela não pode ser falsa. 
+Existe um estilo de fazer matemático conhecido como "matemática construtivista" que nega a equivalência de $\neg \neg A$ e $ A$. Uma prova de que algo é verdadeiro deveria fornecer evidências explícitas de que uma declaração é falsa, em vez de evidências de que ela não pode ser falsa. 
 
-Antes de utilizar a prova por absurdo precisamos abrir o modo classíco do lean.
+Antes de utilizar a prova por absurdo precisamos abrir o modo clássico do lLean.
 
 \section{Dedução Natural}
 
