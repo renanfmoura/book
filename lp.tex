@@ -10,10 +10,12 @@ Quando nos comunicamos, é habitual utilizar diferentes estruturas de linguagem 
 %Depois dessa seção mostraríamos as árvores mais complexas de dedução natural tb dessa forma. 
 
 \subsection{Implicação} 
-A implicação é essencial para o condicionamento de sentenças. Se na lingua falada utilizamos a estrutura "Se ... então" para nos referirmos a acontecimentos que dependem de outros, na logica a ideia é muito semelhante.\\
+A implicação é essencial para o condicionamento de sentenças. Se na lingua falada utilizamos a estrutura "Se ... então" para nos referirmos a acontecimentos que dependem de outros, na logica a ideia é muito semelhante.
+
 Retornando aos primeiros problemas do capítulo, relembramos um dos problemas descritos:
 \begin{center}
-\textbf{Se Ana viajar para o Chile, conhecerá o Atacama}\\
+\textbf{Se Ana viajar para o Chile, conhecerá o Atacama}
+
 \textbf{Se a família real não tivesse vindo ao Brasil, então o território se desintegraria}
 \end{center}
 
@@ -24,8 +26,9 @@ Para começar a analisar a valoração dessa implicação pensemos em A correspo
 
 \begin{center}
 
-Caso 1: Ana viaja para o Chile \\
-Caso 2: Ana não viaja para o Chile \\   
+Caso 1: Ana viaja para o Chile 
+
+Caso 2: Ana não viaja para o Chile
 
 \end{center}
 
@@ -43,15 +46,19 @@ F          & F          & V                  \\ \hline
 \end{tabular}
 \end{table}
 
-No primeiro caso, Ana viaja para o Chile e A é verdadeiro. Dessa forma, para a implicação ser verdadeira, B precisa ver também verdadeiro.\\
+No primeiro caso, Ana viaja para o Chile e A é verdadeiro. Dessa forma, para a implicação ser verdadeira, B precisa ver também verdadeiro.
+
 No segundo caso, Ana não viaja para o Chile e A é falso.
-Dessa forma, nada podemos dizer sobre o evento B e qualquer valor atribuído a ele torna a implicação verdadeira. A esse tipo de afirmação, chamamos de \textbf{verdadeira por vacuidade}.\\
+Dessa forma, nada podemos dizer sobre o evento B e qualquer valor atribuído a ele torna a implicação verdadeira. A esse tipo de afirmação, chamamos de \textbf{verdadeira por vacuidade}.
+
 A implicação é protagonista da regra chamada "regra da exclusão da implicação" ou \textit{Modus Ponens}("A maneira que afirma afirmando" ), ou seja:
 
 \begin{center}
 
-Se Ana viajar para o Chile, conhecerá o Atacama \\
-Ana viajou para o Chile \\
+Se Ana viajar para o Chile, conhecerá o Atacama
+
+Ana viajou para o Chile
+
 Ana conheceu o Atacama
 
 \end{center}
@@ -64,7 +71,8 @@ Escrito em dedução natural como:
     \BinaryInfC{B}
 \end{prooftree}
 
-E com seu correspondente no Lean, sendo:\\
+E com seu correspondente no Lean, sendo:
+
 \vspace{5mm}
 \begin{lstlisting} 
 
@@ -107,12 +115,12 @@ show B, from sorry
 \subsection{Conjunção}
 A regra da conjunção se refere ao uso ``e'' na linguagem informal, de forma que juntamos duas informações. Podemos ter frases como:
 \begin{center}
-\textbf{Santiago é a capital do Chile e o deserto do Atacama está localizado no Chile.}\\
+\textbf{Santiago é a capital do Chile e o deserto do Atacama está localizado no Chile.}
 \end{center}
 
 Ao mesmo tempo, podemos utilizar o ``e'' para conectar duas informações que nem mesmo possuem relação entre si. Por exemplo, podemos dizer que:
 \begin{center}
-\textbf{Santiago é a capital do Chile e Bolsonaro é o presidente do Brasil.}\\
+\textbf{Santiago é a capital do Chile e Bolsonaro é o presidente do Brasil.}
 \end{center}
 Quando utilizamos o ``e'', representado pelo símbolo $\land$ na lógica, o que de fato importa é estarmos unindo duas informações que são verdadeiras. Isso fica claro na tabela verdade abaixo, na qual é possível ver que quando $A$ ou quando $B$ são falsos, $A\land B$ é falso:
 
