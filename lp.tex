@@ -188,18 +188,58 @@ No Lean, essa operação é realizada utilizando a função $and.right$, de mane
 
 \subsection{Disjunção}
 
-Introdução do ``ou'':
+A regra da disjunção se refere ao uso do ``ou''. Na linguagem informal, podemos utilizá-lo para expressar situações excludentes, como da seguinte forma:
+\begin{center}
+\textbf{Alexandre vai viajar para o Atacama ou Alexandre vai viajar para Santiago.}\\
+\end{center}
+Nesse caso, é possível que uma pessoa compreenda que somente uma das duas situações vai ocorrer, ou seja, que Alexandre somente vai para um dos dois lugares no Chile. Contudo, quando utilizamos o  ``ou'' na lógica, representado pelo símbolo $\lor$, também estamos levando em consideração situações nas quais ambas as proposições são verdadeiras. Dessa forma, conforme indicado na tabela verdade a seguir, a sentença formada pelo ``ou'' será verdadeira quando somente $A$ for verdadeiro, quando somente $B$ for verdadeiro ou quando ambos forem verdadeiros. 
+
+\begin{table}[htb]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{A} & \textbf{B} & \textbf{A $\lor$ B} \\ \hline
+V          & V          & V                 \\ \hline
+V          & F          & V                 \\ \hline
+F          & V          & V                 \\ \hline
+F          & F          & F                 \\ \hline
+\end{tabular}
+\end{table}
+
+Não só o ``ou'' formará uma sentença verdadeira quando uma ou ambas as situações forem verdadeiras, como também quando ambas as situações forem verdadeiras, mas não possuírem nenhuma relação entre si. Por exemplo, a seguinte sentença é verdadeira: 
+\begin{center}
+\textbf{Santiago é a capital do Chile ou Bolsonaro é o presidente do Brasil.}\\
+\end{center}
+
+É verdadeiro que Santiago é a capital do Chile e que Bolsonaro é o presidente do Brasil. Logo, toda a sentença é verdadeira, apesar de não soar de forma natural na linguagem informal.
+
+Como o ``ou'' é verdadeiro mesmo que somente um de seus elementos seja verdadeiro, na dedução natural, é possível introduzir um ``ou'' tendo somente $A$ ou somente $B$. Logo, pode-se formar $A \lor B$ da seguinte forma:
 \begin{prooftree}
      \AxiomC{A}
      \UnaryInfC{$A \lor B$}
 \end{prooftree}
 
-Código Lean de introdução do ``ou'':
+No Lean, essa operação de introdução do ``ou'' é realizada utilizando a função $or.inl$. Essa função indica que queremos adicionar o $A$ do lado esquerdo do $\lor$ (por isso, ``or include left''). Dessa forma, teremos o seguinte código: 
 \begin{lstlisting} 
 variables A B : Prop
 
 example (h1 : A): A ∨ B :=
 or.inl h1
+\end{lstlisting} 
+
+Alternativamente, é possível realizar a introdução do $\lor$ a partir do $B$:
+\begin{prooftree}
+     \AxiomC{B}
+     \UnaryInfC{$A \lor B$}
+\end{prooftree}
+
+Nesse caso, como o $B$ está sendo adicionado à direita do $\lor$ utilizamos a função $or.inr$ no Lean (ou seja,  ``or include right''). 
+
+\begin{lstlisting} 
+variables A B : Prop
+
+example (h1 : B): A ∨ B :=
+or.inr h1
 \end{lstlisting} 
 
 Exclusão do ``ou'': 
@@ -230,20 +270,6 @@ show C, from h1 h4)
 (assume h4: B, 
 show C, from h2 h4)
 \end{lstlisting} 
-Tabela verdade do ``ou'':
-
-
-\begin{table}[htb]
-\centering
-\begin{tabular}{|l|l|l|}
-\hline
-\textbf{A} & \textbf{B} & \textbf{A $\lor$ B} \\ \hline
-V          & V          & V                 \\ \hline
-V          & F          & V                 \\ \hline
-F          & V          & V                 \\ \hline
-F          & F          & F                 \\ \hline
-\end{tabular}
-\end{table}
 
 \subsection{Negação}
 %Incluir um exemplo de algum "quebra-cabeça"
