@@ -1,5 +1,12 @@
 *~
-*aux
-*pdf
-*log
-*toc
+*.aux
+*.pdf
+*.log
+*.toc
+*.bbl
+*.blg
+*.out
+*.fdb_latexmk
+*.fls
+*.gz
+
