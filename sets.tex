@@ -159,7 +159,7 @@
 
 \begin{lstlisting}
 
-import data.set
+    import data.set
     open set
 
     variable {U : Type}
@@ -174,22 +174,206 @@ import data.set
     #check ∅ ⊆ A
     #check B ⊆ univ
     
- \end{lstlisting}
+\end{lstlisting}
 
 
 Abaixo temos uma pequena lista de como se representa os principais caractéres da parte de conjuntos no Lean: 
 
 \begin{itemize}
+
+  
     \item $\in$ $\rightarrow$ $\backslash$in
+  
     \item $\notin$ $\rightarrow$ $\backslash$notin
+  
     \item $\subset$ $\rightarrow$ $\backslash$subset
+  
     \item $\subseteq$ $\rightarrow$ $\backslash$sub
+  
     \item $\emptyset$ $\rightarrow$ $\backslash$empty
+  
     \item $\cup$ $\rightarrow$ $\backslash$un \ ou \ $\backslash$cup \ ou \ $\backslash$union
+  
     \item $\cap$ $\rightarrow$ $\backslash$i \ ou \ $\backslash$cap \ ou \ $\backslash$intersction
+
 \end{itemize}
-Obs$^{1}$.: O conjunto universal é denotado $univ$.
 
-Obs$^{2}$.: O complementar de um conjunto é denotada com um símbolo de negação antes de seu símbolo, assim: 
+Obs$^{1}$.: O conjunto universal é denotado {\fontencoding{U}\fontfamily{cmtt}
+\selectfont univ}.
 
-Noções básicas da teoria dos conjuntos são definidas na biblioteca principal do Lean, mas teoremas e notações adicionais estão disponíveis em uma biblioteca auxiliar que é carregada com o comando import data.set, que deve aparecer no início do arquivo.
+Obs$^{2}$.: O complementar de um conjunto é denotada com um símbolo de negação antes de seu símbolo, assim: $-A$
+
+$\qquad$
+
+Noções básicas da teoria dos conjuntos são definidas na biblioteca principal do Lean, mas teoremas e notações adicionais estão disponíveis em uma biblioteca auxiliar que é carregada com o comando 
+{\fontencoding{U}\fontfamily{cmtt}
+\selectfont import data.set}, que deve aparecer no início do arquivo.
+
+$\qquad$
+
+O template abaixo serve para mostrar que o conjunto $A$ é um subconjunto de $B$:
+
+\begin{lstlisting}
+
+    import data.set
+    open set
+
+    variable {U : Type}
+    variables A B C : set U
+
+    -- BEGIN
+    example : A ⊆ B :=
+    assume x,
+    assume h : x ∈ A,
+    show x ∈ B, from sorry
+    -- END
+
+\end{lstlisting}
+
+E o template a seguir pode ser usado para mostrar que $A$ e $B$ são iguais:
+
+\begin{lstlisting}
+
+    import data.set
+    open set
+
+    variable {U : Type}
+    variables A B C : set U
+
+    -- BEGIN
+    example : A = B :=
+    eq_of_subset_of_subset
+      (assume x,
+        assume h : x ∈ A,
+        show x ∈ B, from sorry)
+      (assume x,
+        assume h : x ∈ B,
+        show x ∈ A, from sorry)
+    -- END
+    
+\end{lstlisting}
+
+Opcionalmente, nós podemos mostrar a mesma prova de outra forma:
+
+\begin{lstlisting}
+
+    import data.set
+    open set
+
+    variable {U : Type}
+    variables A B C : set U
+
+    -- BEGIN
+    example : A = B :=
+    ext (assume x, iff.intro
+      (assume h : x ∈ A,
+        show x ∈ B, from sorry)
+      (assume h : x ∈ B,
+        show x ∈ A, from sorry))
+    -- END
+    
+\end{lstlisting}
+
+Aqui, {\fontencoding{U}\fontfamily{cmtt}
+\selectfont ext} é uma sigla para "extensionality", ou seja, extensionalidade. Matemáticamente, isso é representado desta forma:
+
+$\qquad$
+
+\begin{center}
+    $\forall x$ ; ($x \in A$ $\leftrightarrow$ $x \in B$) $\rightarrow$ $A = B$.  
+\end{center}
+
+Reduzindo assim a prova $A = B$ para a prova: $\forall x$ ; ($x \in A$ $\leftrightarrow$ $x \in B$), que nós podemos realizar usando $\forall$ e $\leftrightarrow$ introdução.
+
+$\qquad$
+
+Além disso, o Lean possui interpretação ambígua para regras de união, interseção e outras operações em conjuntos que são consideradas “definições”. Isso significa que as expressões $x$ $\in$ $A$ $\cap$ $B$ e $x$ $\in$ $A$ $\wedge$ $x$ $\in$ $B$ possuem a mesma interpretação no Lean. Isso também é válido para outras construções em conjuntos, como: $x$ $\in$ $A$ $\backslash $ $B$ e $x$ $\in$ $A$ $\wedge$ $\neg$ $(x$ $\in$ $B)$. O termo $\neg$ $(x$ $\in$ $B)$ que acabara de ser apresentado é outra forma de escrever $x$ $\notin$ $B$. Abaixo são apresentadas algumas aplicações dessa interpretação em Lean:
+
+\begin{lstlisting}
+
+    import data.set
+    open set
+
+    variable {U : Type}
+    variables A B C : set U
+
+    -- BEGIN
+    example : ∀ x, x ∈ A → x ∈ B → x ∈ A ∩ B :=
+    assume x,
+    assume h₁ : x ∈ A,
+    assume h₂ : x ∈ B,
+    show x ∈ A ∩ B, from and.intro h₁ h₂
+
+    example : A ⊆ A ∪ B :=
+    assume x,
+    assume h : x ∈ A,
+    show x ∈ A ∪ B, from or.inl h
+
+    example : ∅ ⊆ A  :=
+    assume x,
+    assume h : x ∈ (∅ : set U),
+    show x ∈ A, from false.elim h
+    -- END
+
+\end{lstlisting}
+
+Observe no último exemplo a necessidade de usar a notação {\fontencoding{U}\fontfamily{cmtt}
+\selectfont ($\emptyset$ : set U)}, dizendo ao Lean que o $\emptyset$ é um conjunto de {\fontencoding{U}\fontfamily{cmtt}
+\selectfont (U)}. O Lean pode, em algumas situações, inferir informações como essa dentro do contexto (por exemplo, quando queremos mostrar que $x$ $\in$ $A$, onde $A$ é do tipo {\fontencoding{U}\fontfamily{cmtt}
+\selectfont (set U)}), mas para isso acontecer, é necessário o uso de alguns comandos.
+
+Opcionalmente, podemos usar alguns teoremas da biblioteca do Lean, projetados especificamente para uso em conjuntos:
+
+\begin{lstlisting}
+
+    import data.set
+    open set
+
+    variable {U : Type}
+    variables A B C : set U
+
+    -- BEGIN
+    example : ∀ x, x ∈ A → x ∈ B → x ∈ A ∩ B :=
+    assume x,
+    assume : x ∈ A,
+    assume : x ∈ B,
+    show x ∈ A ∩ B, from mem_inter ‹x ∈ A› ‹x ∈ B›
+
+    example : A ⊆ A ∪ B :=
+    assume x,
+    assume h : x ∈ A,
+    show x ∈ A ∪ B, from mem_union_left B h
+
+    example : ∅ ⊆ A  :=
+    assume x,
+    assume : x ∈ ∅,
+    show x ∈ A, from absurd this (not_mem_empty x)
+ 
+\end{lstlisting}
+
+Lembre-se que{\fontencoding{U}\fontfamily{cmtt}
+\selectfont absurd} pode ser usado para provar qualquer fato a partir de duas hipóteses contrárias: $h_1$ : $P$ e $h_2$ : $\neg$ $P$. 
+
+Aqui, o teorema {\fontencoding{U}\fontfamily{cmtt}
+\selectfont not\_mem\_empty x} significa $x$ $\notin$ $\emptyset$. Você pode ver a declaração dos teoremas usando o comando {\fontencoding{U}\fontfamily{cmtt}
+\selectfont \#check} no Lean:
+
+\begin{lstlisting}
+
+    import data.set
+    open set
+
+    -- BEGIN
+    #check @mem_inter
+    #check @mem_of_mem_inter_left
+    #check @mem_of_mem_inter_right
+    #check @mem_union_left
+    #check @mem_union_right
+    #check @mem_or_mem_of_mem_union
+    #check @not_mem_empty
+    -- END
+
+\end{lstlisting}
+
+Aqui, o símbolo{\fontencoding{U}\fontfamily{cmtt}
+\selectfont @} no Lean impede que ele tente preencher argumentos implícitos automaticamente, forçando-o a exibir a declaração completa do teorema.
