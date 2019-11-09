@@ -26,6 +26,71 @@
     
     \textbf{Definição de Conjunto Complementar :} Sendo $A$ um conjunto, dizemos que o conjunto $A$ complementar (denotado como $\overline A$ ou $A^C$)contém todos os conjuntos/elementos que não estão contidos/pertencem a $A$, mas fazem parte de nosso universo ($U$).
     
+    \newpage
+    \subsection{Diagrama de Venn}
+    A maneira mais simples de entender a Teoria de Conjuntos, talvez seja o Diagrama de Venn. Criado por John Venn em 1880, esse sistema de representar graficamente conjuntos auxilia imensamente quem está começando a aprender esse assunto, principalmente para entender sobre a parte inicial de notações. Basicamente, consiste em representar num plano, o universo $\mathcal U$ como sendo um retângulo e cada conjunto $A,B,...$ como uma curva fechada simples (geralmente, círculo). Começando com a ideia mais simples, a imagem abaixo representa em vermelho o conjunto $A$ dentro do universo $\mathcal U$:
+    
+    %\begin{figure}[h!]
+    %    \centering
+    %    \includegraphics{fig_set_01_01.png}
+    %    \caption{Conjunto $A$ dentro de $\mathcal U$}
+    %    \label{fig:fig_set_01_01}
+    %\end{figure}
+    
+    Já sobre o conjunto complementar $A^c$, ele simplesmente é a parte que está no retângulo, mas não está no círculo, justamente o que não estava de vermelho na figura anterior.
+    
+    %\begin{figure}[h!]
+    %    \centering
+    %    \includegraphics{fig_set_01_02.png}
+    %    \caption{Conjunto complementar $A^c$}
+    %    \label{fig:fig_set_01_02}
+    %\end{figure}
+    
+    Para representar que um elemento pertence ao conjunto $A$, simplesmente colocamos ele dentro do espaço delimitado pelo círculo que representa o conjunto, e para representar que um elemento nāo pertence ao conjunto $A$, fazemos o inverso.
+    
+    
+    %\begin{figure}[h!]
+    %    \centering
+    %    \includegraphics{figure_set_01_03.png}
+    %    \caption{$a \in A$ e $b \notin A$}
+    %    \label{fig:figure_set_01_03}
+    %\end{figure}
+    
+    Quando vamos representar mais de um conjunto em um diagrama de Venn, devemos necessariamente ter todas as possíveis relações, mas o que isso significa? Por exemplo, quando temos $2$ conjuntos $A$ e $B$, significa que devemos ter $4$ regiões representando respectivamente: elementos que pertencem somente à $A$, elementos que pertencem somente à $B$, elementos que pertencem à $A$ e à $B$ simultaneamente e elementos que não pertencem a nenhum dos conjuntos. Precisamos disso, para que tudo que provarmos para dois conjuntos $A$ e $B$, possa ser generalizado para dois conjuntos quaisquer, isso será explicado melhor num exemplo posterior.
+    Utilizando esse artífiico, podemos representar todas as definições de intersecçāo, uniāo e diferença de $2$ conjuntos, introduzidas na seçāo anterior. Veja nas figuras abaixo:
+    
+    %\begin{figure}[h!]
+    %    \centering
+    %    \includegraphics{figure_set_01_04.png}
+    %    \caption{Intersecção $A \cap B$}
+    %    \label{fig:figure_set_01_04}
+    %\end{figure}
+    
+    %\begin{figure}[h!]
+    %    \centering
+    %    \includegraphics{figure_set_01_05.png}
+    %    \caption{União $A \cup B$}
+    %    \label{fig:figure_set_01_05}
+    %\end{figure}
+    
+    %\begin{figure}[h!]
+    %    \centering
+    %    \includegraphics{figure_set_01_06.png}
+    %    \caption{Diferença $A \setminus B$}
+    %    \label{fig:figure_set_01_06}
+    %\end{figure}
+    
+    Todavia, isso ainda não permite fazer tudo que desejamos. Se quisermos representar que $A \subseteq B$, a ideia inicial seria colocar o círculo $A$ dentro do círculo $B$, quebrando o rigor de manter todas as possíveis relações, pois não teremos uma região para representar os elementos que pertecem somente a $A$. Então, como resolver esse problema? Representamos os conjuntos $A$ e $B$ da mesma forma que anteriormente e também escrevemos o símbolo do conjunto vazio na região dos elementos que pertencem somente a $A$. Assim, só existem elementos no conjunto $A$ que estão na região $A\cap B$, ou seja, se um elemento está em $A$, como consequência ele está em $B$, exatamente a definição de $A \subseteq B$.
+    
+    %\begin{figure}[h!]
+    %    \centering
+    %    \includegraphics{figure_set_01_07.png}
+    %    \caption{Subconjunto $A \subseteq B$}
+    %    \label{fig:figure_set_01_07}
+    %\end{figure}
+    
+    É inegável que para muitos exemplos isso se torna inviável.
+
     Lembre-se: os diagramas apresentados servem apenas para ajudar a entender os conceitos, mas não devem ser vistos como únicos, nem devem ser o foco único para entender o que é proposto.
     
     \subsection{Axiomas}
@@ -34,4 +99,239 @@
     
     \textbf{Axioma da Completude :} Dois conjuntos são iguais, se e somente se, todo elemento que pertence ao primeiro conjunto pertence ao segundo e, todo elemento que pertence ao segundo também pertence ao primeiro, ou seja:
     
+    \[\forall A \hspace{1.5mm} \forall B \hspace{1.5mm} (A=B) \iff (\forall x \hspace{1.5mm} (x \in A \iff x \in B))\]
+    
+    Através desse axioma fica mais claro de entender certa propriedades dos conjuntos. Deste axioma, vem a explicação do motivo de que a ordem dos elementos de um conjunto não importa, pois dado dois conjuntos com os mesmos elemento, mas em ordem diferente (por exemplo, $X=\{a,b,c,d,e,f\}$ e o conjunto $Y=\{e,c,f,b,a,d\}$) eles ainda satisfazem a propriedade de que se $t$ pertence a um deles implica $t$ pertencer ao outro. Outra coisa interessante é que não importa se um conjunto possui elementos repetidos ele continuará igual ao que possui apenas um elemento, isto é, $X=\{a,b,d,e\}$ é igual ao $Y=\{b,a,d,a,e,b,b\}$. Ou seja, em um conjunto não importa a ordem dos elementos, nem as repetições de elementos.
+    
+    \textbf{Axioma da Existencia do Conjunto Vazio}
+
+\section{Conjuntos em Lean}
+    
+    Ao longo deste capítulo, observamos que, embora na teoria axiomática dos conjuntos se considere conjuntos de objetos distintos, em matemática é mais comum considerar subconjuntos de algum dominio fixo ($\mathcal U $). É assim que os conjuntos são tratados no Lean. Para qualquer dado do tipo $U$, Lean nos retorna um novo dado tipo $conjunto$ $U$, que consiste nos conjuntos dos elementos de $U$. Assim, por exemplo, podemos raciocinar sobre conjuntos de números naturais, conjuntos de números inteiro ou conjuntos de pares de números naturais.
+
+\subsection{Primeiros Passos}
+    Dado $A$ : $set$ $U$ e $x : U$, é possível escrever $x \in A$ para afirmar que $x$ é um elemento do conjunto $A$. O carácter $\in$ pode ser escrito em Lean usando $\backslash$in .
+    
+
+\begin{lstlisting}
+
+    import data.set
+    open set
+
+    variable {U : Type}
+    variables A B C : set U
+    variable x : U
+
+    #check x ∈ A
+    #check A ∪ B
+    #check B \ C
+    #check C ∩ A
+    #check -C
+    #check ∅ ⊆ A
+    #check B ⊆ univ
+    
+\end{lstlisting}
+
+
+Abaixo temos uma pequena lista de como se representa os principais caractéres da parte de conjuntos no Lean: 
+
+\begin{itemize}
+
+  
+    \item $\in$ $\rightarrow$ $\backslash$in
+  
+    \item $\notin$ $\rightarrow$ $\backslash$notin
+  
+    \item $\subset$ $\rightarrow$ $\backslash$subset
+  
+    \item $\subseteq$ $\rightarrow$ $\backslash$sub
+  
+    \item $\emptyset$ $\rightarrow$ $\backslash$empty
+  
+    \item $\cup$ $\rightarrow$ $\backslash$un \ ou \ $\backslash$cup \ ou \ $\backslash$union
+  
+    \item $\cap$ $\rightarrow$ $\backslash$i \ ou \ $\backslash$cap \ ou \ $\backslash$intersction
+
+\end{itemize}
+
+Obs$^{1}$.: O conjunto universal é denotado {\fontencoding{U}\fontfamily{cmtt}
+\selectfont univ}.
+
+Obs$^{2}$.: O complementar de um conjunto é denotada com um símbolo de negação antes de seu símbolo, assim: $-A$
+
+$\qquad$
+
+Noções básicas da teoria dos conjuntos são definidas na biblioteca principal do Lean, mas teoremas e notações adicionais estão disponíveis em uma biblioteca auxiliar que é carregada com o comando 
+{\fontencoding{U}\fontfamily{cmtt}
+\selectfont import data.set}, que deve aparecer no início do arquivo.
+
+$\qquad$
+
+O template abaixo serve para mostrar que o conjunto $A$ é um subconjunto de $B$:
+
+\begin{lstlisting}
+
+    import data.set
+    open set
+
+    variable {U : Type}
+    variables A B C : set U
+
+    -- BEGIN
+    example : A ⊆ B :=
+    assume x,
+    assume h : x ∈ A,
+    show x ∈ B, from sorry
+    -- END
+
+\end{lstlisting}
+
+E o template a seguir pode ser usado para mostrar que $A$ e $B$ são iguais:
+
+\begin{lstlisting}
+
+    import data.set
+    open set
+
+    variable {U : Type}
+    variables A B C : set U
+
+    -- BEGIN
+    example : A = B :=
+    eq_of_subset_of_subset
+      (assume x,
+        assume h : x ∈ A,
+        show x ∈ B, from sorry)
+      (assume x,
+        assume h : x ∈ B,
+        show x ∈ A, from sorry)
+    -- END
+    
+\end{lstlisting}
+
+Opcionalmente, nós podemos mostrar a mesma prova de outra forma:
+
+\begin{lstlisting}
+
+    import data.set
+    open set
+
+    variable {U : Type}
+    variables A B C : set U
+
+    -- BEGIN
+    example : A = B :=
+    ext (assume x, iff.intro
+      (assume h : x ∈ A,
+        show x ∈ B, from sorry)
+      (assume h : x ∈ B,
+        show x ∈ A, from sorry))
+    -- END
+    
+\end{lstlisting}
+
+Aqui, {\fontencoding{U}\fontfamily{cmtt}
+\selectfont ext} é uma sigla para ``extensionality", ou seja, extensionalidade. Matemáticamente, isso é representado desta forma:
+
+$\qquad$
+
+\begin{center}
+    $\forall x$ ; ($x \in A$ $\leftrightarrow$ $x \in B$) $\rightarrow$ $A = B$.  
+\end{center}
+
+Reduzindo assim a prova $A = B$ para a prova: $\forall x$ ; ($x \in A$ $\leftrightarrow$ $x \in B$), que nós podemos realizar usando $\forall$ e $\leftrightarrow$ introdução.
+
+$\qquad$
+
+Além disso, o Lean possui interpretação ambígua para regras de união, interseção e outras operações em conjuntos que são consideradas “definições”. Isso significa que as expressões $x$ $\in$ $A$ $\cap$ $B$ e $x$ $\in$ $A$ $\wedge$ $x$ $\in$ $B$ possuem a mesma interpretação no Lean. Isso também é válido para outras construções em conjuntos, como: $x$ $\in$ $A$ $\backslash $ $B$ e $x$ $\in$ $A$ $\wedge$ $\neg$ $(x$ $\in$ $B)$. O termo $\neg$ $(x$ $\in$ $B)$ que acabara de ser apresentado é outra forma de escrever $x$ $\notin$ $B$. Abaixo são apresentadas algumas aplicações dessa interpretação em Lean:
+
+\begin{lstlisting}
+
+    import data.set
+    open set
+
+    variable {U : Type}
+    variables A B C : set U
+
+    -- BEGIN
+    example : ∀ x, x ∈ A → x ∈ B → x ∈ A ∩ B :=
+    assume x,
+    assume h₁ : x ∈ A,
+    assume h₂ : x ∈ B,
+    show x ∈ A ∩ B, from and.intro h₁ h₂
+
+    example : A ⊆ A ∪ B :=
+    assume x,
+    assume h : x ∈ A,
+    show x ∈ A ∪ B, from or.inl h
+
+    example : ∅ ⊆ A  :=
+    assume x,
+    assume h : x ∈ (∅ : set U),
+    show x ∈ A, from false.elim h
+    -- END
+
+\end{lstlisting}
+
+Observe no último exemplo a necessidade de usar a notação {\fontencoding{U}\fontfamily{cmtt}
+\selectfont ($\emptyset$ : set U)}, dizendo ao Lean que o $\emptyset$ é um conjunto de {\fontencoding{U}\fontfamily{cmtt}
+\selectfont (U)}. O Lean pode, em algumas situações, inferir informações como essa dentro do contexto (por exemplo, quando queremos mostrar que $x$ $\in$ $A$, onde $A$ é do tipo {\fontencoding{U}\fontfamily{cmtt}
+\selectfont (set U)}), mas para isso acontecer, é necessário o uso de alguns comandos.
+
+Opcionalmente, podemos usar alguns teoremas da biblioteca do Lean, projetados especificamente para uso em conjuntos:
+
+\begin{lstlisting}
+
+    import data.set
+    open set
+
+    variable {U : Type}
+    variables A B C : set U
+
+    -- BEGIN
+    example : ∀ x, x ∈ A → x ∈ B → x ∈ A ∩ B :=
+    assume x,
+    assume : x ∈ A,
+    assume : x ∈ B,
+    show x ∈ A ∩ B, from mem_inter ‹x ∈ A› ‹x ∈ B›
+
+    example : A ⊆ A ∪ B :=
+    assume x,
+    assume h : x ∈ A,
+    show x ∈ A ∪ B, from mem_union_left B h
+
+    example : ∅ ⊆ A  :=
+    assume x,
+    assume : x ∈ ∅,
+    show x ∈ A, from absurd this (not_mem_empty x)
+ 
+\end{lstlisting}
+
+Lembre-se que{\fontencoding{U}\fontfamily{cmtt}
+\selectfont absurd} pode ser usado para provar qualquer fato a partir de duas hipóteses contrárias: $h_1$ : $P$ e $h_2$ : $\neg$ $P$. 
+
+Aqui, o teorema {\fontencoding{U}\fontfamily{cmtt}
+\selectfont not\_mem\_empty x} significa $x$ $\notin$ $\emptyset$. Você pode ver a declaração dos teoremas usando o comando {\fontencoding{U}\fontfamily{cmtt}
+\selectfont \#check} no Lean:
+
+\begin{lstlisting}
+
+    import data.set
+    open set
+
+    -- BEGIN
+    #check @mem_inter
+    #check @mem_of_mem_inter_left
+    #check @mem_of_mem_inter_right
+    #check @mem_union_left
+    #check @mem_union_right
+    #check @mem_or_mem_of_mem_union
+    #check @not_mem_empty
+    -- END
+
+\end{lstlisting}
+
+Aqui, o símbolo{\fontencoding{U}\fontfamily{cmtt}
+\selectfont @} no Lean impede que ele tente preencher argumentos implícitos automaticamente, forçando-o a exibir a declaração completa do teorema.
+
     \[\forall A, \space \forall B, \space (A=B) \iff (\forall x,  (x \in A \iff x \in B))\]
