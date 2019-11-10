@@ -26,6 +26,81 @@ Operadores aritméticos em um contexto global . . .
 
 Operadores aritméticos nos naturais . . .
 
+No Lean, os naturais são definidos internamente como um tipo indutivo:
+
+\begin{lstlisting}
+namespace hidden
+
+inductive nat : Type
+| zero : nat
+| succ : nat → nat
+
+end hidden
+\end{lstlisting}
+
+Como não queremos que o nosso novo tipo \textit{nat} entre em conflito com o \textit{nat} do Lean, usa-se o \textit{namespace}. Com ele, \textit{nat} é reconhecido como \textit{hidden.nat} e suas respectivas propriedades também, \textit{hidden.nat.zero} e \textit{hidden.nat.succ}. O símbolo unicode $\mathbb{N}$ pode ser escrito com \textit{\textbackslash N} ou \textit{\textbackslash nat}, e equivale à mesma coisa que \textit{nat}.
+
+Apesar de definirmos o tipo \textit{nat} anteriormente, usaremos o da biblioteca do Lean chamada \textit{nat}. Como este tipo é definido indutivamente, podemos criar funções recursivas e provar teoremas por indução. Por exemplo:
+
+\begin{lstlisting}
+open nat
+
+def two_pow : ℕ → ℕ
+| 0        := 1
+| (succ n) := 2 * two_pow n
+
+def fact : ℕ → ℕ
+| 0        := 1
+| (succ n) := (succ n) * fact n
+\end{lstlisting}
+
+No trecho de código acima, definimos duas funções de maneira recursiva: $2^n$ e $x!$. Como o domínio são os naturais, as funções necessitam saber o que fazer com toda entrada possível, que no nosso caso seria a constante $0$ e um outro natural qualquer. Quando colocado \textit{(succ n)}, o Lean interpreta como se a entrada fosse \textit{(succ n)}, isto é, $n$ torna-se o valor tal que \textit{(succ n)} é igual à entrada. Com isso, podemos atribuir o valor desejado recursivamente à nossa função.
+
+O infixo $+$ é criado de uma maneira que $n + 1$ é reconhecido da mesma maneira que \textit{(succ n)}. Todas definições acima funcionariam da mesma maneira caso este fosse substituído.
+
+Caso se deseje criar uma função de potência mais genérica, o seguinte código funciona muito bem e inclusive é a definição  da biblioteca \textit{nat}, que pode ser chamada por \textit{nat.pow}.
+
+\begin{lstlisting}
+def pow : ℕ → ℕ → ℕ
+| m 0        := 1
+| m (n + 1)  := pow m n * m
+\end{lstlisting}
+
+Repare que a recursão ocorre no segundo parâmetro. Com esta nova função, podemos provar alguns teoremas:
+
+\begin{lstlisting}
+open nat
+
+theorem pow_zero (n : ℕ) : pow n 0 = 1 := rfl
+theorem pow_succ (m n : ℕ) : pow m (n+1) = pow m n * m := rfl
+\end{lstlisting}
+
+O operador \textit{rfl} funciona da seguinte maneira: ele tenta simplificar ambos os lados da igualdade seguindo definições e propriedades. Caso ele consiga chegar na igualdade desejada, ele não retorna um erro.
+
+Da mesma maneira que o infixo $+$ foi definido, também é definido o infixo "\textasciicircum ". O texto \textit{m\textasciicircum n} equivale a escrever \textit{pow m n}. Finalmente, podemos realizar uma prova em Lean por indução:
+
+\begin{lstlisting}
+open nat
+
+theorem pow_succ' (m n : ℕ) : m^(succ n) = m * m^n :=
+nat.rec_on n
+  (show m^(succ 0) = m * m^0, from calc
+    m^(succ 0) = m^0 * m : by rw pow_succ
+           ... = 1 * m   : by rw pow_zero
+           ... = m       : by rw one_mul
+           ... = m * 1   : by rw mul_one
+           ... = m * m^0 : by rw pow_zero)
+  (assume n,
+    assume ih : m^(succ n) = m * m^n,
+    show m^(succ (succ n)) = m * m^(succ n), from calc
+      m^(succ (succ n)) = m^(succ n) * m   : by rw pow_succ
+                    ... = (m * m^n) * m    : by rw ih
+                    ... = m * (m^n * m)    : by rw mul_assoc
+                    ... = m * m^(succ n)   : by rw pow_succ)
+\end{lstlisting}
+
+Mussum Ipsum, cacilds vidis litro abertis. Si u mundo tá muito paradis? Toma um mé que o mundo vai girarzis! A ordem dos tratores não altera o pão duris. Praesent vel viverra nisi. Mauris aliquet nunc non turpis scelerisque, eget. Quem num gosta di mé, boa gentis num é.
+
 \subsection{Aritmética nos Inteiros}
 
 Operadores aritméticos nos inteiros . . .
