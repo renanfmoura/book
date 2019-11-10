@@ -206,18 +206,49 @@ por exemplo $t$, para termos $A(t)$. Para a inclusão do universal, devemos assu
 "assume" e com esta letra livre de qualquer hipótese provamos $A(t)$, dessa forma o Lean é capaz de inferir $\forall x A(x)$.
 \newline Vamos utilizando o Lean provar o nosso primeiro exemplo do quantificador universal, $\forall xP(x) \to \forall x Q(x) \to \forall x(P(x) \land Q(x))$:
 \begin{lstlisting}
- example : $\forall$x P(x) $\to$ $\forall$x Q(x) $\to \forall$x (P(x) $\land$ Q (x)) :=  
- assume h$_1$ : $\forall$x P(x),
- assume h$_2$ : $\forall$x Q(x),
+ variable U : Type
+ variables P Q : Type $\to$ Prop
+
+ example : ($\forall$x, P x) $\to$ ($\forall$x, Q x) $\to \forall$x P x $\land$ Q x :=  
+ assume h$_1$ : $\forall$x, P x,
+ assume h$_2$ : $\forall$x, Q x,
  assume t,
- have h$_3$ : P(t), from h$_1$ t,
- have h$_4$ : Q(t), from h$_2$ t,
- show P(t) $\land$ Q(t), from and.intro h$_3$ h$_4$ 
+ have h$_3$ : P t, from h$_1$ t,
+ have h$_4$ : Q t, from h$_2$ t,
+ show P t $\land$ Q t, from and.intro h$_3$ h$_4$ 
 \end{lstlisting}
 Note que na linha 4 utilizamos da inclusão do universal, assumimos um $t$ e desejamos provar $P(t) \land Q(t)$ 
 sem que $t$ possua qualquer restrição e nas linhas 5 e 6 utilizamos a exclusão do universal, temos fórmulas do
-tipo $\forall x P(x)$ e passamos a letra $t$, obtendo $P(t)$.
+tipo $\forall x P(x)$ e passamos a letra $t$, obtendo $P(t)$. Além disso note nesse exemplo a importância da utilização
+dos parenteses para delimitar a ação do quantificador, quando definimos o exemplo, caso não tivessemos colocado
+o parenteses em  $(\forall x, P x)$, o primeiro quantificador $\forall x$ seria interpretado como se valesse para toda
+a expressão, incluindo as duas implicações.
+\newline Vamos também provar o segundo exemplo em Lean:
+\begin{lstlisting}
+variable U : Type
+variables P Q R : U $\to$ Prop
+
+example (h$_1$ : $\forall$ x, P x $\land \neg$ Q x) (h$_2$ : $\forall$ x, $\neg$ Q x $\to$ R x) :
+$\forall$ x, R x :=
+assume t,
+have h$_3$ : P t $\land$ $\neg$ Q t, from h$_1$ t,
+have h$_4$ : $\neg$ Q t $\to$ R t, from h$_2$ t,
+show R t, from h$_4$ h$_3$.right
+\end{lstlisting}
+Note que neste simples exemplo, apesar de possuirmos fórmulas maiores, apenas realizamos simples regras de inclusão e exclusão
+do universal.
 \newline Para as regras do existencial, na exclusão utilizamos "exists.elim" seguida por uma proposição do tipo $\forall x A(x)$,
 para provarmos $B$, devemos provar $ A y \to B$, ou seja, assumimos um $y$ e $A y$ e chegamos até $B$, concluindo assim a exclusão
 do existencial. Para a inclusão do existencial utilizamos "exists.intro", devemos passar uma letra, por exemplo $t$, e uma prova
 de que $A(t)$ vale.
+\newline Vamos provar o nosso primeiro exemplo existencial com o Lean, $\exists x (A(x) \land B(x)) \to \exists x A(x)$:
+\begin{lstlisting}
+variable U : Type
+variables A B : U $\to$ Prop
+
+example : ($\exists$x, A x $\land$ B x) $\to \exists$x, A x :=
+assume h$_1$ : $\exists$ x, A x $\land$ B x,
+exists.elim h$_1$
+    (assume t (h$_2$ : A t $\land$ B t)
+        show $\exists$ x, A x, from exists.intro t h$_2$.left) 
+\end{lstlisting}
