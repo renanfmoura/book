@@ -194,3 +194,30 @@ Para a nossa dedução a primeira etapa foi desmontar a implicação, passando $
 uma de nossas hipóteses, em seguida, como temos uma negação devemos chegar até ao falso. Utilizamos 
 $\exists x A(x)$ como mais uma de nossas hipóteses e aplicamos a regra de exclusão do existencial,
 dessa forma obtemos no mesmo ramo $A(t)$ e $\neg A(t)$, obtendo a contradição que estávamos procurando.
+\subsection{Igualdade}
+TO DO 
+\subsection{Exercícios}
+TO DO
+\subsection{Dedução natural no LEAN}
+No Lean a dedução ocorre de forma similar a dedução em primeira ordem, apenas devemos utilizar de novos símbolos e das 
+regras de exclusão e inclusão dos quantificadores. Os símbolos $\exists $ e $\forall $ são escritos no Lean como \textbackslash exist 
+e  \textbackslash all. Para a regra de exclusão do universal apenas passamos para uma proposição $\forall x A(x)$ uma letra,
+por exemplo $t$, para termos $A(t)$. Para a inclusão do universal, devemos assumir uma letra, por exemplo $t$, utilizando o
+"assume" e com esta letra livre de qualquer hipótese provamos $A(t)$, dessa forma o Lean é capaz de inferir $\forall x A(x)$.
+\newline Vamos utilizando o Lean provar o nosso primeiro exemplo do quantificador universal, $\forall xP(x) \to \forall x Q(x) \to \forall x(P(x) \land Q(x))$:
+\begin{lstlisting}
+ example : $\forall$x P(x) $\to$ $\forall$x Q(x) $\to \forall$x (P(x) $\land$ Q (x)) :=  
+ assume h$_1$ : $\forall$x P(x),
+ assume h$_2$ : $\forall$x Q(x),
+ assume t,
+ have h$_3$ : P(t), from h$_1$ t,
+ have h$_4$ : Q(t), from h$_2$ t,
+ show P(t) $\land$ Q(t), from and.intro h$_3$ h$_4$ 
+\end{lstlisting}
+Note que na linha 4 utilizamos da inclusão do universal, assumimos um $t$ e desejamos provar $P(t) \land Q(t)$ 
+sem que $t$ possua qualquer restrição e nas linhas 5 e 6 utilizamos a exclusão do universal, temos fórmulas do
+tipo $\forall x P(x)$ e passamos a letra $t$, obtendo $P(t)$.
+\newline Para as regras do existencial, na exclusão utilizamos "exists.elim" seguida por uma proposição do tipo $\forall x A(x)$,
+para provarmos $B$, devemos provar $ A y \to B$, ou seja, assumimos um $y$ e $A y$ e chegamos até $B$, concluindo assim a exclusão
+do existencial. Para a inclusão do existencial utilizamos "exists.intro", devemos passar uma letra, por exemplo $t$, e uma prova
+de que $A(t)$ vale.
