@@ -14,19 +14,74 @@
     \subsection{Notações}
     Nesta seção iremos começar a introduzir notações matemáticas e algumas definições sobre conjuntos.
     
-    Quando um determinado elemento $x$ faz parte de determinado conjunto $A$, nós dizemos que $x$ pertence a $A$ (denotamos $x \in A$). Caso $x$ não faça parte de $A$, diz-se que $x$ não pertence a $A$ (denota-se  $x \notin A$).
+    \textbf{Pertence e Não Pertence:} Quando um determinado elemento $x$ faz parte de determinado conjunto $A$, nós dizemos que $x$ pertence a $A$ (denotamos $x \in A$). Caso $x$ não faça parte de $A$, diz-se que $x$ não pertence a $A$ (denota-se  $x \notin A$).
     
-    Já quando um conjunto $B$ possui todos os elementos que $A$ possui e, $B$ tem, pelo menos, um objeto que $A$ não possua, dizemos que $A$ está contido em $B$ ($\space A \subset B$) ou que $B$ contém $A$ ($B \supset A$). Se não sabemos se $B$ possui um objeto que $A$ não possua (e $B$ ainda possui todos os elementos que $A$), denotamos $A \subseteq B$, que quer dizer que $A \subset B$ ou $A=B$, de modo equivalente $B \supseteq A$, significa que $B \supset A$ ou $A=B$. Se $A$ possui pelo menos um elemento que $B$ não possua, dizemos que $A$ não está contido em $B$ ($A \not\subset B$) ou que $B$ não contém $B\not\supset A$, assim $A \neq B$. 
+    \textbf{Contém, Contido e similares:} Já quando um conjunto $B$ possui todos os elementos que $A$ possui e, $B$ tem, pelo menos, um objeto que $A$ não possua, dizemos que $A$ está contido em $B$ ($\space A \subset B$) ou que $B$ contém $A$ ($B \supset A$)%$^{\ref{fig:sets-02-00}}$%
+    . Se não sabemos se $B$ possui um objeto que $A$ não possua (e $B$ ainda possui todos os elementos que $A$), denotamos $A \subseteq B$, que quer dizer que $A \subset B$ ou $A=B$, de modo equivalente $B \supseteq A$, significa que $B \supset A$ ou $A=B$. Se $A$ possui pelo menos um elemento que $B$ não possua, dizemos que $A$ não está contido em $B$ ($A \not\subset B$) ou que $B$ não contém $B\not\supset A$, assim $A \neq B$. 
     
-    Se estamos interessados em conjuntos/elementos que pertencem simultaneamente a dois conjuntos $A$ e $B$, dizemos que estamos interessados na interseção de $A$ e $B$ (denotada como $A \cap B$).
+    %\begin{figure}[hbt!]
+     %   \centering      
+      %  \includegraphics[width = 7.5 cm]{figures/sets/fig-sets-02-00.png}
+       % \caption{O conjunto $A$ está contido no conjunto $B$, equivalentemente, $B$ contém $A$.}
+        %\label{fig:sets-02-00}
+    %\end{figure}
+
+    \textbf{Interseção:} Se estamos interessados em conjuntos/elementos que pertencem simultaneamente a dois conjuntos $A$ e $B$, dizemos que estamos interessados na interseção de $A$ e $B$ (denotada como $A \cap B$)%$^{\ref{fig:sets-02-01}}$.
     
-    Já se estamos interessados nos conjuntos/elementos que fazem parte de $A$ ou de $B$ dizemos que, nosso objetivo é a união de $A$ e $B$ ($A \cap B$).
+%    \begin{figure}[hbt!]
+ %       \centering      
+  %      \includegraphics[width = 7.5 cm]{figures/sets/fig-sets-02-01.png}
+   %     \caption{A região azul representa a visualização da interseção dos conjuntos $A$ e $B$.}
+    %    \label{fig:sets-02-01}
+    %\end{figure}
     
-    \textbf{Definição de Universo :} Quando estamos trabalhando com conjuntos é comum definirmos quem é nosso universo ($ \mathcal U $), isto é, o conjunto que conterá todos os conjuntos/elementos que estaremos trabalhando em um contexto. Por exemplo, na reta real nosso universo é $\mathcal U = \mathbb{R}$.
+    \textbf{União :}Já se estamos interessados nos conjuntos/elementos que fazem parte de $A$ ou de $B$ dizemos que, nosso objetivo é a união de $A$ e $B$ ($A \cup B$)%$^{\ref{fig:sets-02-02}}$.
     
-    \textbf{Definição de Conjunto Complementar :} Sendo $A$ um conjunto, dizemos que o conjunto $A$ complementar (denotado como $\overline A$ ou $A^C$)contém todos os conjuntos/elementos que não estão contidos/pertencem a $A$, mas fazem parte de nosso universo ($U$).
+%       \centering      
+ %       \includegraphics[width = 7.5 cm]{figures/sets/fig-sets-02-02.png}
+  %      \caption{A região azul representa a visualização da união dos conjuntos $A$ e $B$.}
+   %     \label{fig:sets-02-02}
+    %\end{figure}
     
-    \newpage
+    \textbf{Universo:} Quando estamos trabalhando com conjuntos é comum definirmos quem é nosso universo ($ \mathcal U $), isto é, o conjunto que conterá todos os conjuntos/elementos que estaremos trabalhando em um contexto%$^{\ref{fig:sets-02-03}}$. Por exemplo, na reta real nosso universo é $\mathcal U = \mathbb{R}$.
+    
+%    \begin{figure}[hbt!]
+ %      \includegraphics[width = 7.5 cm]{figures/sets/fig-sets-02-03.png}
+  %      \caption{A região azul representa a visualização do nosso Universo.}
+   %     \label{fig:sets-02-03}
+    %\end{figure}
+    
+    \textbf{Conjunto Complementar:} Sendo $A$ um conjunto, dizemos que o conjunto $A$ complementar ou complemento de $A$ (denotado como $\overline A$ ou $A^C$)contém todos os conjuntos/elementos que não estão contidos/pertencem a $A$, mas fazem parte de nosso universo ($\mathcal U$)%$^{\ref{fig:sets-02-04}}$.
+    
+%    \begin{figure}[hbt!]
+ %      \includegraphics[width = 7.5 cm]{figures/sets/fig-sets-02-04.png}
+  %      \caption{A região azul representa a visualização do complemento de $A$.}
+   %     \label{fig:sets-02-04}
+    %\end{figure}
+    
+    \textbf{Diferença de Conjuntos :} Quando temos dois conjuntos e nosso objetivo são os conjuntos/elementos que pertencem a um destes conjuntos, mas não do outro dizemos que estamos interessados na diferença destes conjuntos. No caso, se quero os conjuntos/elementos de $B$, mas não queremos pegar os que também pertencem a $A$, queremos os elementos/conjuntos que pertencem a diferença de $B$ com $A$ (denotamos como $B-A$ ou $B \backslash A$)%$^{\ref{fig:sets-02-05}}$.
+    
+%    \begin{figure}[hbt!]
+ %       \centering      
+  %      \includegraphics[width = 8 cm]{figures/sets/fig-sets-02-05.png}
+   %     \caption{A região azul representa a visualização da diferença entre os conjuntos $B$ e $A$, isto é, a área onde estão os elementos que pertencem a $B$, mas não pertencem a $A$.}
+    %    \label{fig:sets-02-05}
+    %\end{figure}
+    
+    Lembre-se: os diagramas apresentados servem como ferramenta auxiliar para ajudar a entender os conceitos, mas não devem ser vistos como a única ferramenta para compreender as definições e  a teoria exposta.
+    
+    \subsection{Axiomas}
+    
+    Agora iremos apresentar alguns axiomas que servirão como base para todo o desenvolvimento dos conteúdos aqui propostos.
+    
+    \textbf{Axioma da Completude :} Dois conjuntos são iguais, se e somente se, todo elemento que pertence ao primeiro conjunto pertence ao segundo e, todo elemento que pertence ao segundo também pertence ao primeiro, ou seja:
+    
+    \[\forall A \hspace{1.5mm} \forall B \hspace{1.5mm} (A=B) \iff (\forall x \hspace{1.5mm} (x \in A \iff x \in B))\]
+    
+    Através desse axioma fica mais claro de entender certa propriedades dos conjuntos. Deste axioma, vem a explicação do motivo de que a ordem dos elementos de um conjunto não importa, pois dado dois conjuntos com os mesmos elemento, mas em ordem diferente (por exemplo, $X=\{a,b,c,d,e,f\}$ e o conjunto $Y=\{e,c,f,b,a,d\}$) eles ainda satisfazem a propriedade de que se $t$ pertence a um deles implica $t$ pertencer ao outro. Outra coisa interessante é que não importa se um conjunto possui elementos repetidos ele continuará igual ao que possui apenas um elemento, isto é, $X=\{a,b,d,e\}$ é igual ao $Y=\{b,a,d,a,e,b,b\}$. Ou seja, em um conjunto não importa a ordem dos elementos, nem as repetições de elementos.
+    
+    \textbf{Axioma da Existencia do Conjunto Vazio}
+
     \subsection{Diagrama de Venn}
     A maneira mais simples de entender a Teoria de Conjuntos, talvez seja o Diagrama de Venn. Criado por John Venn em 1880, esse sistema de representar graficamente conjuntos auxilia imensamente quem está começando a aprender esse assunto, principalmente para entender sobre a parte inicial de notações. Basicamente, consiste em representar num plano, o universo $\mathcal U$ como sendo um retângulo e cada conjunto $A,B,...$ como uma curva fechada simples (geralmente, círculo). Começando com a ideia mais simples, a imagem abaixo representa em vermelho o conjunto $A$ dentro do universo $\mathcal U$:
     
@@ -90,20 +145,6 @@
     %\end{figure}
     
     É inegável que para muitos exemplos isso se torna inviável.
-
-    Lembre-se: os diagramas apresentados servem apenas para ajudar a entender os conceitos, mas não devem ser vistos como únicos, nem devem ser o foco único para entender o que é proposto.
-    
-    \subsection{Axiomas}
-    
-    Agora iremos apresentar alguns axiomas que servirão como base para todo o desenvolvimento dos conteúdos aqui propostos.
-    
-    \textbf{Axioma da Completude :} Dois conjuntos são iguais, se e somente se, todo elemento que pertence ao primeiro conjunto pertence ao segundo e, todo elemento que pertence ao segundo também pertence ao primeiro, ou seja:
-    
-    \[\forall A \hspace{1.5mm} \forall B \hspace{1.5mm} (A=B) \iff (\forall x \hspace{1.5mm} (x \in A \iff x \in B))\]
-    
-    Através desse axioma fica mais claro de entender certa propriedades dos conjuntos. Deste axioma, vem a explicação do motivo de que a ordem dos elementos de um conjunto não importa, pois dado dois conjuntos com os mesmos elemento, mas em ordem diferente (por exemplo, $X=\{a,b,c,d,e,f\}$ e o conjunto $Y=\{e,c,f,b,a,d\}$) eles ainda satisfazem a propriedade de que se $t$ pertence a um deles implica $t$ pertencer ao outro. Outra coisa interessante é que não importa se um conjunto possui elementos repetidos ele continuará igual ao que possui apenas um elemento, isto é, $X=\{a,b,d,e\}$ é igual ao $Y=\{b,a,d,a,e,b,b\}$. Ou seja, em um conjunto não importa a ordem dos elementos, nem as repetições de elementos.
-    
-    \textbf{Axioma da Existencia do Conjunto Vazio}
 
 \section{Conjuntos em Lean}
     
