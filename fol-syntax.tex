@@ -26,9 +26,9 @@
             \item Existem \textbf{relações}, como \textit{igual} e \textit{menor}, que recebem dois números e retornam $V$ ou $F$.
         \end{itemize}
 
-        Os objetos pertencentes ao domínio, chamados constantes, como o $1$ e o $4x$, no caso do domínio dos naturais, podem ser considerados funções que tomam zero elementos. Além disso, podemos considerar predicados que tomam zero elementos como os valores lógicos $\top$ e $\bot$.
+        Os objetos pertencentes ao domínio, chamados constantes, como o $1$ e o $4$, no exemplo, podem ser considerados funções que tomam zero elementos. Além disso, podemos considerar predicados que tomam zero elementos como os valores lógicos $\top$ e $\bot$.
 
-        Em geral, expressões que representam elementos do domínio (incluindo funções de elementos) são chamados de \textbf{termos}. Alguns exemplos:
+        Expressões que representam elementos do domínio(incluindo funções de elementos) são chamados de \textbf{termos}. Alguns exemplos:
 
         \begin{itemize}
             \item $5$
@@ -36,6 +36,8 @@
             \item $33+44$
         \end{itemize}
 
+        Observe que o símbolo para a função de adição está "infixo"; poderíamos ter representado como $+(33, 44)$ ou $adicao(33, 44)$.
+        
         Expressões que retornam $V$ ou $F$ são chamadas \textbf{fórmulas}:
 
         \begin{itemize}
@@ -56,7 +58,7 @@
     constant adicao : U → U → U
         \end{lstlisting}
 
-        Por causa do fato de que o Lean é baseado em \textit{Teoria dos Tipos}, declaramos um novo tipo \lstinline{U}. Podemos intuitivamente considerá-lo como "universo" ou "domínio". Por exemplo, o conjunto dos naturais.
+        Pelo fato de que o Lean é baseado em \textit{Teoria dos Tipos}, declaramos um novo tipo \lstinline{U}. Podemos intuitivamente considerá-lo como "universo" ou "domínio". Por exemplo, o conjunto dos naturais.
 
         Foi declarado um objeto chamado \lstinline{zero} do tipo \lstinline{U} (nossa analogia com o zero natural).
         \lstinline{par} é um predicado, pois toma um elemento do tipo \lstinline{U} e retona um elemento do tipo proposição (\lstinline{Prop}).
@@ -64,17 +66,16 @@
         \lstinline{adicao} é uma função que toma dois elementos do tipo \lstinline{U} e retorna outro do mesmo tipo. Ora, podemos constatar:
 
         \begin{lstlisting}
-    #check adicao zero zero
     #check par zero
-    #check igual zero zero
+    #check adicao zero zero
     #check par (adicao zero zero)
         \end{lstlisting}
 
-        \lstinline{#check} informa que a primeira expressão tem tipo \lstinline{U}, enquanto as restantes têm tipo \lstinline{Prop}. Importante observar o papel dos parênteses acima, para que \lstinline{par} receba apenas um elemento.
+        \lstinline{#check} informa que a primeira expressão tem tipo \lstinline{Prop}, a segunda tem tipo \lstinline{U} e a terceira, \lstinline{Prop}. Importante observar o papel dos parênteses acima, para que \lstinline{par} receba apenas um elemento.
 
-        A notação para predicados (\lstinline{U → Prop}) e relações (\lstinline{U → U → Prop}) funciona como se ambas fossem funções, porém retornassem \lstinline{Prop}. Além disso, uma função (ou relação) que recebe mais de um elemento tem notação \lstinline{U → U → U}.
+        Uma função (ou relação) que recebe mais de um elemento tem notação \lstinline{U → U → U}. A notação para predicados (\lstinline{U → Prop}) e relações (\lstinline{U → U → Prop}) funciona como se ambas fossem funções, porém retornassem \lstinline{Prop}. 
 
-        Observe que vários conjuntos são estão nas bibliotecas padrão do Lean, como os naturais, utilizados nos exemplos anteriores. O comando para o símbolo \lstinline{ℕ} é \lstinline{\nat} ou \lstinline{\N}.
+        Vários conjuntos estão nas bibliotecas padrão do Lean, como os naturais, utilizados nos exemplos anteriores. O comando para o símbolo \lstinline{ℕ} é \lstinline{\nat} ou \lstinline{\N}.
 
         \begin{lstlisting}
     constant zero : ℕ
@@ -82,3 +83,23 @@
         \end{lstlisting}
 
         O \lstinline{#check} acima retorna algo do tipo \lstinline{ℕ}.
+
+        Podemos misturar Lógica Proposicional com Lógica de Primeira Ordem:
+
+        \begin{lstlisting}
+    constant U : Type
+
+    constant zero : U
+    constant par : U → Prop
+    constant primo : U → Prop
+    constant igual : U → U → Prop
+    constant adicao : U → U → U
+
+    #check ¬ (par zero ∨ par (adicao zero zero)) ∧ primo zero
+        \end{lstlisting}
+
+        E o \lstinline{#check} nos retorna:
+        
+        \begin{lstlisting}
+    ¬(par zero ∨ par (adicao zero zero)) ∧ primo zero : Prop
+        \end{lstlisting}
