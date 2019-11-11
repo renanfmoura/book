@@ -79,13 +79,34 @@ Lembre-se que diferenciamos o tipo $X$ do tipo $set~X$ em Lean.
 
 \section{Primeiras Definições}
 
-\textit{Definição:} Seja um conjunto $X$. A função identidade de $A$ é a função 
-$i_A : A \rightarrow A$ definida para todos os valores $x \in A$ tal que $i_A(x) = x$.
+\theoremstyle{definition}
+\newtheorem{definition}{Definição}[section]
 
-\textit{Definição:} Sejam $f : X \rightarrow Y$ e $g : Y \rightarrow Z$ funções. 
-Defina $k : X \rightarrow Z$ por $k(x) = g(f(x))$. A função $k$ é chamada de composição
-de $f$ e $g$ ou $f$ composta com $g$ e é escrita $g \circ f$. Desta forma, para cada elemento, 
-primeiro  avaliamos $f(x) \in Y$ e depois avaliamos $g(f(x)) \in Z$. 
+\theoremstyle{definition}
+\newtheorem{example}{Exemplo}[section]
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Proposição}[section]
+
+\theoremstyle{plain}
+\newtheorem{corollary}{Corolário}[section]
+
+\begin{definition}
+    \label{def1}
+    Seja um conjunto $X$. A função identidade de $A$ é a função 
+    $i_A : A \rightarrow A$ definida para todos os valores $x \in A$ tal que $i_A(x) = x$.
+\end{definition}
+
+\begin{definition}
+    \label{def2}
+    Sejam $f : X \rightarrow Y$ e $g : Y \rightarrow Z$ funções. 
+    Defina $k : X \rightarrow Z$ por $k(x) = g(f(x))$. A função $k$ é chamada de composição
+    de $f$ e $g$ ou $f$ composta com $g$ e é escrita $g \circ f$. Desta forma, para cada elemento, 
+    primeiro  avaliamos $f(x) \in Y$ e depois avaliamos $g(f(x)) \in Z$. 
+\end{definition}
+
+Podemos ver em Lean as definições de composição e de identidade. Note que estamos em um namespace 
+hidden para que não haja conflito de definições. 
 
 \begin{lstlisting}
     namespace hidden
@@ -95,33 +116,41 @@ primeiro  avaliamos $f(x) \in Y$ e depois avaliamos $g(f(x)) \in Z$.
         λx, f (g x)
 
         infixr  ` ∘ ` := comp
+
         #check @comp
 
         def id (x : X) : X := x
+
+        #check @id
         
     end hidden
 \end{lstlisting}
 
-\textit{Definição:} Considere $f,g : X \to Y$. Dizemos que essas funções são iguais, 
-quando para todos os valores do domínio $X$, a correspondência no contradomínio $Y$ é a 
-mesma. Em lógica simbólica, $\forall x (x \in X \to (f(x) = g(x)) \iff f = g $. 
+\begin{definition}
+    \label{def3}
+    Considere $f,g : X \to Y$. Dizemos que essas funções são iguais, 
+    quando para todos os valores do domínio $X$, a correspondência no contradomínio $Y$ é a 
+    mesma. Em lógica simbólica, $\forall x (x \in X \to (f(x) = g(x)) \iff f = g $. 
+\end{definition}
 
 Obseve que em termos de lógica formal de tipos, poderíamos reescrever como 
 $\forall x : X (f(x) = g(x)) \iff f = g$. Escrevemos essa equivalência entre lógica e funções 
 utilizando a extensionalidade das funções, muito semelhante à descrita no capítulo de 
 \textit{\hyperlink{chapter.5}{conjuntos}}. Por exemplo, se $f, g : \mathbb{R} \to \mathbb{R}$ 
-definidas por $f(x) = x + 1$ e $g(x) = x + 1$, então $f = g$, pois para cada valor de $x$, vale 
+definidas por $f(x) = x + 1$ e $g(x) = 1 + x$, então $f = g$, pois para cada valor de $x$, vale 
 a comutativade da soma. 
 
-\textit{Observação: colocamos dentro de um namespace hidden, pois id já é definido.}
+Em lean, o comando \lstinline{funext} (de "function extensionality") prova a igualdade de funções.
 
 \begin{lstlisting}
-    #check @id
-\end{lstlisting} 
+    variables {X Y : Type}
 
-\newtheorem{theorem}{Proposição}
+    example (f g : X → Y) (h : ∀ x, f x = g x) : f = g :=
+        funext h
+\end{lstlisting}
 
 \begin{theorem}
+    \label{prop1}
     Para todo $f: X \to Y$, $f \circ i_X = f$ e $i_Y \circ f = f$
 \end{theorem}
 \begin{proof}
@@ -129,25 +158,45 @@ a comutativade da soma.
      e $(i_Y \circ f)(x) = i_Y(f(x)) = f(x)$, o que mostra a igualdade. 
 \end{proof}
 
-\textit{Definição:} Suponha $f:X \to Y$ e $g : Y \to X$ satisfaz $g \circ f = i_X$. Assim, 
-$g(f(x)) = i_X(x) = x$, para todos os elementos de $X$. Neste caso $g$ é dita inversa à esquerda
-de $f$ e $f$ é dita inversa à direita de $g$.
+No Lean, podemos mostrar essa proposição da seguinte forma. Para algumas funções, será necessário
+escrevermos \lstinline{open function}.   
 
-\vspace{3mm}
+\begin{lstlisting}
+    variables {X Y Z W : Type}
 
-\textit{Exemplos}
+    lemma left_id (f : X → Y) : id ∘ f = f := rfl
 
-\begin{itemize}
-    \item Defina $f,g : \mathbb{R} \to \mathbb{R}$ por $f(x) = x + 1$ e $g(x) = x - 1$. Então $g$ 
+    lemma right_id (f : X → Y) : f ∘ id = f := rfl
+
+    theorem comp.assoc (f : Z → W) (g : Y → Z) (h : X → Y) :
+        (f ∘ g) ∘ h = f ∘ (g ∘ h) := rfl
+  
+\end{lstlisting}
+
+\begin{definition}
+    \label{def4}
+    Suponha $f:X \to Y$ e $g : Y \to X$ satisfaz $g \circ f = i_X$. Assim, 
+    $g(f(x)) = i_X(x) = x$, para todos os elementos de $X$. Neste caso $g$ é dita inversa à esquerda
+    de $f$ e $f$ é dita inversa à direita de $g$. Quando $g$ é inversa à direita e é inversa à esquerda
+    de $f$, então $g$ é dita simplesmente inversa de $f$. 
+\end{definition}
+
+\begin{example}
+    \label{ex1}
+    Defina $f,g : \mathbb{R} \to \mathbb{R}$ por $f(x) = x + 1$ e $g(x) = x - 1$. Então $g$ 
     é inversa à direita e à esquerda de $f$ e vice-versa.
-    \item $\mathbb{R}^{+}$ denota os reais não negativos. Defina $f : \mathbb{R} \to \mathbb{R}^{+}$ 
+\end{example}
+\begin{example}
+    \label{ex2}
+    $\mathbb{R}^{+}$ denota os reais não negativos. Defina $f : \mathbb{R} \to \mathbb{R}^{+}$ 
     por $f(x) = x^2$ e defina $g : \mathbb{R}^2 \to \mathbb{R}$ por $g(x) = \sqrt{x}$. Então 
     $f(g(x)) = (\sqrt{x})^2 = x$, para todo $x$ no domínio de $g$. Então $f$ é inversa à esquerda de $g$
     e $g$ inversa à direita de $f$. Por outro lado, $g(f(x)) = \sqrt{x^2} = |x|$. Logo $g$ não é inversa à 
-    esqueda de $f$ e $f$ não é inversa à direita de $g$. 
-\end{itemize}
+    esquerda de $f$ e $f$ não é inversa à direita de $g$. 
+\end{example}
 
 \begin{theorem}
+    \label{prop2}
     Suponha que $f : X \to Y $ tem inversa à esquerda, $h : Y \to X $ e uma inversa à direita, $k : Y \to X $.
     Então $h = k$. 
 \end{theorem}
@@ -155,3 +204,75 @@ de $f$ e $f$ é dita inversa à direita de $g$.
     Seja $y \in Y$. $h(f(k(y))) = k(y)$, pois $h$ é uma inversa à esquerda de $f$. 
     Por outro lado, $f(k(y)) = y$ e, portanto $h(f(k(y))) = h(y)$. Assim $k(y) = h(y) $ e as funções são iguais. 
 \end{proof}
+
+Essa proposição pode também ser vista em Lean. Considerarei a prova utilizando táticas. O leitor pode estudar 
+aquela que sentir mais confortável. Note que neste exemplo, já foi necessário o \lstinline{namespace function}, 
+visto que \lstinline{left_inverse} e \lstinline{right_inverse} já estão predefinidas. 
+
+\begin{lstlisting}
+    open function 
+
+    variables {X Y Z: Type}
+
+    -- Term and Calc Mode
+    example (f: X → Y) (h: Y → X) (k: Y → X) 
+        (hf: left_inverse h f) (fk: right_inverse k f): h = k :=
+        have H: ∀ ( x : Y ), h x = k x, from 
+            assume x, 
+            have h1: h (f (k x)) = k x , from calc
+                h ( f (k x)) = k x: by apply hf, 
+            have h2: h (f (k x)) = h x, from calc
+                h (f (k x)) = h x: by rw fk,         
+            show h x = k x, from eq.trans (eq.symm h2) h1,
+        show h = k, from funext H
+
+    -- Tatics Mode
+    example (f: X → Y) (h: Y → X) (k: Y → X) 
+        (hf: left_inverse h f) (fk: right_inverse k f): h = k :=
+        begin
+            apply funext, 
+            assume x, 
+            have hf: h (f (k x)) = k x, by apply hf, 
+            rw ←hf,
+            rw fk, 
+        end
+\end{lstlisting}
+
+\begin{theorem}
+    \label{prop3}
+    Seja $f: X \to Y$. Se a inversa de $f$ existe, então ela é única. Isto é, se $g_1, g_2: Y \to X$ são inversas 
+    de $f$, então $g_1 = g_2$        
+\end{theorem}   
+\begin{proof}
+    Sabemos que $g_1$ é inversa à esquerda de $f$. Então, 
+    $$g_1(f(g_2(x))) = g_2(x), ~para~todos~os~valores~de~x.$$ 
+    Também, $g_2$ é inversa de $f$. Então, 
+    $$g_1(f(g_2(x))) = g_1(x), ~para~todos~os~valores~de~x.$$ Logo $g_1 = g_2$. 
+\end{proof}
+
+Quando a inversa de $f$ existe, então, podemos escrevê-la como $f^{-1}$. Dada a Definição \ref{def4}, 
+podemos afirmar que $(f^{-1})^{-1} = f$.  
+
+\begin{theorem}
+     \label{prop4}
+     Seja $f: X \to Y $ e $g: Y \to Z$. Se $h: Y \to X$ e $k: Z \to Y$ são inversas à esqueda de $f$ e $g$, 
+     respectivamente, então $h \circ k$ é inversa à esquerda de $g \circ f$. O mesmo vale quando substituimos
+     esquerda por direita na proposição. 
+\end{theorem}
+
+\begin{proof}
+ $(h \circ k)\circ(g \circ f)(x) = h(k(g(f(x)))) = h(f(x)) = x $. A demonstração quando substituimos a proposição
+ de esquerda para direita é análoga e é deixada como exercício ao leitor.
+\end{proof}
+
+\begin{corollary}
+    \label{cor1}
+    Se $f: X \to Y$ e $g: Y \to Z$ possuem inversas, então $(f \circ g)^{-1}$ existe e 
+    $(f \circ g)^{-1} = f^{-1} \circ g^{-1}$.
+\end{corollary}
+
+\begin{proof}
+    Segue diretamente da Proposição \ref{prop4} e Proposição \ref{prop2}.  
+\end{proof}
+
+    
