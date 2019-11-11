@@ -253,6 +253,11 @@ visto que \lstinline{left_inverse} e \lstinline{right_inverse} já estão predef
 Quando a inversa de $f$ existe, então, podemos escrevê-la como $f^{-1}$. Dada a Definição \ref{def4}, 
 podemos afirmar que $(f^{-1})^{-1} = f$.  
 
+Observe que uma função pode possuir mais de uma função inversa à esquerda ou mais de uma função inversa 
+à direita. Ainda, quando uma função possui mais de uma função inversa à esquerda, ela não possui inversa 
+à direita. Se ela possuisse, ela seria igual a todas as funções inversas à esquerda pela Proposição \ref{prop2}, 
+portanto elas seriam iguais, o que é uma contradição, por hipótese. O mesmo vale para inversas à direita. 
+
 \begin{theorem}
      \label{prop4}
      Seja $f: X \to Y $ e $g: Y \to Z$. Se $h: Y \to X$ e $k: Z \to Y$ são inversas à esqueda de $f$ e $g$, 
@@ -275,4 +280,184 @@ podemos afirmar que $(f^{-1})^{-1} = f$.
     Segue diretamente da Proposição \ref{prop4} e Proposição \ref{prop2}.  
 \end{proof}
 
-    
+\section{Funções Injetiva, Sobrejetiva e Bijetiva}
+
+\begin{definition}[Função Injetiva]
+    \label{def5}
+    Também conhecida como função injetora, é uma função em que elementos distintos do domínio são 
+    mapeados para elementos diferentes do contradomínio. Dessa forma, seja $f: X \to Y$. Se 
+    $\forall x_1 \in X, \forall x_2 \in X, x_1 \neq x_2 \Rightarrow f(x_1) \neq f(x_2) $, f é injetiva. 
+    A definição pode ser feita pela contrapositiva dessa afirmação, também. A definição pela contrapositiva
+    será bastante utilizada nas demonstrações. 
+\end{definition}
+
+\begin{definition}[Função Sobrejetiva]
+    \label{def6}
+    Também conhecida como função bijetora, é uma função em que todos os elementos do contradomínio 
+    estão na imagem da função. Dessa forma, seja $f: X \to Y$. Se $\forall y \in Y, \exists x \in X, f(x) = y$, 
+    f é sobrejetiva. 
+   \end{definition}
+
+\begin{definition}[Função Bijetiva]
+    \label{def7}
+    Também conhecida como bijeção ou correspondência um a um, é uma função simultaneamente injetiva e 
+    sobrejetiva. 
+\end{definition}
+
+Em Lean, essas definições são descritas no \lstinline{namespace function}. 
+
+\begin{example}
+    Considere $X = {1,2,3,4}$ e $Y = \{John, Paul, George, Ringo\}$. É possível construir uma função bijetiva 
+    entre o conjunto $X$ e o conjunto $Y$.  
+\end{example}
+
+\begin{lstlisting}
+    variables {X Y: Type}
+
+    def injective (f : X → Y) : Prop :=
+    ∀ x₁ x₂, f x₁ = f x₂ → x₁ = x₂
+
+    def surjective (f : X → Y) : Prop :=
+    ∀ y, ∃ x, f x = y
+
+    def bijective (f : X → Y) := injective f ∧ surjective f
+\end{lstlisting}
+
+\begin{theorem}
+    \label{prop5}
+    Seja $f : X \to Y$.
+    \renewcommand{\labelenumi}{\Roman{enumi}}
+    \begin{enumerate}
+        \item Se $f$ possui inversa à esquerda, $f$ é injetiva.
+        \item Se $f$ possui inversa à direita, $f$ é sobrejetiva. 
+        \item Se $f$ possui inversa, $f$ é bijetiva. 
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    Para provar I), suponha que $f(x_1) = f(x_2)$ e que $g$ é inversa à esquerda
+    de $f$. Assim $g(f(x_1)) = x_1$ e $g(f(x_2)) = x_2)$. Portanto $x_1 = x_2$ e 
+    está provado. Para provar II), considere $h$ inversa à direita de $f$. Seja 
+    $y \in Y$ e $x = h(y)$. Então $f(x) = f(h(y)) = y$. A terceira sai diretemente 
+    das duas anteriores.  
+\end{proof}
+
+\begin{lstlisting}
+    open function 
+
+    variables {X Y : Type}
+
+    theorem inj_of_left_inverse {g : Y → X} {f : X → Y} :
+    left_inverse g f → injective f :=
+        assume h, assume x₁ x₂, assume feq, 
+        calc x₁ = g (f x₁) : by rw h
+            ... = g (f x₂) : by rw feq
+            ... = x₂       : by rw h
+
+    theorem surj_of_right_inverse {g : Y → X} {f : X → Y} :
+    right_inverse g f → surjective f :=
+        assume h, assume y,
+        let  x : X := g y in
+        have f x = y, from calc
+            f x  = (f (g y))    : rfl
+            ... = y            : by rw [h y],
+        show ∃ x, f x = y, from exists.intro x this
+\end{lstlisting}
+
+\begin{theorem}
+    \label{prop6}
+    Seja $f: X \to Y$
+    \renewcommand{\labelenumi}{\Roman{enumi}}
+    \begin{enumerate}
+        \item Se $X$ é não vazio e $f$ é injetiva, então $f$ possui inversa à esquerda.
+        \item Se $f$ é sobrejetiva, então $f$ possui inversa à direita.
+        \item Se $X$ é não vazio e $f$ é bijetiva, então $f$ possui inversa.
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    Seja $\hat{x} \in X$. Defina uma função $g: Y \to X$ com $g(y) = x$, tal que $f(x) = y$,
+    caso exista esse $x$. Caso ele não exista, $g(y) = \hat{x}$. Agora, suponha que 
+    $g(f(x)) = x'$. Pela definição de $g$, $f(x) = y$, logo $g(y) = x$. Assim, $f(x) = f(x')$.
+    Como $f$ é injetiva $x = x'$. 
+
+    Para a segunda afirmação, defina $h: Y \to X$, onde, para cada $y \in Y$, escolha um elemento 
+    $x \in X$, tal que $h(y) = x$. Note que a sobrejetividade garante a existência desse elemento,
+    mas não garante a unicidade. Então $f(h(y)) = f(x) = y$, por definição de $h$. 
+
+    A fim de provar a terceira, basta as demonstrações das anteriores. 
+\end{proof}
+
+Algumas observações sobre essa demonstração são importantes. Ao definir $g$ na primeira parte, 
+precisa-se decidir se $x \in X$ existe tal que $f(x) = y$. Isso pode não ser algoritmicamente 
+feito, logo $g$ poderia não ser computável. Na construção de $h$, a prova requere que haja 
+uma escolha de valor de $x$ entre os possíveis candidatos. Isto é uma versão do 
+\href{https://pt.wikipedia.org/wiki/Axioma_da_escolha#Enunciado}{\textit{axioma da escolha}}. 
+Este axioma foi muito debatido no século XX, mas hoje já é comum para demonstrações. O paradoxo
+de Banach-Tarski é um argumento contra o axioma.
+
+Utilizando conceitos e resultados da seção anterior, podemos provar a seguinte proposição.
+
+\begin{theorem}
+    Seja $f: X \to Y$ e $g: Y \to Z$. 
+    \renewcommand{\labelenumi}{\Roman{enumi}}
+    \begin{enumerate}
+        \item Se $f$ e $g$ são injetivas, $g \circ f$ também será.
+        \item Se $f$ e $g$ são sobrejetivas, $g \circ f$ também será.
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    Basta aplicarmos a Proposição \ref{def4} e definirmos $h$ e $k$ como 
+    inversas à esquerd ade $f$ e $g$ respefticamente. Logo $(h \circ k)$ 
+    é inversa à esquerda de  $(g \circ f)$ e, portanto, ela é injetiva. 
+
+    O mesmo vale para a segunda afirmação.
+\end{proof} 
+
+\begin{lstlisting}
+    open function
+
+    namespace hidden
+        variables {X Y Z : Type}
+
+        theorem injective_comp {g : Y → Z} {f : X → Y}
+        (Hg : injective g) (Hf : injective f) :
+        injective (g ∘ f) :=
+            assume x₁ x₂,
+            assume : (g ∘ f) x₁ = (g ∘ f) x₂,
+            have f x₁ = f x₂, from Hg this,
+            show x₁ = x₂, from Hf this
+
+        theorem surjective_comp {g : Y → Z} {f : X → Y}
+            (hg : surjective g) (hf : surjective f) :
+        surjective (g ∘ f) :=
+        begin
+            assume z, 
+            apply exists.elim (hg z),
+            assume y (hy: g y = z),
+            apply exists.elim (hf y),
+            assume x (hx: f x = y),
+            rw ←hx at hy,
+            apply exists.intro x hy
+        end
+
+        theorem bijective_comp {g : Y → Z} {f : X → Y}
+            (hg : bijective g) (hf : bijective f) : 
+            bijective (g ∘ f) :=
+        have ginj : injective g, from hg.left,
+        have gsurj : surjective g, from hg.right, 
+        have finj : injective f, from hf.left,
+        have fsurj : surjective f, from hf.right,
+        and.intro (injective_comp ginj finj) 
+                  (surjective_comp gsurj fsurj)
+    end hidden       
+\end{lstlisting}
+
+\begin{example}
+    Considere $f: \mathbb{N} \to Y$, tal que $f(n) = 2n$. Podemos, ter:
+    \begin{itemize}
+        \item $Y = \mathbb{N}$. $f$ é injetiva, mas não é sobrejetiva. 
+        \item $Y = \mathbb{R}$. $f$ é injetiva, mas não é sobrejetiva.
+        \item $Y = \{n \in \mathbb{N} | n~par\}$. $f$ é bijetiva. 
+    \end{itemize} 
+\end{example}
