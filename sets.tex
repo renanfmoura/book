@@ -152,8 +152,6 @@
 
 \subsection{Primeiros Passos}
     Dado $A$ : $set$ $U$ e $x : U$, é possível escrever $x \in A$ para afirmar que $x$ é um elemento do conjunto $A$. O carácter $\in$ pode ser escrito em Lean usando $\backslash$in .
-    
-
 \begin{lstlisting}
 
     import data.set
@@ -315,7 +313,6 @@ Observe no último exemplo a necessidade de usar a notação {\fontencoding{U}\f
 $\qquad$
 
 Opcionalmente, podemos usar alguns teoremas da biblioteca do Lean, projetados especificamente para uso em conjuntos:
-
 \begin{lstlisting}
 
     import data.set
@@ -368,3 +365,96 @@ Aqui, o teorema {\fontencoding{U}\fontfamily{cmtt}
 
 Aqui, o símbolo{\fontencoding{U}\fontfamily{cmtt}
 \selectfont @} no Lean impede que ele tente preencher argumentos implícitos automaticamente, forçando-o a exibir a declaração completa do teorema.
+
+$\qquad$
+
+Como o Lean pode identificar conjuntos com suas definições lógicas, auxilia a comprovação de inclusões entre conjuntos:
+\begin{lstlisting}
+
+    import data.set
+    open set
+
+    variable {U : Type}
+    variables A B C : set U
+
+    -- BEGIN
+    example : A \ B ⊆ A :=
+    assume x,
+    assume : x ∈ A \ B,
+    show x ∈ A, from and.left this
+
+    example : A \ B ⊆ -B :=
+    assume x,
+    assume : x ∈ A \ B,
+    have x ∉ B, from and.right this,
+    show x ∈ -B, from this
+    -- END
+
+\end{lstlisting}
+
+Outra vez, é possível usar versões dos teoremas projetados especificamente para conjuntos:
+\begin{lstlisting}
+
+    import data.set
+    open set
+
+    variable {U : Type}
+    variables A B C : set U
+
+    -- BEGIN
+    example : A \ B ⊆ A :=
+    assume x,
+    assume : x ∈ A \ B,
+    show x ∈ A, from mem_of_mem_diff this
+
+    example : A \ B ⊆ -B :=
+    assume x,
+    assume : x ∈ A \ B,
+    have x ∉ B, from not_mem_of_mem_diff this,
+    show x ∈ -B, from this
+    -- END
+
+\end{lstlisting}
+
+$\qquad$
+
+Como o Lean tem que desenvolver definições, ele pode acabar se confundindo às vezes. Por exemplo, na prova a seguir, se você subtituir a última linha por{\fontencoding{U}\fontfamily{cmtt}
+\selectfont sorry}, o Lean terá problemas tentando entender que você quer que ele desenvolva o símbolo de subconjunto:
+\begin{lstlisting}
+
+    variable  {U : Type}
+    variables A B : set U
+
+    example : A ∩ B ⊆ B ∩ A :=
+    assume x,
+    assume h : x ∈ A ∩ B,
+    have h₁ : x ∈ A, from and.left h,
+    have h₂ : x ∈ B, from and.right h,
+    and.intro h₂ h₁
+
+\end{lstlisting}
+
+Uma solução alternativa é usar o comando{\fontencoding{U}\fontfamily{cmtt}
+\selectfont show}. Na maioria das vezes, fornecer informações adicionais para o Lean pode ser útil. Outra solução é nomear um teorema, o que leva o Lean a usar um método um pouco diferente de processar a prova, corrigindo o problema como um efeito colateral de sorte.
+\begin{lstlisting}
+
+    variable  {U : Type}
+    variables A B : set U
+
+    -- BEGIN
+    example : A ∩ B ⊆ B ∩ A :=
+    assume x,
+    assume h : x ∈ A ∩ B,
+    have h₁ : x ∈ A, from and.left h,
+    have h₂ : x ∈ B, from and.right h,
+    show x ∈ B ∩ A, from sorry
+
+    theorem my_example : A ∩ B ⊆ B ∩ A :=
+    assume x,
+    assume h : x ∈ A ∩ B,
+    have h₁ : x ∈ A, from and.left h,
+    have h₂ : x ∈ B, from and.right h,
+    sorry
+    -- END
+
+\end{lstlisting}
