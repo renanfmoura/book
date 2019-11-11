@@ -177,7 +177,6 @@
 Abaixo temos uma pequena lista de como se representa os principais caractéres da parte de conjuntos no Lean: 
 
 \begin{itemize}
-
   
     \item $\in$ $\rightarrow$ $\backslash$in
   
@@ -209,7 +208,6 @@ Noções básicas da teoria dos conjuntos são definidas na biblioteca principal
 $\qquad$
 
 O template abaixo serve para mostrar que o conjunto $A$ é um subconjunto de $B$:
-
 \begin{lstlisting}
 
     import data.set
@@ -228,7 +226,6 @@ O template abaixo serve para mostrar que o conjunto $A$ é um subconjunto de $B$
 \end{lstlisting}
 
 E o template a seguir pode ser usado para mostrar que $A$ e $B$ são iguais:
-
 \begin{lstlisting}
 
     import data.set
@@ -251,7 +248,6 @@ E o template a seguir pode ser usado para mostrar que $A$ e $B$ são iguais:
 \end{lstlisting}
 
 Opcionalmente, nós podemos mostrar a mesma prova de outra forma:
-
 \begin{lstlisting}
 
     import data.set
@@ -274,8 +270,6 @@ Opcionalmente, nós podemos mostrar a mesma prova de outra forma:
 Aqui, {\fontencoding{U}\fontfamily{cmtt}
 \selectfont ext} é uma sigla para ``extensionality", ou seja, extensionalidade. Matemáticamente, isso é representado desta forma:
 
-$\qquad$
-
 \begin{center}
     $\forall x$ ; ($x \in A$ $\leftrightarrow$ $x \in B$) $\rightarrow$ $A = B$.  
 \end{center}
@@ -285,7 +279,6 @@ Reduzindo assim a prova $A = B$ para a prova: $\forall x$ ; ($x \in A$ $\leftrig
 $\qquad$
 
 Além disso, o Lean possui interpretação ambígua para regras de união, interseção e outras operações em conjuntos que são consideradas “definições”. Isso significa que as expressões $x$ $\in$ $A$ $\cap$ $B$ e $x$ $\in$ $A$ $\wedge$ $x$ $\in$ $B$ possuem a mesma interpretação no Lean. Isso também é válido para outras construções em conjuntos, como: $x$ $\in$ $A$ $\backslash $ $B$ e $x$ $\in$ $A$ $\wedge$ $\neg$ $(x$ $\in$ $B)$. O termo $\neg$ $(x$ $\in$ $B)$ que acabara de ser apresentado é outra forma de escrever $x$ $\notin$ $B$. Abaixo são apresentadas algumas aplicações dessa interpretação em Lean:
-
 \begin{lstlisting}
 
     import data.set
@@ -319,6 +312,8 @@ Observe no último exemplo a necessidade de usar a notação {\fontencoding{U}\f
 \selectfont (U)}. O Lean pode, em algumas situações, inferir informações como essa dentro do contexto (por exemplo, quando queremos mostrar que $x$ $\in$ $A$, onde $A$ é do tipo {\fontencoding{U}\fontfamily{cmtt}
 \selectfont (set U)}), mas para isso acontecer, é necessário o uso de alguns comandos.
 
+$\qquad$
+
 Opcionalmente, podemos usar alguns teoremas da biblioteca do Lean, projetados especificamente para uso em conjuntos:
 
 \begin{lstlisting}
@@ -348,13 +343,12 @@ Opcionalmente, podemos usar alguns teoremas da biblioteca do Lean, projetados es
  
 \end{lstlisting}
 
-Lembre-se que{\fontencoding{U}\fontfamily{cmtt}
+Lembre-se que o comando{\fontencoding{U}\fontfamily{cmtt}
 \selectfont absurd} pode ser usado para provar qualquer fato a partir de duas hipóteses contrárias: $h_1$ : $P$ e $h_2$ : $\neg$ $P$. 
 
 Aqui, o teorema {\fontencoding{U}\fontfamily{cmtt}
-\selectfont not\_mem\_empty x} significa $x$ $\notin$ $\emptyset$. Você pode ver a declaração dos teoremas usando o comando {\fontencoding{U}\fontfamily{cmtt}
-\selectfont \#check} no Lean:
-
+\selectfont not\_mem\_empty x} significa $x$ $\notin$ $\emptyset$. Você pode ver a declaração de teoremas disponíveis no Lean com o comando{\fontencoding{U}\fontfamily{cmtt}
+\selectfont \#check}:
 \begin{lstlisting}
 
     import data.set
