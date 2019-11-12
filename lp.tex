@@ -220,7 +220,7 @@ Não só o ``ou'' formará uma sentença verdadeira quando uma ou ambas as situa
 
 É verdadeiro que Santiago é a capital do Chile e que Bolsonaro é o presidente do Brasil. Logo, toda a sentença é verdadeira, apesar de não soar de forma natural na linguagem informal.
 
-Como o ``ou'' é verdadeiro mesmo que somente um de seus elementos seja verdadeiro, na dedução natural, é possível introduzir um ``ou'' tendo somente $A$ ou somente $B$. Logo, pode-se formar $A \lor B$ da seguinte forma:
+Na dedução natural, como o ``ou'' é verdadeiro mesmo que somente um de seus elementos seja verdadeiro, introduzimos o $\lor$ tendo somente $A$ ou somente $B$. Logo, pode-se formar $A \lor B$ da seguinte forma:
 \begin{prooftree}
      \AxiomC{A}
      \UnaryInfC{$A \lor B$}
@@ -249,7 +249,7 @@ example (h1 : B): A ∨ B :=
 or.inr h1
 \end{lstlisting} 
 
-Exclusão do ``ou'': 
+Para excluir o ``ou'' de $A \lor B$ é preciso estruturar uma árvore de dedução natural de forma que $A$ e $B$ resultem em um mesmo resultado $C$. Chegando nesse $C$, é possível substituir o $A \lor B$ pelo C. A seguinte árvore de dedução natural demonstra essa estrutura:
 
 \begin{prooftree}
     \AxiomC{$A \lor B$}
@@ -266,7 +266,19 @@ Exclusão do ``ou'':
     \TrinaryInfC{$C$}
 \end{prooftree}
      
-Código Lean de exclusão do ``ou'':
+No Lean, para excluir o ``ou'', utiliza-se a função $or.elim$. Ao lado do $or.elim$ é necessário inserir a hipótese contendo o ``ou'',  que deseja-se eliminar. Em seguida, deve-se abrir dois parênteses. Esses dois parênteses serão equivalentes às duas colunas contendo, respectivamente, $A$ e $B$ na árvore de dedução natural acima. Dessa forma, um parênteses começa com o $assume$ de $A$ e o outro com o$assume$ de $B$. O objetivo é que a partir deles chegue-se à hipótese C.  O código abaixo mostra a estrutura de como ficaria uma operação de eliminação do ``ou''(o ``sorry'' nas provas abaixo representa a etapa em que se prova que a partir de $A$ é possível chegar em $C$) :
+
+\begin{lstlisting}
+variables A B C D : Prop
+
+example (h1: A ∨ B): C :=
+or.elim h1
+(assume h2: A, sorry)
+(assume h2: B, sorry)
+\end{lstlisting}
+
+Como exemplo mais concreto, sem o uso do ``sorry'', é possível observar a prova abaixo, na qual utiliza-se as hipóteses $A \rightarrow C$ e $B \rightarrow C$ para se chegar à C a partir de $A$ e $B$:
+
 \begin{lstlisting} 
 variables A B C D : Prop
 
