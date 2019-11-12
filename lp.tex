@@ -368,6 +368,8 @@ Na dedução natural, como o ``ou'' é verdadeiro mesmo que somente um de seus e
      \UnaryInfC{$A \lor B$}
 \end{prooftree}
 
+%adicionar explicacao de como o lean entende que o B ficara do lado direito do ou
+
 No Lean, essa operação de introdução do ``ou'' é realizada utilizando a função $or.inl$. Essa função indica que queremos adicionar o $A$ do lado esquerdo do $\lor$ (por isso, ``or include left''). Dessa forma, teremos o seguinte código: 
 \begin{lstlisting} 
 variables A B : Prop
