@@ -103,3 +103,53 @@
         \begin{lstlisting}
     ¬(par zero ∨ par (adicao zero zero)) ∧ primo zero : Prop
         \end{lstlisting}
+
+    \subsection{Quantificador Universal}
+
+        Grande parte do poder da Lógica Proposicional se deve aos quantificadores.
+        O símbolo $\forall$ é o quantificador universal, que representa "para todo".
+        Quando ele é seguido de uma variável e de uma expressão, ele indica que aquela expressão é verdadeira para toda variável do domínio.
+        Por exemplo:
+
+        \begin{itemize}
+            \item $\forall x, (par(x) \lor impar(x))$
+            \item $\forall y, (par(y) \rightarrow impar(y + 1))$
+        \end{itemize}
+
+        A primeira expressão nos diz que todo número é par ou ímpar (no caso dos naturais).
+        A segunda diz que, para todo número, o fato dele ser par implica que seu sucessor é ímpar.
+        Vejamos essas expressões no Lean:
+
+        \begin{lstlisting}
+    constant U : Type
+
+    constant par : U → Prop
+    constant impar : U → Prop
+    constant sucessor : U → U
+
+    #check ∀ x : U, par x ∨ impar x
+    #check ∀ y : U, par y → impar (sucessor y)
+        \end{lstlisting}
+
+        Os dois \lstinline{#check}'s nos retornam \lstinline{Prop}.
+
+        Observe as três sentenças:
+
+        \begin{itemize}
+            \item $\forall x, (par(x) \lor impar(x))$
+            \item $\forall x, par(x) \lor impar(x)$
+            \item $\forall x, (par(x)) \lor impar(x)$
+        \end{itemize}
+
+        Por uma questão de convenção, as duas últimas sentenças são equivalentes, enquanto a primeira é diferente.
+        Neste contexto, estamos lidando com o \textbf{escopo} da variável $x$. A convenção diz, portanto, que o escopo da variável é o menor possível.
+        
+        Curiosamente, o modo como o Lean lida com escopo é diferente: \lstinline{∀ x : U, par x ∨ impar x} equivale a \lstinline{∀ x : U, (par x ∨ impar x)}.
+        Ou seja, o Lean busca o maior escopo possível.
+
+        Quando estamos lidando com quantificadores, a variável que o acompanha é dita \textbf{limitada} (\textit{bound}, em inglês).
+        na expressão $\forall x, A(x)$, a variável $x$ é limitada.
+        Isso significa que o $x$ não representa um valor em si, mas apenas um ``espaço reservado"\space para qualquer outra variável.
+        Observe que a expressão $\forall y, A(y)$ representa exatamente a mesma coisa.
+
+    \subsection{Quantificador Existencial}
