@@ -16,7 +16,7 @@ A implicação é essencial para o condicionamento de sentenças. Se na lingua f
 
 Retornando aos primeiros problemas do capítulo, relembramos um dos problemas descritos:
 \begin{center}
-\textbf{Se Ana viajar para o Chile, conhecerá o Atacama}
+\textbf{Se Ana viajar para o Chile, comprará pesos chilenos}
 
 \textbf{Se a família real não tivesse vindo ao Brasil, então o território se desintegraria}
 \end{center}
@@ -24,7 +24,7 @@ Retornando aos primeiros problemas do capítulo, relembramos um dos problemas de
 Apesar das duas sentenças terem a mesma estrutura "Se... então", podemos perceber que as duas tem suas diferenças. Em particular, chamamos a segunda proposição de implicação contrafactual, pois ela afirma como o mundo possivelmente seria, caso a realidade fosse diferentes do que ela realmente é. Esse assunto é discutido por filósofos há seculos e Spinoza e Saul Kripke são nomes de destaque nesses estudos. Entretanto, a lógica matemática se debruça mais especialmente na primeira sentença.
 
 Dessa forma, tomando a primeira sentença como objeto de estudo, como podemos valorar essa implicação?
-Para começar a analisar a valoração dessa implicação pensemos em A correspondendo o evento "Ana viaja para o Chile" e B ao evento "Ana irá conhecer o Atacama". Temos, então, dois casos e uma tabela verdade correpondente:
+Para começar a analisar a valoração dessa implicação pensemos em A correspondendo o evento "Ana viaja para o Chile" e B ao evento "Ana compra pesos chilenos". Temos, então, dois casos e uma tabela verdade correpondente:
 
 \begin{center}
 
@@ -51,17 +51,41 @@ F          & F          & V                  \\ \hline
 No primeiro caso, Ana viaja para o Chile e A é verdadeiro. Dessa forma, para a implicação ser verdadeira, B precisa ver também verdadeiro.
 
 No segundo caso, Ana não viaja para o Chile e A é falso.
-Dessa forma, nada podemos dizer sobre o evento B e qualquer valor atribuído a ele torna a implicação verdadeira. A esse tipo de afirmação, chamamos de \textbf{verdadeira por vacuidade}.
+Dessa forma, nada podemos dizer sobre o evento B e qualquer valor atribuído a ele torna a implicação verdadeira. A esse tipo de afirmação, chamamos de \textbf{verdadeira por vacuidade}.\\
 
-A implicação é protagonista da regra chamada "regra da exclusão da implicação" ou \textit{Modus Ponens}("A maneira que afirma afirmando" ), ou seja:
+Vamos agora analisar a implicação contrária:
+\begin{center}
+
+\textbf{Se Ana comprar pesos chilenos, viajará para o Chile}
+
+\end{center}
+Ainda analisando o evento A como "Ana viaja para o Chile" e B como "Ana compra pesos chilenos", temos a seguinte tabela verdade:
+
+\begin{table}[htb]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+
+\textbf{B} & \textbf{A} & \textbf{B $\to$ A} \\ \hline
+V          & V          & V                  \\ \hline
+V          & F          & F                  \\ \hline
+F          & V          & V                  \\ \hline
+F          & F          & V                  \\ \hline
+
+\end{tabular}
+\end{table}
+
+A partir da comparação das duas tabelas podemos perceber que a segunda e terceira linhas evidenciam que, apesar de A e B terem o mesmo valor nas duas tabelas, a implicação tem uma valoração diferente. Ou seja, A $\to$ B $\neq$ B $\to$ A. Esse resultado condiz com a nossa intuição pois uma vez que embora saibamos que se Ana viaja para o Chile, comprará pesos chilenos, uma vez que Ana comprou pesos chilenos, não podemos afirmar com certeza que ela viajará para o Chile. Quem sabe Ana seja uma colecionadora de moedas internacionais?\\
+
+Além disso, a implicação é protagonista da regra chamada "regra da exclusão da implicação" ou \textit{Modus Ponens}("A maneira que afirma afirmando" ), ou seja:
 
 \begin{center}
 
-Se Ana viajar para o Chile, conhecerá o Atacama
+Se Ana viajar para o Chile, comprará pesos chilenos
 
 Ana viajou para o Chile
 
-Ana conheceu o Atacama
+Ana comprou pesos chilenos
 
 \end{center}
 
@@ -112,7 +136,125 @@ show B, from sorry
 \vspace{5mm}
 
 \subsection{Se e somente se}
-%Vitoria
+
+Já vimos anteriormente que $A \rightarrow B \neq B \rightarrow A$. Entretanto, em muitos casos na Matemática conseguimos chegar na igualdade dessas duas implicações e precisamos expressar a estrutura da linguagem falada "Se, e somente se". Dessa forma, faz-se uso do símbolo chamado de "bi-implicação" e representado por $\iff$ \\
+Poderíamos também utilizar a formalização $A \rightarrow B \land B \rightarrow A$, mas por questões ligadas a praticidade da abreviação, é preferível o uso do novo símbolo apresentado.\\
+Para entender melhor a interpretação dessa regra, usaremos o exemplo abaixo:
+
+\begin{center}
+    \textbf{Ana viajará para o Chile se, e somente se, comprar pesos chilenos}
+\end{center}
+
+Novamente construiremos a bi-implicação tratando o evento A como sendo "Ana viaja ao Chile" e B "Ana compra pesos chilenos". A tabela verdade então será:
+
+\begin{table}[htb]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+
+\textbf{A} & \textbf{B} & \textbf{A $\iff$ B} \\ \hline
+V          & V          & V                  \\ \hline
+V          & F          & F                  \\ \hline
+F          & V          & F                  \\ \hline
+F          & F          & V                  \\ \hline
+
+\end{tabular}
+\end{table}
+
+Para melhor visualização dos resultados, vamos também mostrar uma tabela verdade que utiliza a definição da bi-implicação com o "e":
+
+\begin{table}[htb]
+\centering
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+
+\textbf{A} & \textbf{B} & \textbf{A $\iff$ B}& \textbf{B $\iff$ A} & \textbf{(B $\iff$ A) $\land$ (A $\iff$ B)} \\ \hline
+V          & V          & V                  & V                   & V\\ \hline
+V          & F          & F                  & V                   & F\\ \hline
+F          & V          & F                  & V                   & F\\ \hline
+F          & F          & V                  & V                   & V\\ \hline
+
+\end{tabular}
+\end{table}
+
+Dessa forma, temos os casos:
+\begin{center}
+
+Caso 1: Ana viaja para o Chile 
+
+Caso 2: Ana não viaja para o Chile
+
+Caso 3: Ana compra pesos chilenos
+
+Caso 4: Ana não compra pesos chilenos
+
+\end{center}
+Assim, com essa sentença sabemos que o caso 1 acontece se, e somente se o caso 3 acontece, e o caso 2 acontece se, e somente se o caso 4 também acontece.\\
+Em dedução natural a regra da inclusão bi-implicação evidencia a necessidade de possuirmos duas implicações verdadeiras. Escrevemos a regra como:
+
+\begin{prooftree}
+    \AxiomC{$A$}
+    \noLine
+    \UnaryInfC{$\vdots$}
+    \noLine
+    \UnaryInfC{$B$}
+    \AxiomC{$B$}
+    \noLine
+    \UnaryInfC{$\vdots$}
+    \noLine
+    \UnaryInfC{$A$}
+    \BinaryInfC{$A \iff B$}
+\end{prooftree}
+
+No lean, temos o comando "iff.intro" que introduz o símbolo dado a verdade das duas implicações:
+\vspace{5mm}
+\begin{lstlisting} 
+
+example : A ↔ B :=
+iff.intro
+  (assume h : A,
+    show B, from sorry)
+  (assume h : B,
+    show A, from sorry)
+
+\end{lstlisting}
+\vspace{5mm}
+
+Enquanto para a exclusão, a regra em dedução natural é muito semelhante a regra da exclusão da implicação:
+
+\begin{prooftree}
+    \AxiomC{$A \iff B$}
+    \AxiomC{$A$}
+    \BinaryInfC{$B$}
+\end{prooftree}
+\begin{prooftree}
+    \AxiomC{$A \iff B$}
+    \AxiomC{$B$}
+    \BinaryInfC{$A$}
+\end{prooftree}
+
+E seu correspondente no lean é feito pelos comandos de eliminação a direita e a esquerda:
+
+\vspace{5mm}
+\begin{lstlisting} 
+
+section
+  variable h1 : A ↔ B
+  variable h2 : A
+
+  example : B := iff.elim_left h1 h2
+end
+
+section
+  variable h1 : A ↔ B
+  variable h2 : B
+
+  example : A := iff.elim_right h1 h2
+end
+
+\end{lstlisting}
+\vspace{5mm}
+
 
 \subsection{Conjunção}
 A regra da conjunção se refere ao uso ``e'' na linguagem informal, de forma que juntamos duas informações. Podemos ter frases como:
@@ -220,7 +362,7 @@ Não só o ``ou'' formará uma sentença verdadeira quando uma ou ambas as situa
 
 É verdadeiro que Santiago é a capital do Chile e que Bolsonaro é o presidente do Brasil. Logo, toda a sentença é verdadeira, apesar de não soar de forma natural na linguagem informal.
 
-Como o ``ou'' é verdadeiro mesmo que somente um de seus elementos seja verdadeiro, na dedução natural, é possível introduzir um ``ou'' tendo somente $A$ ou somente $B$. Logo, pode-se formar $A \lor B$ da seguinte forma:
+Na dedução natural, como o ``ou'' é verdadeiro mesmo que somente um de seus elementos seja verdadeiro, introduzimos o $\lor$ tendo somente $A$ ou somente $B$. Logo, pode-se formar $A \lor B$ da seguinte forma:
 \begin{prooftree}
      \AxiomC{A}
      \UnaryInfC{$A \lor B$}
@@ -249,7 +391,7 @@ example (h1 : B): A ∨ B :=
 or.inr h1
 \end{lstlisting} 
 
-Exclusão do ``ou'': 
+Para excluir o ``ou'' de $A \lor B$ é preciso estruturar uma árvore de dedução natural de forma que $A$ e $B$ resultem em um mesmo resultado $C$. Chegando nesse $C$, é possível substituir o $A \lor B$ pelo C. A seguinte árvore de dedução natural demonstra essa estrutura:
 
 \begin{prooftree}
     \AxiomC{$A \lor B$}
@@ -266,7 +408,19 @@ Exclusão do ``ou'':
     \TrinaryInfC{$C$}
 \end{prooftree}
      
-Código Lean de exclusão do ``ou'':
+No Lean, para excluir o ``ou'', utiliza-se a função $or.elim$. Ao lado do $or.elim$ é necessário inserir a hipótese contendo o ``ou'',  que deseja-se eliminar. Em seguida, deve-se abrir dois parênteses. Esses dois parênteses serão equivalentes às duas colunas contendo, respectivamente, $A$ e $B$ na árvore de dedução natural acima. Dessa forma, um parênteses começa com o $assume$ de $A$ e o outro com o$assume$ de $B$. O objetivo é que a partir deles chegue-se à hipótese C.  O código abaixo mostra a estrutura de como ficaria uma operação de eliminação do ``ou''(o ``sorry'' nas provas abaixo representa a etapa em que se prova que a partir de $A$ é possível chegar em $C$) :
+
+\begin{lstlisting}
+variables A B C D : Prop
+
+example (h1: A ∨ B): C :=
+or.elim h1
+(assume h2: A, sorry)
+(assume h2: B, sorry)
+\end{lstlisting}
+
+Como exemplo mais concreto, sem o uso do ``sorry'', é possível observar a prova abaixo, na qual utiliza-se as hipóteses $A \rightarrow C$ e $B \rightarrow C$ para se chegar à C a partir de $A$ e $B$:
+
 \begin{lstlisting} 
 variables A B C D : Prop
 
