@@ -14,7 +14,7 @@ Quando nos comunicamos, é habitual utilizar diferentes estruturas de linguagem 
 \subsection{Implicação} 
 A implicação é essencial para o condicionamento de sentenças. Se na lingua falada utilizamos a estrutura "Se ... então" para nos referirmos a acontecimentos que dependem de outros, na logica a ideia é muito semelhante.
 
-Retornando aos primeiros problemas do capítulo, relembramos um dos problemas descritos:
+Retornando aos primeiros problemas do capítulo, relembramos um dos problemas descritos: % lembrar de add os exemplos na introdução %
 \begin{center}
 \textbf{Se Ana viajar para o Chile, comprará pesos chilenos}
 
@@ -368,6 +368,8 @@ Na dedução natural, como o ``ou'' é verdadeiro mesmo que somente um de seus e
      \UnaryInfC{$A \lor B$}
 \end{prooftree}
 
+%adicionar explicacao de como o lean entende que o B ficara do lado direito do ou
+
 No Lean, essa operação de introdução do ``ou'' é realizada utilizando a função $or.inl$. Essa função indica que queremos adicionar o $A$ do lado esquerdo do $\lor$ (por isso, ``or include left''). Dessa forma, teremos o seguinte código: 
 \begin{lstlisting} 
 variables A B : Prop
@@ -470,6 +472,142 @@ Existe um estilo de fazer matemático conhecido como "matemática construtivista
 
 Antes de utilizar a prova por absurdo precisamos abrir o modo clássico do lLean.
 
-\section{Dedução Natural}
+\section{Exemplos adicionais de Dedução Natural}
+\begin{itemize}
+
+\item Prova de A $\rightarrow$ C a partir de A $\rightarrow$ B e B $\rightarrow$ C
+
+\begin{prooftree}
+    \AxiomC{}
+    \RightLabel{\scriptsize(1)}
+    \UnaryInfC{A}
+                               \AxiomC{$A \rightarrow B$}
+                   \BinaryInfC{B}
+                                        \AxiomC{$B \rightarrow C$}
+                                 \BinaryInfC{C}
+                                 \RightLabel{\scriptsize(1)}
+                                 \UnaryInfC{$A \rightarrow C$}
+\end{prooftree}
+
+Que também pode ser intuitivamente pensada como (A $\rightarrow$ B) $\land$ (B $\rightarrow$ C) $\rightarrow$ (A $\rightarrow$ C) pois:
+
+\begin{prooftree}
+    \AxiomC{}
+    \RightLabel{\scriptsize(1)}
+    \UnaryInfC{A}
+               \AxiomC{}
+               \RightLabel{\scriptsize(2)}
+               \UnaryInfC{$(A \rightarrow B) \land (B \rightarrow C)$}
+               \UnaryInfC{$A \rightarrow B$}
+        \BinaryInfC{B}
+                                           \AxiomC{}
+                                           \RightLabel{\scriptsize(2)}
+                                           \UnaryInfC{$(A \rightarrow B) \land (B \rightarrow C)$}
+                                           \UnaryInfC{$B \rightarrow C$}
+                          \BinaryInfC{$C$}
+                          \RightLabel{\scriptsize(1)}
+                          \UnaryInfC{$A \rightarrow C$}
+                          \RightLabel{\scriptsize(2)}
+                          \UnaryInfC{$(A \rightarrow B) \land (B \rightarrow C) \rightarrow (A \rightarrow C)$}
+\end{prooftree}
+Nos dois casos acima, podemos observar a utilização de números em determinadas hipóteses. Utilizamos esses para evidenciar onde descartamos as hipóteses marcadas. 
+\item Prova de $Q\land S$ a partir de $(P\land Q)\land R$ e $S \land T$
+
+\begin{prooftree}
+    \AxiomC{$(P \land Q) \land S$}
+    \UnaryInfC{$P \land Q$}
+    \UnaryInfC{Q}
+                                      \AxiomC{$S \land T$}
+                                      \UnaryInfC{S}
+                      \BinaryInfC{$Q \land S$}
+\end{prooftree}
+Nesse caso, não descartamos nenhuma hipótese pois assumimos $(P\land Q)\land R$ e $S \land T$ como verdade e apenas derivamos a prova.
+\item Prova de $(A \rightarrow (B \rightarrow C)) \rightarrow (A \land B \rightarrow C)$ :
+\begin{prooftree}
+    \AxiomC{}
+    \RightLabel{\scriptsize(2)}
+    \UnaryInfC{$A \rightarrow (B \rightarrow C)$}
+                                               \AxiomC{}
+                                               \RightLabel{\scriptsize(1)}
+                                               \UnaryInfC{$A \land B$}
+                                               \UnaryInfC{A}
+                        \BinaryInfC{$B \rightarrow C$}
+                                                                          \AxiomC{}
+                                                                          \RightLabel{\scriptsize(1)}
+                                                                          \UnaryInfC{$A \land B$}
+                                                                          \UnaryInfC{B}
+                                                      \BinaryInfC{C}
+                                                      \RightLabel{\scriptsize(1)}
+                                                      \UnaryInfC{$A \land B \rightarrow C$}
+                                                      \RightLabel{\scriptsize(2)}
+                                                      \UnaryInfC{$(A \rightarrow (B \rightarrow C)) \rightarrow (A \land B \rightarrow C) $}
+\end{prooftree}
+
+\item Prova de $A \land B \iff B \land A$:
+\begin{prooftree}
+    \AxiomC{}
+    \RightLabel{\scriptsize(1)}
+    \UnaryInfC{$A \land B$}
+    \UnaryInfC{B}
+                              \AxiomC{}
+                              \RightLabel{\scriptsize(1)}
+                              \UnaryInfC{$A\land B$}
+                              \UnaryInfC{A}
+             \BinaryInfC{$B \land A$}
+                                                         \AxiomC{}
+                                                         \RightLabel{\scriptsize(2)}
+                                                         \UnaryInfC{$B \land A $}
+                                                         \UnaryInfC{A}
+                                                                                    \AxiomC{}
+                                                                                    \RightLabel{\scriptsize(2)}
+                                                                                    \UnaryInfC{$B \land A$}
+                                                                                    \UnaryInfC{B}
+                                                                     \BinaryInfC{$A \land B$}
+                                                                     \RightLabel{\scriptsize(1,2)}
+                                      \BinaryInfC{$A \land B \iff B \land A$}
+\end{prooftree}
+
+\item Prova de $A \land (B \lor C) \rightarrow (A \land B) \lor (A \land C)$
+
+\begin{prooftree}
+
+\AxiomC{}                   
+\RightLabel{\scriptsize(2)} 
+\UnaryInfC{$A \land (B \lor C)$}                
+\UnaryInfC{$B \lor C$}
+
+\AxiomC{}
+\RightLabel{\scriptsize(2)} 
+\UnaryInfC{$A \land (B \lor C)$}
+\UnaryInfC{A}
+\AxiomC{}
+\RightLabel{\scriptsize(1)} 
+\UnaryInfC{B}
+\BinaryInfC{$A \land B$}
+\UnaryInfC{$(A \land B) \lor (A \land C)$}
+
+\AxiomC{}
+\RightLabel{\scriptsize(2)} 
+\UnaryInfC{$A \land (B \lor C)$}
+\UnaryInfC{A}
+\AxiomC{}
+\RightLabel{\scriptsize(1)} 
+\UnaryInfC{C}
+\BinaryInfC{$A \land C$}
+\UnaryInfC{$(A \land B ) \lor (A \land C)$}
+
+            \RightLabel{\scriptsize(1)} 
+            \TrinaryInfC{$ (A \land B) \lor (A \land C)$}
+            \RightLabel{\scriptsize(2)} 
+           \UnaryInfC{$A \land (B \lor C) \rightarrow (A \land B) \lor (A \land C)$}
+\end{prooftree}
+
+\item Prova do PHP-3
+    O princípio da casa dos pombos afirma que  se n pombos devem ser postos em m casas, e se n > m, então pelo menos uma casa irá conter mais de um pombo. Apesar desse princípio  generalizado ser muito amplo para ser provado por árvores dedutivas, conseguimos provar o caso de 3 pombos e 2 casas de pombo utilizando árvores dedutivas.
+    %tentaremos por a árvore?%
+
+
+
+\end{itemize}
 
 \section{Exercícios}
