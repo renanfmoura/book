@@ -181,7 +181,7 @@ nat.rec_on n
               ... = succ n       : by rw ih)
 \end{lstlisting}
 
-Como vimos no capítulo de relações, a relação \lstinline{≤} nos naturais é uma ordem parcial e possui várias propriedades. Logo podemos realizar provas por indução:
+Como vimos no capítulo anterior, a relação \lstinline{≤} nos naturais é uma ordem parcial e possui várias propriedades que estão definidas na biblioteca \lstinline{nat}. Dentre elas, temos sua reflexividade, antissimetria e transitividade, que estão representadas respectivamente por \lstinline{le_refl}, \lstinline{le_antisymm} e \lstinline{le_trans}. Grande parte dos teoremas em Lean sobre desigualdade começam com "le\_" ou "lt\_", logo caso você deseje explorar outros teoremas internos escreva essas iniciais e explore as opções fornecidas pelo autocompletamento (função disponível no editor web). Portanto podemos realizar provas por indução. Segue uma prova de $\forall m,\forall n,\forall k,n+k\leq m+k \rightarrow n\le m$ em Lean.
 
 \begin{lstlisting}
 open nat
@@ -195,7 +195,7 @@ assume m n k,
         n = n + 0 : by rw add_zero
       ... ≤ m + 0 : h
       ... = m     : by rw add_zero
-      ... ≤ m     : nat.le_refl m)
+      ... ≤ m     : le_refl m)
   (assume k,
    assume ih : n + k ≤ m + k → n ≤ m,
     assume h1 : n + succ k ≤ m + succ k,
@@ -213,7 +213,7 @@ assume m n k,
    show n ≤ m, from ih h4)
 \end{lstlisting}
 
-Repare que o Lean preserva o operador que estabelece a maior restrição quando se está usando \lstinline{calc}.
+Repare que o Lean preserva o operador que estabelece a maior restrição quando se está usando \lstinline{calc} em desigualdades.
 
 \subsection{Aritmética nos Inteiros}
 
