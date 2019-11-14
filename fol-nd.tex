@@ -1,36 +1,36 @@
+\newenvironment{bprooftree}
+  {\leavevmode\hbox\bgroup}
+  {\DisplayProof\egroup}
 \section{Dedução Natural}
 Como visto na seção anterior devemos estabelecer as regras de inclusão e exclusão
 de dedução para os quantificadores e para a igualdade. Listamos elas inicialmente:
 \newline \textbf{Quantificador universal:}
  \newline 
  \begin{center}
+ \begin{bprooftree}
     \AxiomC{$A(y)$}
     \RightLabel{\scriptsize $\forall I$}
     \UnaryInfC{$\forall x A(x)$}
-    \DisplayProof
-\end{center}
-    Para inserir o quantificador universal devemos ter 
-    que a variável $y$ não deve estar atrelada em nenhuma
-     hipótese, isto é, em todas as hipóteses não canceladas
-      ela não pode ser livre. 
-\begin{center}
-
-   
+\end{bprooftree}
+\begin{bprooftree}
     \AxiomC{$\forall x A(x)$}
     \RightLabel{\scriptsize $\forall E$}
-    \UnaryInfC{$A(t)$}
-    \DisplayProof   
- \end{center}
+    \UnaryInfC{$A(t)$} 
+\end{bprooftree}
+\end{center}
 
+Para inserir o quantificador universal devemos ter que a variável $y$ não deve estar 
+atrelada em nenhuma hipótese, isto é, em todas as hipóteses não canceladasela não pode ser livre. 
+\newline \textbf{Quantificador existencial:}
 
- \textbf{Quantificador existencial:}
  \begin{center}
-     \AxiomC{$A(t)$}
-     \RightLabel{\scriptsize $\exists I$}
-     \UnaryInfC{$\exists x A(x)$}
-     \DisplayProof
-
-     \AxiomC{$\exists x A(x)$}
+    \begin{bprooftree}
+        \AxiomC{$A(t)$}
+        \RightLabel{\scriptsize $\exists I$}
+        \UnaryInfC{$\exists x A(x)$}
+    \end{bprooftree}
+    \begin{bprooftree}
+        \AxiomC{$\exists x A(x)$}
         \AxiomC{}
         \UnaryInfC{$A(t)$}
         \alwaysNoLine
@@ -39,40 +39,43 @@ de dedução para os quantificadores e para a igualdade. Listamos elas inicialme
         \alwaysSingleLine
         \RightLabel{\scriptsize $\exists E$}
         \BinaryInfC{$B$}
-     \DisplayProof
-\end{center}
+    \end{bprooftree}
+ \end{center}
 
 Para retirarmmos o quantificador existencial, a variável $t$ não pode estar livre em $B$, isto é, ela não 
 deve estar livre em qualquer hipótese não cancelada.
 
 \textbf{Igualdade:}
 \begin{center}
-    \AxiomC{}
-    \RightLabel{\scriptsize refl}
-    \UnaryInfC{$t=t$}
-    \DisplayProof
-
-    \AxiomC{$t=s$}
-    \RightLabel{\scriptsize sim}
-    \UnaryInfC{$s=t$}
-    \DisplayProof
-
-    \AxiomC{$t=s$}
-    \AxiomC{$s=v$}
-    \RightLabel{\scriptsize trans}
-    \BinaryInfC{$t=v$}
-    \DisplayProof
-
-    \AxiomC{$t=s$}
-    \RightLabel{\scriptsize subs}
-    \UnaryInfC{$r(t) = r(s)$}
-    \DisplayProof
-
-    \AxiomC{$t=s$}
-    \AxiomC{$P(t)$}
-    \RightLabel{\scriptsize subs}
-    \BinaryInfC{$P(s)$}
-    \DisplayProof
+    \begin{bprooftree}
+        \AxiomC{}
+        \RightLabel{\scriptsize refl}
+        \UnaryInfC{$t=t$}
+    \end{bprooftree}
+    \begin{bprooftree}
+        \AxiomC{$t=s$}
+        \RightLabel{\scriptsize sim}
+        \UnaryInfC{$s=t$} 
+    \end{bprooftree}
+\end{center}
+\begin{center}
+    \begin{bprooftree}
+        \AxiomC{$t=s$}
+        \AxiomC{$s=v$}
+        \RightLabel{\scriptsize trans}
+        \BinaryInfC{$t=v$}  
+    \end{bprooftree}
+    \begin{bprooftree}
+        \AxiomC{$t=s$}
+        \RightLabel{\scriptsize subs}
+        \UnaryInfC{$r(t) = r(s)$}
+    \end{bprooftree}
+    \begin{bprooftree}
+        \AxiomC{$t=s$}
+        \AxiomC{$P(t)$}
+        \RightLabel{\scriptsize subs}
+        \BinaryInfC{$P(s)$}
+    \end{bprooftree}
 \end{center}
 Iremos passar por cada um destas regras para apresentá-las com o auxílio de exemplos.
 
@@ -108,25 +111,23 @@ $\forall x (\neg Q(x) \to R(x))$ e $\forall x(P(x) \land \neg Q(x))$ provaremos 
 
 \begin{center}
     \AxiomC{$\forall x(P(x) \land \neg Q(x))$}
-    \RightLabel{\scriptsize $\forall E_1$}
+    \RightLabel{\scriptsize $\forall E$}
     \UnaryInfC{$P(t) \land \neg Q(t)$}
-    \RightLabel{\scriptsize $\land E_2$}
     \UnaryInfC{$\neg Q(t)$}
     \AxiomC{$\forall x (\neg Q(x) \to R(x))$}
-    \RightLabel{\scriptsize $\forall E_3$}
+    \RightLabel{\scriptsize $\forall E$}
     \UnaryInfC{$\neg Q(t) \to R(t)$}
-    \RightLabel{\scriptsize $\to E_4$}
     \BinaryInfC{$R(t)$}
-    \RightLabel{\scriptsize $\forall I_5$}
+    \RightLabel{\scriptsize $\forall I$}
     \UnaryInfC{$\forall x R(x)$}
     \DisplayProof
 \end{center}
-Vamos inicialmente utilizar de nossas hipóteses, em $\forall E_1$ nós executamos a primeira 
+Vamos inicialmente utilizar de nossas hipóteses, em $\forall x(P(x) \land \neg Q(x))$ nós executamos a primeira 
 exclusão do universal, utilizando a variável $t$ e em seguida executamos a exclusão do $\land$ 
 visto que não é necessário o $P(t)$ na dedução. Do outro lado executamos mais uma exclusão do universal
- em $\forall E_3$ e atribuímos novamente a mesma variável $t$. Com $\neg Q(t)$ e $\neg Q(t) \to R(t)$ 
- podemos realizar uma exclusão da implicação em $\to E_4$ e por fim incluímos o universal em $\forall 
- I_5$.
+ em $\forall x (\neg Q(x) \to R(x))$ e atribuímos novamente a mesma variável $t$. Com $\neg Q(t)$ e $\neg Q(t) \to R(t)$ 
+ podemos realizar uma exclusão da implicaçã e por fim incluímos o universal em $\forall 
+ I$.
 
 \subsection{Quantificador existencial}
 Lembrando a regra de exclusão do existencial, o que fazemos é que com $\exists x A(x)$, supomos um $y$
@@ -252,3 +253,4 @@ exists.elim h$_1$
     (assume t (h$_2$ : A t $\land$ B t)
         show $\exists$ x, A x, from exists.intro t h$_2$.left) 
 \end{lstlisting}
+\subsection{Exercícios}
