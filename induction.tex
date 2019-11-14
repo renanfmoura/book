@@ -45,20 +45,25 @@ Apesar de termos definido o tipo \lstinline{nat} anteriormente, usaremos o da bi
 \begin{lstlisting}
 open nat
 
-def two_pow : ℕ → ℕ
-| 0        := 1
-| (succ n) := 2 * two_pow n
+def five_mult : ℕ → ℕ
+| 0        := 0
+| (succ n) := 5 + five_mult n
 
 def fact : ℕ → ℕ
 | 0        := 1
 | (succ n) := (succ n) * fact n
+
+def fibonacci : ℕ → ℕ
+| 0        := 0
+| 1        := 1
+| (n + 2)  := fibonacci (n + 1) + fibonacci n
 \end{lstlisting}
 
-No trecho de código acima, definimos duas funções de maneira recursiva: $2^n$ e $x!$. Como o domínio são os naturais, as funções necessitam saber o que fazer com toda entrada possível, que no nosso caso seria a constante $0$ e um outro natural qualquer. Quando colocado \lstinline{(succ n)}, o Lean interpreta como se a entrada fosse \lstinline{(succ n)}, isto é, $n$ torna-se o valor tal que \lstinline{(succ n)} é igual à entrada. Com isso, podemos atribuir o valor desejado recursivamente à nossa função.
+No trecho de código acima, definimos três funções de maneira recursiva: $5*n$, $x!$ e $fib(n)$. Como o domínio são os naturais, as funções necessitam saber o que fazer com toda entrada possível, que no nosso caso seria a constante $0$ e um outro natural qualquer. Quando colocado \lstinline{(succ n)}, o Lean interpreta como se a entrada fosse \lstinline{(succ n)}, isto é, $n$ torna-se o valor tal que \lstinline{(succ n)} é igual à entrada. Com isso, podemos atribuir o valor desejado recursivamente à nossa função. Para $n+2$ o raciocínio é idêntico: $n$ torna-se o valor tal que $n+2$ é igual à entrada.
 
-O infixo $+$ é criado de uma maneira que $n + 1$ é reconhecido da mesma maneira que \lstinline{(succ n)}. Todas definições acima funcionariam da mesma maneira caso este fosse substituído.
+No Lean, $n + 1$ é reconhecido da mesma maneira que \lstinline{(succ n)}. Todas definições acima funcionariam da mesma maneira caso este fosse substituído.
 
-Caso se deseje criar uma função de potência mais genérica, o seguinte código funciona muito bem e inclusive é a definição  da biblioteca \lstinline{nat}, que pode ser chamada por \textit{nat.pow}.
+Caso se deseje criar uma função de potência, o seguinte código funciona muito bem e inclusive é a definição da biblioteca \lstinline{nat}, que pode ser chamada por \textit{nat.pow}.
 
 \begin{lstlisting}
 def pow : ℕ → ℕ → ℕ
@@ -102,7 +107,23 @@ nat.rec_on n
 
 O comando \lstinline{nat.rec_on} recebe como entrada três parâmetros: a variável que se deseja aplicar indução; uma prova de $P(0)$ e uma prova de $P(n)→P(n+1)$, onde $P$ seria o \lstinline{goal}. No exemplo acima, usando \lstinline{calc} e algumas funções já definidas na biblioteca \lstinline{nat} e no Lean, conseguimos provar sem usar a comutatividade da multiplicação. Repare que como usamos \lstinline{open nat}, não há necessidade de escrever \lstinline{nat.pow}, apenas \lstinline{pow}.
 
-Uma boa dica para provas usando \lstinline{calc} é de introduzir o seu resultado desejado e ir trabalhando a equação atual de modo a chegar ao seu objetivo. Segue abaixo um exemplo da identidade \lstinline{m^(n + k) = m^n * m^k}.
+Uma boa dica para provas usando \lstinline{calc} é de introduzir o seu resultado desejado e ir trabalhando a equação atual de modo a chegar ao seu objetivo. Como todas as coisas no Lean, provas por \lstinline{calc} também podem ser simplificadas. Segue abaixo o exemplo anterior com sintaxe reduzida:
+
+\begin{lstlisting}
+open nat
+
+theorem pow_succ' (m n : ℕ) : m^(succ n) = m * (m^n) :=
+nat.rec_on n
+  (show m^(succ 0) = m * m^0,
+    by rw [pow_succ, pow_zero, mul_one, one_mul])
+  (assume n,
+    assume ih : m^(succ n) = m * m^n,
+    show m^(succ (succ n)) = m * m^(succ n),
+      by rw [pow_succ, ih, mul_assoc, mul_comm (m^n)])
+\end{lstlisting}
+
+Você também pode usar o \lstinline{rw} fora do \lstinline{calc}, lhe passando uma lista de argumentos, que seriam equivalentes a usá-lo separadamente em cada um desses argumentos.
+Entretanto, você não consegue controlar qual parte da equação você deseja alterar, algo que seria possível usando \lstinline{calc}. Segue abaixo um exemplo da identidade \lstinline{m^(n + k) = m^n * m^k}.
 
 \begin{lstlisting}
 open nat
@@ -117,13 +138,83 @@ nat.rec_on k
     assume ih : m^(n + k) = m^n * m^k,
     show m^(n + succ k) = m^n * m^(succ k), from calc
       m^(n + succ k) = m^(succ (n + k)) : by rw nat.add_succ
-                ... = m^(n + k) * m    : by rw pow_succ
-                ... = m^n * m^k * m    : by rw ih
-                ... = m^n * (m^k * m)  : by rw mul_assoc
-                ... = m^n * m^(succ k) : by rw pow_succ)
+                 ... = m^(n + k) * m    : by rw pow_succ
+                 ... = m^n * m^k * m    : by rw ih
+                 ... = m^n * (m^k * m)  : by rw mul_assoc
+                 ... = m^n * m^(succ k) : by rw pow_succ)
 \end{lstlisting}
 
 Dessa vez, nossa indução foi em $k$. Uma dica interessante presente no editor web do Lean é que você pode passar o mouse por cima do nome do teorema e ver o que ele afirma. Usando \lstinline{calc} para estruturar o objetivo e \lstinline{rewrite} para completar a justificativa de cada passo torna sua prova muito mais legível e elegante.
+
+Segue abaixo alguns axiomas da biblioteca \lstinline{nat}, e algumas provas no Lean:
+
+\begin{lstlisting}
+open nat
+
+variables m n : ℕ
+
+#check add_zero m
+#check add_succ m n
+#check @pred_zero
+#check pred_succ m
+#check mul_zero m
+#check mul_succ m n
+
+theorem succ_pred (n : ℕ) : n ≠ 0 → succ (pred n) = n :=
+nat.rec_on n
+  (assume H : 0 ≠ 0,
+    show succ (pred 0) = 0, from absurd rfl H)
+  (assume n,
+    assume ih,
+    assume H : succ n ≠ 0,
+     show succ (pred (succ n)) = succ n,
+      by rewrite pred_succ)
+
+theorem zero_add' (n : nat) : 0 + n = n :=
+nat.rec_on n
+  (show 0 + 0 = 0, from rfl)
+  (assume n,
+    assume ih : 0 + n = n,
+     show 0 + succ n = succ n, from
+      calc
+       0 + succ n = succ (0 + n) : rfl
+              ... = succ n       : by rw ih)
+\end{lstlisting}
+
+Como vimos no capítulo de relações, a relação \lstinline{≤} nos naturais é uma ordem parcial e possui várias propriedades. Logo podemos realizar provas por indução:
+
+\begin{lstlisting}
+open nat
+
+example : ∀ m n k : nat, n + k ≤ m + k → n ≤ m := 
+assume m n k,
+ nat.rec_on k 
+  (assume h : n + 0 ≤ m + 0,
+    show n ≤ m, from 
+     calc
+        n = n + 0 : by rw add_zero
+      ... ≤ m + 0 : h
+      ... = m     : by rw add_zero
+      ... ≤ m     : nat.le_refl m)
+  (assume k,
+   assume ih : n + k ≤ m + k → n ≤ m,
+    assume h1 : n + succ k ≤ m + succ k,
+     have h2 : succ(n + k) ≤ succ(m + k), from 
+      calc
+        succ(n + k) = n + succ(k) : by rw add_succ
+                ... ≤ m + succ(k) : h1
+                ... = succ(m + k) : by rw add_succ,
+     have h3 : pred(succ(n + k)) ≤ pred(succ(m + k)), from pred_le_pred h2,
+     have h4 : n + k ≤ m + k, from 
+      calc
+         n + k = pred(succ(n + k)) : by rw pred_succ
+           ... ≤ pred(succ(m + k)) : h3
+           ... = m + k             : by rw pred_succ, 
+   show n ≤ m, from ih h4)
+\end{lstlisting}
+
+Repare que o Lean preserva o operador que estabelece a maior restrição quando se está usando \lstinline{calc}.
+
 \subsection{Aritmética nos Inteiros}
 
 Operadores aritméticos nos inteiros . . .
