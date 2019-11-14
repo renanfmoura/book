@@ -448,29 +448,54 @@ Mostrar que $\neg A $ ocorre, em termos lógicos, é o mesmo que mostrar que $A 
     \UnaryInfC{$\neg A$}
 \end{prooftree}
 
-Começamos supondo $A$. Em seguida, continuamos a prova aplicando as regras  já apresentadas, representadas pelos três pontinhos na árvore de dedução natural, até chegarmos a uma contradição. 
+Esta é uma outra forma de raciocínio hipotético, similar a utilizada em "se ... então" . Começamos supondo $A$. Em seguida, continuamos a prova aplicando as regras  já apresentadas, representadas pelos três pontinhos na árvore de dedução natural, até chegarmos a uma contradição.
 
 A pergunta a se fazer em seguida é: de que forma uma contradição aparece numa prova, ou seja, como a encontramos? Suponha, por exemplo, que ao construir uma prova temos uma hipótese $A$ que nos leva a concluir que uma outra hipotése $B$ ocorre ao mesmo tempo que $\neg B$ também ocorre, no entanto se temos $B$ e  $ \neg B $, então temos uma contradição.
 Em dedução natural, representamos essa ideia por:
 
-%Completar a árvore incluindo A E \not A
 \begin{prooftree}
     \AxiomC{$\neg B$}
     \AxiomC{B}
     \BinaryInfC{$\bot$}
 \end{prooftree}
 
-%Falar de false.elim e show false, from 
+\begin{table}[htb]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{A} & \textbf{$\neg A$}  \\ \hline
+V          & F                            \\ \hline
+F          & V                            \\ \hline
+\end{tabular}
+\end{table}
+
+A tabela verdade reforça o fato de que é ímpossível que uma proposição e sua negação sejam ambas verdadeiras ao mesmo tempo.
+
+Ao utilizarmos o Lean, as regras de inferência de eliminação e introdução da negação podem ser obtidas atráves dos comandos a seguir: 
+
+\begin{lstlisting} 
+variables p q : Prop
+-- show false, from ...
+
+example (h1 : P → Q) (h2 : ¬Q) : ¬P :=
+assume hp : P,
+    show false, from h2 (h1 hp)
+\end{lstlisting} 
+
+Note que a hipotése que contém a negação vem primeiro após o \verb|from| e \textit{Q} é resultado do uso da regra de eliminação da implicação, além disso o símbolo $\neg Q$ é escrito como \verb| \not Q|. Na biblioteca padrão do Lean, $ \neg P$ é na verdade uma abreviação de $ P \rightarrow false $, ou seja, o fato de que $P$ implica uma contradição.
 
 Uma vez apresentado o símbolo para \textit{falso}, a seguir apresentamos o símbolo para \textit{verdadeiro}. No entanto,  \textit{verdadeiro} ou \textit{true} não possui regra de eliminação, apenas a regra de introdução:
 
-%Árvore da regra de introdução do true
+\begin{prooftree}
+    \AxiomC{}
+    \UnaryInfC{$\top $}
+\end{prooftree}
 
-No lean, obtemos $\neg A$ com o comando \verb| \not A|.
+%Citar mais alguma info sobre o símbolo true?
 \subsection{Prova por contradição}
-Existe um estilo de fazer matemático conhecido como "matemática construtivista" que nega a equivalência de $\neg \neg A$ e $ A$. Uma prova de que algo é verdadeiro deveria fornecer evidências explícitas de que uma declaração é falsa, em vez de evidências de que ela não pode ser falsa. 
+Existe um estilo de fazer matemático conhecido como "matemática construtivista" que nega a equivalência de $\neg \neg A$ e $ A$. Uma prova de que algo é verdadeiro deveria fornecer evidências explícitas de que uma declaração é falsa, em vez de evidências de que ela não pode ser falsa.
 
-Antes de utilizar a prova por absurdo precisamos abrir o modo clássico do lLean.
+Antes de utilizar a prova por absurdo precisamos abrir o modo clássico do Lean.
 
 \section{Exemplos adicionais de Dedução Natural}
 
