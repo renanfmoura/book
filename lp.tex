@@ -473,6 +473,8 @@ Existe um estilo de fazer matemático conhecido como "matemática construtivista
 Antes de utilizar a prova por absurdo precisamos abrir o modo clássico do lLean.
 
 \section{Exemplos adicionais de Dedução Natural}
+
+Nesta seção serão apresentados exemplos adicionais de provas de dedução natural e seus equivalentes no Lean. Também será explicado como construir essas árvores do zero, partindo somente do  que se quer provar.  
 \begin{itemize}
 
 \item Prova de A $\rightarrow$ C a partir de A $\rightarrow$ B e B $\rightarrow$ C
@@ -489,7 +491,51 @@ Antes de utilizar a prova por absurdo precisamos abrir o modo clássico do lLean
                                  \UnaryInfC{$A \rightarrow C$}
 \end{prooftree}
 
-Que também pode ser intuitivamente pensada como (A $\rightarrow$ B) $\land$ (B $\rightarrow$ C) $\rightarrow$ (A $\rightarrow$ C) pois:
+Como construir essa prova? Primeiro, começamos pelo que se quer provar: $A \rightarrow C$. Podemos escrever isso na última linha, já que é onde queremos chegar. Como a prova é de uma implicação, sabemos que na linha logo acima dessa vamos chegar no $C$:
+\begin{prooftree}
+\AxiomC{C}
+\UnaryInfC{$A \rightarrow C $}
+\end{prooftree}
+
+Agora podemos considerar as hipóteses. Como a prova é de $A\rightarrow B$, vamos utilizar o $A$ em algum momento na árvore. Além disso, pelo enunciado, sabemos que vamos também utilizar o  $A \rightarrow B$ e $B \rightarrow C$. Então teremos uma estrutura razoavelmente parecida com essa: 
+
+\begin{prooftree}
+    \AxiomC{}
+    \RightLabel{\scriptsize(1)}
+    \UnaryInfC{A}
+        \noLine
+        \UnaryInfC{$\vdots$}
+    \AxiomC{$A \rightarrow B$}
+        \noLine
+        \UnaryInfC{$\vdots$}
+    \AxiomC{$B \rightarrow C$}
+        \noLine
+        \UnaryInfC{$\vdots$}
+    \TrinaryInfC{$C$}
+    \RightLabel{\scriptsize(1)}
+    \UnaryInfC{$A \rightarrow C $}
+\end{prooftree}
+     
+A partir disso, é possível observar com mais facilidade quais regras de dedução natural podem ser aplicadas ao problema. No caso, observamos que temos $A$ e $A\rightarrow B$. Logo, é possível obter $B$. 
+
+\begin{prooftree}
+    \AxiomC{}
+    \RightLabel{\scriptsize(1)}
+    \UnaryInfC{A}
+    \AxiomC{$A \rightarrow B$}
+    \BinaryInfC{$B$}
+    \AxiomC{$B \rightarrow C$}
+        \noLine
+        \UnaryInfC{$\vdots$}
+    \BinaryInfC{$C$}
+    \RightLabel{\scriptsize(1)}
+    \UnaryInfC{$A \rightarrow C $}
+\end{prooftree}
+     
+Por fim, obtemos $C$ a partir de $B$ e de $B \rightarrow C$, formando a ávore apresentada de início. 
+
+
+Essa prova  também pode ser intuitivamente pensada como (A $\rightarrow$ B) $\land$ (B $\rightarrow$ C) $\rightarrow$ (A $\rightarrow$ C). Nesse caso, teria-se a seguinte árvore:
 
 \begin{prooftree}
     \AxiomC{}
@@ -510,7 +556,33 @@ Que também pode ser intuitivamente pensada como (A $\rightarrow$ B) $\land$ (B 
                           \RightLabel{\scriptsize(2)}
                           \UnaryInfC{$(A \rightarrow B) \land (B \rightarrow C) \rightarrow (A \rightarrow C)$}
 \end{prooftree}
+
+Nesse caso, seria possível construir a árvore da seguinte forma: primeiro, começamos pelo que se quer provar ($(A \rightarrow B) \land (B \rightarrow C) \rightarrow (A \rightarrow C)$). Como vamos chegar em $A \rightarrow C$, podemos colocá-lo logo acima do que queremos provar. Ainda assim, continuamos com uma implicação, então podemos inserir o $C$ antes do $A \rightarrow C$. 
+
+Como hipótese, teremos o o $A$ (de $A \rightarrow C$) e o $(A \rightarrow B) \land (B \rightarrow C)$ (vindo do resultado final: $(A \rightarrow B) \land (B \rightarrow C) \rightarrow (A \rightarrow C)$). Assim, teremos uma estrutura dessa forma: 
+\begin{prooftree}
+    \AxiomC{}
+    \RightLabel{\scriptsize(1)}
+    \UnaryInfC{A}
+        \noLine
+        \UnaryInfC{$\vdots$}
+    \AxiomC{}
+    \RightLabel{\scriptsize(2)}
+    \UnaryInfC{$(A \rightarrow B) \land (B \rightarrow C)$}
+        \noLine
+        \UnaryInfC{$\vdots$}
+    \BinaryInfC{$C$}
+    \RightLabel{\scriptsize(1)}
+    \UnaryInfC{$A \rightarrow C$}
+    \RightLabel{\scriptsize(2)}
+    \UnaryInfC{$(A \rightarrow B) \land (B \rightarrow C) \rightarrow (A \rightarrow C)$}
+\end{prooftree}
+     
+Como sabemos que queremos chegar em um $C$, podemos utilizar o $B \rightarrow C$ para isso ($B \rightarrow C$ pode ser obtido a partir da operação de exclusão do $\land$ na hipótese de número 2) . Contudo, é necessário ter $B$ para realizar essa operação. O $B$ pode ser obtido a partir do $A$ e do $A \rightarrow B$. Logo, é possível construir a árvore. 
+
 Nos dois casos acima, podemos observar a utilização de números em determinadas hipóteses. Utilizamos esses para evidenciar onde descartamos as hipóteses marcadas. 
+
+
 \item Prova de $Q\land S$ a partir de $(P\land Q)\land R$ e $S \land T$
 
 \begin{prooftree}
@@ -522,6 +594,25 @@ Nos dois casos acima, podemos observar a utilização de números em determinada
                       \BinaryInfC{$Q \land S$}
 \end{prooftree}
 Nesse caso, não descartamos nenhuma hipótese pois assumimos $(P\land Q)\land R$ e $S \land T$ como verdade e apenas derivamos a prova.
+
+Para construir essa prova, partimos também de onde queremos chegar: $Q \land S$. Para formar um $\land$, precisamos de $Q$ e de $S$ separadamente. Logo, podemos escrevê-los acima do $Q \land S$. Pelo enunciado, sabemos que vamos usar como hipótese: $(P\land Q)\land R$ e $S \land T$. Assim, teremos a seguinte estrutura: 
+
+\begin{prooftree}
+    \AxiomC{$(P \land Q) \land S$}
+     \noLine
+    \UnaryInfC{$\vdots$}
+     \noLine
+    \UnaryInfC{$Q$}
+    \AxiomC{$S \land T$}
+     \noLine
+    \UnaryInfC{$\vdots$}
+     \noLine
+    \UnaryInfC{S}
+    \BinaryInfC{$Q \land S$}
+\end{prooftree}
+
+É possível obter o $S$ a partir de qualquer uma das hipóteses. O $Q$ só é possível obter a partir de $(P \land Q) \land S$. Logo, a partir de uma série de operações de exclusão do $\land$, constrói-se a parte restante da prova. 
+
 \item Prova de $(A \rightarrow (B \rightarrow C)) \rightarrow (A \land B \rightarrow C)$ :
 \begin{prooftree}
     \AxiomC{}
@@ -542,6 +633,8 @@ Nesse caso, não descartamos nenhuma hipótese pois assumimos $(P\land Q)\land R
                                                       \RightLabel{\scriptsize(2)}
                                                       \UnaryInfC{$(A \rightarrow (B \rightarrow C)) \rightarrow (A \land B \rightarrow C) $}
 \end{prooftree}
+
+%essa prova é bem parecida com as outras, preciso explicar?
 
 \item Prova de $A \land B \iff B \land A$:
 \begin{prooftree}
@@ -566,6 +659,28 @@ Nesse caso, não descartamos nenhuma hipótese pois assumimos $(P\land Q)\land R
                                                                      \RightLabel{\scriptsize(1,2)}
                                       \BinaryInfC{$A \land B \iff B \land A$}
 \end{prooftree}
+
+Para construir essa prova, partimos do $A \land B \iff B \land A$ ao final da prova. Para obtê-lo, precisamos partir de $B \land A$ e chegar no $A \land B$ e também partir de  $A \land B$ e chegar em $B \land A$. Sabendo que chegaremos nos dois, podemos escrevê-los na linha acima de  $A \land B \iff B \land A$. Sabendo que partiremos também dos dois, podemos escrevê-los como hipóteses. Teremos uma estrutura como essa: 
+\begin{prooftree}
+    \AxiomC{}
+    \RightLabel{\scriptsize(1)}
+    \UnaryInfC{$A \land B$}
+     \noLine
+    \UnaryInfC{$\vdots$}
+     \noLine
+    \UnaryInfC{$B \land A$}
+    \AxiomC{}
+    \RightLabel{\scriptsize(2)}
+    \UnaryInfC{$B \land A$}
+     \noLine
+    \UnaryInfC{$\vdots$}
+     \noLine
+    \UnaryInfC{$A \land B$}
+    \RightLabel{\scriptsize(1,2)}
+    \BinaryInfC{$A \land B \iff B \land A$}
+\end{prooftree}
+
+Para formar $A \land B$ e $B \land A$ precisamos de $A$ e $B$ separadamente. Estes podem ser obtidos a partir das hipóteses. Logo, repetindo as hipóteses e realizando a exclusão do $\land$, formamos a árvore final.
 
 \item Prova de $A \land (B \lor C) \rightarrow (A \land B) \lor (A \land C)$
 
@@ -601,6 +716,23 @@ Nesse caso, não descartamos nenhuma hipótese pois assumimos $(P\land Q)\land R
             \RightLabel{\scriptsize(2)} 
            \UnaryInfC{$A \land (B \lor C) \rightarrow (A \land B) \lor (A \land C)$}
 \end{prooftree}
+
+Para escrever essa prova, podemos partir, como nas outras, do objetivo final: $A \land (B \lor C) \rightarrow (A \land B) \lor (A \land C)$. Como estamos provando uma implicação, vamos chegar em $(A \land B) \lor (A \land C)$ na linha anterior. Observamos também que $A \land (B \lor C)$ será uma hipótese. Teremos, então, uma estrutura como essa:
+
+\begin{prooftree}
+ \AxiomC{}
+\RightLabel{\scriptsize(2)} 
+\UnaryInfC{$A \land (B \lor C)$}
+     \noLine
+    \UnaryInfC{$\vdots$}
+    \noLine
+    \UnaryInfC{$(A \land B) \lor (A \land C)$}
+    \RightLabel{\scriptsize(2)}
+    \UnaryInfC{$A \land (B \lor C) \rightarrow (A \land B) \lor (A \land C)$}
+\end{prooftree}
+
+Como proceder a partir dessa estrutura? Para formar o $(A \land B) \lor (A \land C)$ será necessário o $A \land B$ isoladamente ou o $A \land C$ (a partir de qualquer um dos dois é possível realizar a introdução do $\lor$ e assim chegar em $(A \land B) \lor (A \land C)$). Independente de qual dos dois serão utilizados, nota-se que, para formar o ``e'', será necessário: o $A$ e também o $B$ ou o $C$. O $A$ pode ser facilmente obtido  a partir da hipótese. Para obter $B$ ou $C$ isoladamente, será necessário realizar a exclusão do $B \lor C$ contido no ``e'' da hipótese. Nota-se que para realizar a exclusão do ``ou'', é necessário levantar $B$ e $C$ como hipótese. Assim, podemos formar tanto $A \land B$, quanto $A \land C$. Assim, é possível chegar no resultado final descrito acima. 
+
 
 \item Prova do PHP-3
     O princípio da casa dos pombos afirma que  se n pombos devem ser postos em m casas, e se n > m, então pelo menos uma casa irá conter mais de um pombo. Apesar desse princípio  generalizado ser muito amplo para ser provado por árvores dedutivas, conseguimos provar o caso de 3 pombos e 2 casas de pombo utilizando árvores dedutivas.
