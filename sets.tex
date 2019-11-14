@@ -199,8 +199,8 @@
 
 \subsection{Primeiros Passos}
     Dado $A$ : $set$ $U$ e $x : U$, é possível escrever $x \in A$ para afirmar que $x$ é um elemento do conjunto $A$. O carácter $\in$ pode ser escrito em Lean usando $\backslash$in .
-\begin{lstlisting}
 
+\begin{lstlisting}
     import data.set
     open set
 
@@ -253,8 +253,8 @@ Noções básicas da teoria dos conjuntos são definidas na biblioteca principal
 $\qquad$
 
 O template abaixo serve para mostrar que o conjunto $A$ é um subconjunto de $B$:
-\begin{lstlisting}
 
+\begin{lstlisting}
     import data.set
     open set
 
@@ -271,8 +271,8 @@ O template abaixo serve para mostrar que o conjunto $A$ é um subconjunto de $B$
 \end{lstlisting}
 
 E o template a seguir pode ser usado para mostrar que $A$ e $B$ são iguais:
-\begin{lstlisting}
 
+\begin{lstlisting}
     import data.set
     open set
 
@@ -293,8 +293,8 @@ E o template a seguir pode ser usado para mostrar que $A$ e $B$ são iguais:
 \end{lstlisting}
 
 Opcionalmente, nós podemos mostrar a mesma prova de outra forma:
-\begin{lstlisting}
 
+\begin{lstlisting}
     import data.set
     open set
 
@@ -324,8 +324,8 @@ Reduzindo assim a prova $A = B$ para a prova: $\forall x$ ; ($x \in A$ $\leftrig
 $\qquad$
 
 Além disso, o Lean possui interpretação ambígua para regras de união, interseção e outras operações em conjuntos que são consideradas “definições”. Isso significa que as expressões $x$ $\in$ $A$ $\cap$ $B$ e $x$ $\in$ $A$ $\wedge$ $x$ $\in$ $B$ possuem a mesma interpretação no Lean. Isso também é válido para outras construções em conjuntos, como: $x$ $\in$ $A$ $\backslash $ $B$ e $x$ $\in$ $A$ $\wedge$ $\neg$ $(x$ $\in$ $B)$. O termo $\neg$ $(x$ $\in$ $B)$ que acabara de ser apresentado é outra forma de escrever $x$ $\notin$ $B$. Abaixo são apresentadas algumas aplicações dessa interpretação em Lean:
-\begin{lstlisting}
 
+\begin{lstlisting}
     import data.set
     open set
 
@@ -360,8 +360,8 @@ Observe no último exemplo a necessidade de usar a notação {\fontencoding{U}\f
 $\qquad$
 
 Opcionalmente, podemos usar alguns teoremas da biblioteca do Lean, projetados especificamente para uso em conjuntos:
-\begin{lstlisting}
 
+\begin{lstlisting}
     import data.set
     open set
 
@@ -393,8 +393,8 @@ Lembre-se que o comando{\fontencoding{U}\fontfamily{cmtt}
 Aqui, o teorema {\fontencoding{U}\fontfamily{cmtt}
 \selectfont not\_mem\_empty x} significa $x$ $\notin$ $\emptyset$. Você pode ver a declaração de teoremas disponíveis no Lean com o comando{\fontencoding{U}\fontfamily{cmtt}
 \selectfont \#check}:
-\begin{lstlisting}
 
+\begin{lstlisting}
     import data.set
     open set
 
@@ -416,8 +416,8 @@ Aqui, o símbolo{\fontencoding{U}\fontfamily{cmtt}
 $\qquad$
 
 Como o Lean pode identificar conjuntos com suas definições lógicas, auxilia a comprovação de inclusões entre conjuntos:
-\begin{lstlisting}
 
+\begin{lstlisting}
     import data.set
     open set
 
@@ -440,8 +440,8 @@ Como o Lean pode identificar conjuntos com suas definições lógicas, auxilia a
 \end{lstlisting}
 
 Outra vez, é possível usar versões dos teoremas projetados especificamente para conjuntos:
-\begin{lstlisting}
 
+\begin{lstlisting}
     import data.set
     open set
 
@@ -467,8 +467,8 @@ $\qquad$
 
 Como o Lean tem que desenvolver definições, ele pode acabar se confundindo às vezes. Por exemplo, na prova a seguir, se você subtituir a última linha por{\fontencoding{U}\fontfamily{cmtt}
 \selectfont sorry}, o Lean terá problemas tentando entender que você quer que ele desenvolva o símbolo de subconjunto:
-\begin{lstlisting}
 
+\begin{lstlisting}
     variable  {U : Type}
     variables A B : set U
 
@@ -483,8 +483,8 @@ Como o Lean tem que desenvolver definições, ele pode acabar se confundindo às
 
 Uma solução alternativa é usar o comando{\fontencoding{U}\fontfamily{cmtt}
 \selectfont show}. Na maioria das vezes, fornecer informações adicionais para o Lean pode ser útil. Outra solução é nomear um teorema, o que leva o Lean a usar um método um pouco diferente de processar a prova, corrigindo o problema como um efeito colateral de sorte.
-\begin{lstlisting}
 
+\begin{lstlisting}
     variable  {U : Type}
     variables A B : set U
 
