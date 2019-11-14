@@ -2,7 +2,8 @@
 %A linguagem matemática é caracterizada por seu rigor formal, e possibilidade de abstração sobre diferentes contextos.
 %Somos capazes de descrever situações impensáveis, e obter respostas para problemas que seriam impossíveis sem o uso desse rigor.
 
-Há evidências do uso da matemática já por volta de 3000 a.c, onde povos antigos como os mesopotâmicos, egípcios e moradores de Ebla utilizavam a aritimética, álgebra e a geometria para taxação, comércio, trocas, astronomia e na formulação de calendários e marcação do tempo corrente. Os registros textuais mais antigos desse tipo de prática vem da Mesopotâmia e do Egíto, e são datados aproximadamente entre 2000 a.c e 1800 a.c, mas muitos estudiosos consideram a Grécia Antiga como o berço da matemática, onde, por volta de 600 a.c, os Pitagóricos iniciaram o estudo da matemática como uma "disciplina demonstrativa" e introduziram o raciocínio dedutivo e o rigor matemático em provas formais.
+Há evidências do uso da matemática já por volta de 3000 a.c, onde povos antigos como os mesopotâmicos, egípcios e moradores de Ebla utilizavam a aritimética, álgebra e a geometria para taxação, comércio, trocas, astronomia e na formulação de calendários e marcação do tempo corrente.
+Os registros textuais mais antigos desse tipo de prática vem da Mesopotâmia e do Egíto, e são datados aproximadamente entre 2000 a.c e 1800 a.c, mas muitos estudiosos consideram a Grécia Antiga como o berço da matemática, onde, por volta de 600 a.c, os Pitagóricos iniciaram o estudo da matemática como uma "disciplina demonstrativa" e introduziram o raciocínio dedutivo e o rigor matemático em provas formais.
 
 Apenas quando surge o questionamento de \textit{como sabemos}, e não apenas \textit{o que sabemos} as bases para desenvolver um conhecimento sólido são devidamente definidas.
 Aqui, a lógica formal entra exatamente ao questionar \textit{como sabemos}, ou melhor, como temos certeza do que concluimos partindo de um contexto inicial.
@@ -57,17 +58,64 @@ Isso significa que na prática, não há distinção entre ferramentas provando 
 De fato, reduzimos os problemas de verificação formal a problemas de provas de teoremas e, mais relevante, podemos utilizar computadores nessa tarefa.
 
 Esse tipo de discussão se tornou possível após os recentes avanços no campo de estudo da lógica.
-Reduzimos regras de inferencia e derivação presentes na mior parte das provas a um conjunto pequeno de axiomas fundamentais.
+Reduzimos regras de inferencia e derivação presentes na maior parte das provas a um conjunto pequeno de axiomas fundamentais.
+Provadores desse tipo se tornaram viáveis após o desenvolvimento por Frege de uma base formal adequada a descrição da matemática, em sua \textit{Begriffsschrift}.
+Após Frege, outros nomes, como Alas, Russeau, Hilbert, e Gentzen se esforlaram a desenvolver bases sólidas e compactas para o pensamento matemático que viriam a ser implementadas pelos computadores.
 
-A redução no conjunto de regras viabilizaria computadores implementando ferramentas para auxílio a prova de teoremas, divididas em basicamente duas classes: auxílio a obtebção de uma prova, ou verificação de uma assertiva dada. Esses são os \textit{ATPs} e o \textit{ITPs}.
+A compactação do conjunto de regras de demonstração viabilizaria computadores implementando ferramentas para auxílio a prova de teoremas, divididas em basicamente duas classes: auxílio a obtebção de uma prova, ou verificação de uma assertiva dada. Esses são os \textit{ATPs} e o \textit{ITPs}.
 
-\subsection{Automated theorem proving}
+\subsection{Provadores de Teorema Automáticos}
+% falamos sobre os ATPs, alguns exemplos... Descrevemos características.
+% https://en.wikipedia.org/wiki/Automated_theorem_proving
+% https://www.cs.cmu.edu/~fp/courses/atp/handouts/atp.pdf
+Os provadores automáticos (\textit{Automated theorem proving}) são uma primeira classe de provadores assistentes, e visam a obtenção ou verificação de um teorema.
+Portanto, pertencem a uma classe voltada a obtenção de um termo que representa uma prova, ou a verificação de um teorema, que igualmente se reduz a tarefa de obtenção de uma prova.
 
-falamos sobre os ATPs, alguns exemplos... Descrevemos características.
+Dessa forma, um \textit{ATP} pode tomar como entrada um teorema, e deveria ser capaz de dar um retorno do tipo \textit{verdadeiro} ou \textit{falso}, uma prova ou contraexemplo para a assertiva.
+Note que nesse processo, a participação do ser humano está restrita apenas a aplicação da entrada, ou a descrição do problema para o computador.
+Isso expressa o sentido em que esses provadores são \textit{Automáticos}.
 
-\subsection{Interactive theorem proving}
+De fato, algumas provadores implementam sistemas dedutivos que lidam internamente com o problema, desenvolvendo soluções pouco inteligíveis (resolução, p.ex.).
+Pode-se dizer que o processo de prova nesses casos é pouco acessível.
+Alguns provadores ou sistemas de dedução automática comuns são:
 
-Damos características desse paradigma, exemplos...
+\begin{itemize}
+    \item \textbf{Tecnica A} : breve história, características. Poucas linhas.
+    \item \textbf{Tecnica B} : breve história, características. Poucas linhas
+    \item \textbf{Tecnica C} : breve história, características. Poucas linhas
+    \item \textbf{Provador D} : breve história, características. Poucas linhas
+\end{itemize}
+
+Em 1976, o computador IBM360 participou da prova dada por Apel e Haken para o \textit{Teorema das quatro cores}, mostrando que o uso de computadores poderia ser relevante no desenvolvimento da matemática.
+
+\subsection{Provadores de Teorema Interativos}
+% Damos características desse paradigma, exemplos...
+% https://www.cl.cam.ac.uk/~jrh13/papers/joerg.pdf
+
+Os provadores interativos (\textit{Interactive theorem proving}) representam uma classe de ferramentas que aproximan a noção de máquina e humano trabalhando juntos no desenvolvimento de uma prova formal.
+Nesse contexto, a ferramenta é comumente usada na verificação do processo de prova desenvolvido por um indivíduo.
+
+Nesse processo, a intervenção da máquina pode ser superficial, por exemplo na checagem dos teoremas utilizados em um processo de prova, ou mais intenso, em que lacunas são preenchidas ou completadas por um provador quase automático.
+
+A vantagem nesse tipo de método está presente justamente quando trabalhamos provas que se tornam extremamanete complicadas, e um provador automático se torna incapaz de solucionar, ou quando desejamos ter certeza de um resultado, pela dificuldade em garantir a validade do resultado dado por um \textit{ATP}.
+Problemas desse tipo abrem espaço para o paradigma que garante provas desenvolvidas pela intervenção humana, com assistência computacional.
+
+Alguns \textit{ITPs} que implementam esse tipo de técnica são:
+
+\begin{itemize}
+    \item \textbf{Provador A} : breve história, características. Poucas linhas.
+    \item \textbf{Provador B} : breve história, características. Poucas linhas
+    \item \textbf{Provador C} : breve história, características. Poucas linhas
+    \item \textbf{Provador D} : breve história, características. Poucas linhas
+\end{itemize}
+
+Mais a frente discutioms como o Lean implementa um plataforma entre os dois paradigmas: permite o desenvolvimento de provas interativas, sem abrir mão da automação.
+Podemos discutir \textit{em que ponto o sistema deixa de agir como assistente, e passa a ser considerado autônomo}, ou ainda, \textit{o que é automação}.
+
+% aqui entramos na discussão da automação como pequenas utilidades implementadas.
+% sugesão de proxima seção.
 
 %\subsection{O que é Automacão}
 %fiquei interessafo em defender o que discutimos tantas vezes com o Rdmkr, sobre até onde, e como, o computador está automatizando as tarefas...
+
+\section{Resumo}
