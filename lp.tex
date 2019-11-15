@@ -492,11 +492,6 @@ Uma vez apresentado o símbolo para \textit{falso}, a seguir apresentamos o sím
 \end{prooftree}
 
 %Citar mais alguma info sobre o símbolo true?
-\subsection{Prova por contradição}
-Existe um estilo de fazer matemático conhecido como "matemática construtivista" que nega a equivalência de $\neg \neg A$ e $ A$. Uma prova de que algo é verdadeiro deveria fornecer evidências explícitas de que uma declaração é falsa, em vez de evidências de que ela não pode ser falsa.
-
-Antes de utilizar a prova por absurdo precisamos abrir o modo clássico do Lean.
-
 \section{Exemplos adicionais de Dedução Natural}
 
 Nesta seção serão apresentados exemplos adicionais de provas de dedução natural e seus equivalentes no Lean. Também será explicado como construir essas árvores do zero, partindo somente do  que se quer provar.  
@@ -559,8 +554,16 @@ A partir disso, é possível observar com mais facilidade quais regras de deduç
      
 Por fim, obtemos $C$ a partir de $B$ e de $B \rightarrow C$, formando a ávore apresentada de início. 
 
+No Lean, essa prova poderia ser feita da seguinte forma: 
+\begin{lstlisting}
+variables A B C: Prop
+example (h1: A → B) (h2: B → C): A → C :=
+assume h3: A,
+have h4: B, from h1 h3,
+h2 h4
+\end{lstlisting}
 
-Essa prova  também pode ser intuitivamente pensada como (A $\rightarrow$ B) $\land$ (B $\rightarrow$ C) $\rightarrow$ (A $\rightarrow$ C). Nesse caso, teria-se a seguinte árvore:
+A prova acima também pode ser intuitivamente pensada como (A $\rightarrow$ B) $\land$ (B $\rightarrow$ C) $\rightarrow$ (A $\rightarrow$ C). Nesse caso, teria-se a seguinte árvore:
 
 \begin{prooftree}
     \AxiomC{}
@@ -605,8 +608,17 @@ Como hipótese, teremos o o $A$ (de $A \rightarrow C$) e o $(A \rightarrow B) \l
      
 Como sabemos que queremos chegar em um $C$, podemos utilizar o $B \rightarrow C$ para isso ($B \rightarrow C$ pode ser obtido a partir da operação de exclusão do $\land$ na hipótese de número 2) . Contudo, é necessário ter $B$ para realizar essa operação. O $B$ pode ser obtido a partir do $A$ e do $A \rightarrow B$. Logo, é possível construir a árvore. 
 
-Nos dois casos acima, podemos observar a utilização de números em determinadas hipóteses. Utilizamos esses para evidenciar onde descartamos as hipóteses marcadas. 
+No Lean essa prova poderia ser feita da seguinte forma: 
+\begin{lstlisting}
+variables A B C: Prop
+example: ((A → B) ∧ (B → C)) → (A → C) :=
+assume h1: (A → B) ∧ (B → C),
+assume h2: A,
+have h3: B, from (and.left h1) h2,
+(and.right h1) h3
+\end{lstlisting}
 
+Nos dois casos acima, podemos observar , nas árvores de dedução natural, a utilização de números em determinadas hipóteses. Utilizamos esses para evidenciar onde descartamos as hipóteses marcadas. 
 
 \item Prova de $Q\land S$ a partir de $(P\land Q)\land R$ e $S \land T$
 
@@ -637,6 +649,16 @@ Para construir essa prova, partimos também de onde queremos chegar: $Q \land S$
 \end{prooftree}
 
 É possível obter o $S$ a partir de qualquer uma das hipóteses. O $Q$ só é possível obter a partir de $(P \land Q) \land S$. Logo, a partir de uma série de operações de exclusão do $\land$, constrói-se a parte restante da prova. 
+
+No Lean, essa prova poderia ser feita da seguinte forma: 
+
+\begin{lstlisting}
+variables P Q R S T: Prop
+example (h1: (P ∧ Q) ∧ R) (h2: S ∧ T): Q ∧ S :=
+have h3: Q, from and.right (and.left h1),
+have h4: S, from and.left h2,
+and.intro h3 h4
+\end{lstlisting}
 
 \item Prova de $(A \rightarrow (B \rightarrow C)) \rightarrow (A \land B \rightarrow C)$ :
 \begin{prooftree}
@@ -707,6 +729,18 @@ Para construir essa prova, partimos do $A \land B \iff B \land A$ ao final da pr
 
 Para formar $A \land B$ e $B \land A$ precisamos de $A$ e $B$ separadamente. Estes podem ser obtidos a partir das hipóteses. Logo, repetindo as hipóteses e realizando a exclusão do $\land$, formamos a árvore final.
 
+No Lean, essa prova poderia ser construída da seguinte forma:
+\begin{lstlisting}
+variables A B C: Prop
+example: A ∧ B ↔ B ∧ A :=
+iff.intro 
+    (assume h1: A ∧ B,
+    and.intro (and.right h1) (and.left h1))
+    (assume h3: B ∧ A,
+    and.intro (and.right h3) (and.left h3))
+
+\end{lstlisting}
+
 \item Prova de $A \land (B \lor C) \rightarrow (A \land B) \lor (A \land C)$
 
 \begin{prooftree}
@@ -758,12 +792,52 @@ Para escrever essa prova, podemos partir, como nas outras, do objetivo final: $A
 
 Como proceder a partir dessa estrutura? Para formar o $(A \land B) \lor (A \land C)$ será necessário o $A \land B$ isoladamente ou o $A \land C$ (a partir de qualquer um dos dois é possível realizar a introdução do $\lor$ e assim chegar em $(A \land B) \lor (A \land C)$). Independente de qual dos dois serão utilizados, nota-se que, para formar o ``e'', será necessário: o $A$ e também o $B$ ou o $C$. O $A$ pode ser facilmente obtido  a partir da hipótese. Para obter $B$ ou $C$ isoladamente, será necessário realizar a exclusão do $B \lor C$ contido no ``e'' da hipótese. Nota-se que para realizar a exclusão do ``ou'', é necessário levantar $B$ e $C$ como hipótese. Assim, podemos formar tanto $A \land B$, quanto $A \land C$. Assim, é possível chegar no resultado final descrito acima. 
 
+No Lean, essa prova poderia ser construída da seguinte forma:
+\begin{lstlisting}
+variables A B C: Prop
+example: (A ∧ (B ∨ C)) → ((A ∧ B) ∨ (A ∧ C)) :=
+assume h1: A ∧ (B ∨ C),
+have h2: B ∨ C, from and.right h1,
+have h4: A, from and.left h1,
+or.elim h2
+    (assume h3: B, 
+    or.inl (and.intro h4 h3))
+    (assume h3: C,
+    or.inr (and.intro h4 h3))
+\end{lstlisting}
 
 \item Prova do PHP-3
     O princípio da casa dos pombos afirma que  se n pombos devem ser postos em m casas, e se n > m, então pelo menos uma casa irá conter mais de um pombo. Apesar desse princípio  generalizado ser muito amplo para ser provado por árvores dedutivas, conseguimos provar o caso de 3 pombos e 2 casas de pombo utilizando árvores dedutivas.
     %tentaremos por a árvore?%
 
+No Lean, essa prova poderia ser construída da seguinte forma: 
+\begin{lstlisting}
+variables P11 P12 P21 P22 P31 P32 : Prop
 
+example: ((P11 ∨ P12) ∧ (P21 ∨ P22)) ∧ (P31 ∨ P32) → (P22 ∧ P32) ∨ ((P11 ∧ P31) ∨ ((P12 ∧ P22) ∨ ((P11 ∧ P21) ∨ ((P12 ∧ P32) ∨ (P21 ∧ P31))))) :=
+
+assume h: ((P11 ∨ P12) ∧ (P21 ∨ P22)) ∧ (P31 ∨ P32),
+have ha: P11 ∨ P12, from and.left (and.left h),
+or.elim ha
+    (assume h1: P11, 
+        have hb: P21 ∨ P22, from and.right (and.left h),
+            or.elim hb
+                (assume h2: P21, or.inr (or.inr (or.inr (or.inl (and.intro h1 h2)))))
+                (assume h2: P22, 
+                    have hc: P31 ∨ P32, from and.right h,
+                        or.elim hc
+                            (assume h3: P31, or.inr (or.inl (and.intro h1 h3)))
+                            (assume h3: P32, or.inl (and.intro h2 h3))))
+    (assume h1: P12, 
+        have hb: P21 ∨ P22, from and.right (and.left h),
+            or.elim hb
+                (assume h2: P21, 
+                    have hc: P31 ∨ P32, from and.right h,
+                        or.elim hc
+                            (assume h3: P31, or.inr (or.inr (or.inr (or.inr (or.inr (and.intro h2 h3))))))
+                            (assume h3: P32, or.inr (or.inr (or.inr (or.inr (or.inl (and.intro h1 h3)))))))
+                (assume h2: P22, or.inr (or.inr (or.inl (and.intro h1 h2)))))
+\end{lstlisting}
 
 \end{itemize}
 
