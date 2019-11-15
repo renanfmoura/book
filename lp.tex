@@ -14,7 +14,7 @@ Quando nos comunicamos, é habitual utilizar diferentes estruturas de linguagem 
 \subsection{Implicação} 
 A implicação é essencial para o condicionamento de sentenças. Se na lingua falada utilizamos a estrutura "Se ... então" para nos referirmos a acontecimentos que dependem de outros, na logica a ideia é muito semelhante.
 
-Retornando aos primeiros problemas do capítulo, relembramos um dos problemas descritos:
+Retornando aos primeiros problemas do capítulo, relembramos um dos problemas descritos: % lembrar de add os exemplos na introdução %
 \begin{center}
 \textbf{Se Ana viajar para o Chile, comprará pesos chilenos}
 
@@ -368,6 +368,8 @@ Na dedução natural, como o ``ou'' é verdadeiro mesmo que somente um de seus e
      \UnaryInfC{$A \lor B$}
 \end{prooftree}
 
+%adicionar explicacao de como o lean entende que o B ficara do lado direito do ou
+
 No Lean, essa operação de introdução do ``ou'' é realizada utilizando a função $or.inl$. Essa função indica que queremos adicionar o $A$ do lado esquerdo do $\lor$ (por isso, ``or include left''). Dessa forma, teremos o seguinte código: 
 \begin{lstlisting} 
 variables A B : Prop
@@ -446,30 +448,323 @@ Mostrar que $\neg A $ ocorre, em termos lógicos, é o mesmo que mostrar que $A 
     \UnaryInfC{$\neg A$}
 \end{prooftree}
 
-Começamos supondo $A$. Em seguida, continuamos a prova aplicando as regras  já apresentadas, representadas pelos três pontinhos na árvore de dedução natural, até chegarmos a uma contradição. 
+Esta é uma outra forma de raciocínio hipotético, similar a utilizada em "se ... então" . Começamos supondo $A$. Em seguida, continuamos a prova aplicando as regras  já apresentadas, representadas pelos três pontinhos na árvore de dedução natural, até chegarmos a uma contradição.
 
 A pergunta a se fazer em seguida é: de que forma uma contradição aparece numa prova, ou seja, como a encontramos? Suponha, por exemplo, que ao construir uma prova temos uma hipótese $A$ que nos leva a concluir que uma outra hipotése $B$ ocorre ao mesmo tempo que $\neg B$ também ocorre, no entanto se temos $B$ e  $ \neg B $, então temos uma contradição.
 Em dedução natural, representamos essa ideia por:
 
-%Completar a árvore incluindo A E \not A
 \begin{prooftree}
     \AxiomC{$\neg B$}
     \AxiomC{B}
     \BinaryInfC{$\bot$}
 \end{prooftree}
 
-%Falar de false.elim e show false, from 
+\begin{table}[htb]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{A} & \textbf{$\neg A$}  \\ \hline
+V          & F                            \\ \hline
+F          & V                            \\ \hline
+\end{tabular}
+\end{table}
+
+A tabela verdade reforça o fato de que é ímpossível que uma proposição e sua negação sejam ambas verdadeiras ao mesmo tempo.
+
+Ao utilizarmos o Lean, as regras de inferência de eliminação e introdução da negação podem ser obtidas atráves dos comandos a seguir: 
+
+\begin{lstlisting} 
+variables p q : Prop
+-- show false, from ...
+
+example (h1 : P → Q) (h2 : ¬Q) : ¬P :=
+assume hp : P,
+    show false, from h2 (h1 hp)
+\end{lstlisting} 
+
+Note que a hipotése que contém a negação vem primeiro após o \verb|from| e \textit{Q} é resultado do uso da regra de eliminação da implicação, além disso o símbolo $\neg Q$ é escrito como \verb| \not Q|. Na biblioteca padrão do Lean, $ \neg P$ é na verdade uma abreviação de $ P \rightarrow false $, ou seja, o fato de que $P$ implica uma contradição.
 
 Uma vez apresentado o símbolo para \textit{falso}, a seguir apresentamos o símbolo para \textit{verdadeiro}. No entanto,  \textit{verdadeiro} ou \textit{true} não possui regra de eliminação, apenas a regra de introdução:
 
-%Árvore da regra de introdução do true
+\begin{prooftree}
+    \AxiomC{}
+    \UnaryInfC{$\top $}
+\end{prooftree}
 
-No lean, obtemos $\neg A$ com o comando \verb| \not A|.
+%Citar mais alguma info sobre o símbolo true?
 \subsection{Prova por contradição}
-Existe um estilo de fazer matemático conhecido como "matemática construtivista" que nega a equivalência de $\neg \neg A$ e $ A$. Uma prova de que algo é verdadeiro deveria fornecer evidências explícitas de que uma declaração é falsa, em vez de evidências de que ela não pode ser falsa. 
+Existe um estilo de fazer matemático conhecido como "matemática construtivista" que nega a equivalência de $\neg \neg A$ e $ A$. Uma prova de que algo é verdadeiro deveria fornecer evidências explícitas de que uma declaração é falsa, em vez de evidências de que ela não pode ser falsa.
 
-Antes de utilizar a prova por absurdo precisamos abrir o modo clássico do lLean.
+Antes de utilizar a prova por absurdo precisamos abrir o modo clássico do Lean.
 
-\section{Dedução Natural}
+\section{Exemplos adicionais de Dedução Natural}
+
+Nesta seção serão apresentados exemplos adicionais de provas de dedução natural e seus equivalentes no Lean. Também será explicado como construir essas árvores do zero, partindo somente do  que se quer provar.  
+\begin{itemize}
+
+\item Prova de A $\rightarrow$ C a partir de A $\rightarrow$ B e B $\rightarrow$ C
+
+\begin{prooftree}
+    \AxiomC{}
+    \RightLabel{\scriptsize(1)}
+    \UnaryInfC{A}
+                               \AxiomC{$A \rightarrow B$}
+                   \BinaryInfC{B}
+                                        \AxiomC{$B \rightarrow C$}
+                                 \BinaryInfC{C}
+                                 \RightLabel{\scriptsize(1)}
+                                 \UnaryInfC{$A \rightarrow C$}
+\end{prooftree}
+
+Como construir essa prova? Primeiro, começamos pelo que se quer provar: $A \rightarrow C$. Podemos escrever isso na última linha, já que é onde queremos chegar. Como a prova é de uma implicação, sabemos que na linha logo acima dessa vamos chegar no $C$:
+\begin{prooftree}
+\AxiomC{C}
+\UnaryInfC{$A \rightarrow C $}
+\end{prooftree}
+
+Agora podemos considerar as hipóteses. Como a prova é de $A\rightarrow B$, vamos utilizar o $A$ em algum momento na árvore. Além disso, pelo enunciado, sabemos que vamos também utilizar o  $A \rightarrow B$ e $B \rightarrow C$. Então teremos uma estrutura razoavelmente parecida com essa: 
+
+\begin{prooftree}
+    \AxiomC{}
+    \RightLabel{\scriptsize(1)}
+    \UnaryInfC{A}
+        \noLine
+        \UnaryInfC{$\vdots$}
+    \AxiomC{$A \rightarrow B$}
+        \noLine
+        \UnaryInfC{$\vdots$}
+    \AxiomC{$B \rightarrow C$}
+        \noLine
+        \UnaryInfC{$\vdots$}
+    \TrinaryInfC{$C$}
+    \RightLabel{\scriptsize(1)}
+    \UnaryInfC{$A \rightarrow C $}
+\end{prooftree}
+     
+A partir disso, é possível observar com mais facilidade quais regras de dedução natural podem ser aplicadas ao problema. No caso, observamos que temos $A$ e $A\rightarrow B$. Logo, é possível obter $B$. 
+
+\begin{prooftree}
+    \AxiomC{}
+    \RightLabel{\scriptsize(1)}
+    \UnaryInfC{A}
+    \AxiomC{$A \rightarrow B$}
+    \BinaryInfC{$B$}
+    \AxiomC{$B \rightarrow C$}
+        \noLine
+        \UnaryInfC{$\vdots$}
+    \BinaryInfC{$C$}
+    \RightLabel{\scriptsize(1)}
+    \UnaryInfC{$A \rightarrow C $}
+\end{prooftree}
+     
+Por fim, obtemos $C$ a partir de $B$ e de $B \rightarrow C$, formando a ávore apresentada de início. 
+
+
+Essa prova  também pode ser intuitivamente pensada como (A $\rightarrow$ B) $\land$ (B $\rightarrow$ C) $\rightarrow$ (A $\rightarrow$ C). Nesse caso, teria-se a seguinte árvore:
+
+\begin{prooftree}
+    \AxiomC{}
+    \RightLabel{\scriptsize(1)}
+    \UnaryInfC{A}
+               \AxiomC{}
+               \RightLabel{\scriptsize(2)}
+               \UnaryInfC{$(A \rightarrow B) \land (B \rightarrow C)$}
+               \UnaryInfC{$A \rightarrow B$}
+        \BinaryInfC{B}
+                                           \AxiomC{}
+                                           \RightLabel{\scriptsize(2)}
+                                           \UnaryInfC{$(A \rightarrow B) \land (B \rightarrow C)$}
+                                           \UnaryInfC{$B \rightarrow C$}
+                          \BinaryInfC{$C$}
+                          \RightLabel{\scriptsize(1)}
+                          \UnaryInfC{$A \rightarrow C$}
+                          \RightLabel{\scriptsize(2)}
+                          \UnaryInfC{$(A \rightarrow B) \land (B \rightarrow C) \rightarrow (A \rightarrow C)$}
+\end{prooftree}
+
+Nesse caso, seria possível construir a árvore da seguinte forma: primeiro, começamos pelo que se quer provar ($(A \rightarrow B) \land (B \rightarrow C) \rightarrow (A \rightarrow C)$). Como vamos chegar em $A \rightarrow C$, podemos colocá-lo logo acima do que queremos provar. Ainda assim, continuamos com uma implicação, então podemos inserir o $C$ antes do $A \rightarrow C$. 
+
+Como hipótese, teremos o o $A$ (de $A \rightarrow C$) e o $(A \rightarrow B) \land (B \rightarrow C)$ (vindo do resultado final: $(A \rightarrow B) \land (B \rightarrow C) \rightarrow (A \rightarrow C)$). Assim, teremos uma estrutura dessa forma: 
+\begin{prooftree}
+    \AxiomC{}
+    \RightLabel{\scriptsize(1)}
+    \UnaryInfC{A}
+        \noLine
+        \UnaryInfC{$\vdots$}
+    \AxiomC{}
+    \RightLabel{\scriptsize(2)}
+    \UnaryInfC{$(A \rightarrow B) \land (B \rightarrow C)$}
+        \noLine
+        \UnaryInfC{$\vdots$}
+    \BinaryInfC{$C$}
+    \RightLabel{\scriptsize(1)}
+    \UnaryInfC{$A \rightarrow C$}
+    \RightLabel{\scriptsize(2)}
+    \UnaryInfC{$(A \rightarrow B) \land (B \rightarrow C) \rightarrow (A \rightarrow C)$}
+\end{prooftree}
+     
+Como sabemos que queremos chegar em um $C$, podemos utilizar o $B \rightarrow C$ para isso ($B \rightarrow C$ pode ser obtido a partir da operação de exclusão do $\land$ na hipótese de número 2) . Contudo, é necessário ter $B$ para realizar essa operação. O $B$ pode ser obtido a partir do $A$ e do $A \rightarrow B$. Logo, é possível construir a árvore. 
+
+Nos dois casos acima, podemos observar a utilização de números em determinadas hipóteses. Utilizamos esses para evidenciar onde descartamos as hipóteses marcadas. 
+
+
+\item Prova de $Q\land S$ a partir de $(P\land Q)\land R$ e $S \land T$
+
+\begin{prooftree}
+    \AxiomC{$(P \land Q) \land S$}
+    \UnaryInfC{$P \land Q$}
+    \UnaryInfC{Q}
+                                      \AxiomC{$S \land T$}
+                                      \UnaryInfC{S}
+                      \BinaryInfC{$Q \land S$}
+\end{prooftree}
+Nesse caso, não descartamos nenhuma hipótese pois assumimos $(P\land Q)\land R$ e $S \land T$ como verdade e apenas derivamos a prova.
+
+Para construir essa prova, partimos também de onde queremos chegar: $Q \land S$. Para formar um $\land$, precisamos de $Q$ e de $S$ separadamente. Logo, podemos escrevê-los acima do $Q \land S$. Pelo enunciado, sabemos que vamos usar como hipótese: $(P\land Q)\land R$ e $S \land T$. Assim, teremos a seguinte estrutura: 
+
+\begin{prooftree}
+    \AxiomC{$(P \land Q) \land S$}
+     \noLine
+    \UnaryInfC{$\vdots$}
+     \noLine
+    \UnaryInfC{$Q$}
+    \AxiomC{$S \land T$}
+     \noLine
+    \UnaryInfC{$\vdots$}
+     \noLine
+    \UnaryInfC{S}
+    \BinaryInfC{$Q \land S$}
+\end{prooftree}
+
+É possível obter o $S$ a partir de qualquer uma das hipóteses. O $Q$ só é possível obter a partir de $(P \land Q) \land S$. Logo, a partir de uma série de operações de exclusão do $\land$, constrói-se a parte restante da prova. 
+
+\item Prova de $(A \rightarrow (B \rightarrow C)) \rightarrow (A \land B \rightarrow C)$ :
+\begin{prooftree}
+    \AxiomC{}
+    \RightLabel{\scriptsize(2)}
+    \UnaryInfC{$A \rightarrow (B \rightarrow C)$}
+                                               \AxiomC{}
+                                               \RightLabel{\scriptsize(1)}
+                                               \UnaryInfC{$A \land B$}
+                                               \UnaryInfC{A}
+                        \BinaryInfC{$B \rightarrow C$}
+                                                                          \AxiomC{}
+                                                                          \RightLabel{\scriptsize(1)}
+                                                                          \UnaryInfC{$A \land B$}
+                                                                          \UnaryInfC{B}
+                                                      \BinaryInfC{C}
+                                                      \RightLabel{\scriptsize(1)}
+                                                      \UnaryInfC{$A \land B \rightarrow C$}
+                                                      \RightLabel{\scriptsize(2)}
+                                                      \UnaryInfC{$(A \rightarrow (B \rightarrow C)) \rightarrow (A \land B \rightarrow C) $}
+\end{prooftree}
+
+%essa prova é bem parecida com as outras, preciso explicar?
+
+\item Prova de $A \land B \iff B \land A$:
+\begin{prooftree}
+    \AxiomC{}
+    \RightLabel{\scriptsize(1)}
+    \UnaryInfC{$A \land B$}
+    \UnaryInfC{B}
+                              \AxiomC{}
+                              \RightLabel{\scriptsize(1)}
+                              \UnaryInfC{$A\land B$}
+                              \UnaryInfC{A}
+             \BinaryInfC{$B \land A$}
+                                                         \AxiomC{}
+                                                         \RightLabel{\scriptsize(2)}
+                                                         \UnaryInfC{$B \land A $}
+                                                         \UnaryInfC{A}
+                                                                                    \AxiomC{}
+                                                                                    \RightLabel{\scriptsize(2)}
+                                                                                    \UnaryInfC{$B \land A$}
+                                                                                    \UnaryInfC{B}
+                                                                     \BinaryInfC{$A \land B$}
+                                                                     \RightLabel{\scriptsize(1,2)}
+                                      \BinaryInfC{$A \land B \iff B \land A$}
+\end{prooftree}
+
+Para construir essa prova, partimos do $A \land B \iff B \land A$ ao final da prova. Para obtê-lo, precisamos partir de $B \land A$ e chegar no $A \land B$ e também partir de  $A \land B$ e chegar em $B \land A$. Sabendo que chegaremos nos dois, podemos escrevê-los na linha acima de  $A \land B \iff B \land A$. Sabendo que partiremos também dos dois, podemos escrevê-los como hipóteses. Teremos uma estrutura como essa: 
+\begin{prooftree}
+    \AxiomC{}
+    \RightLabel{\scriptsize(1)}
+    \UnaryInfC{$A \land B$}
+     \noLine
+    \UnaryInfC{$\vdots$}
+     \noLine
+    \UnaryInfC{$B \land A$}
+    \AxiomC{}
+    \RightLabel{\scriptsize(2)}
+    \UnaryInfC{$B \land A$}
+     \noLine
+    \UnaryInfC{$\vdots$}
+     \noLine
+    \UnaryInfC{$A \land B$}
+    \RightLabel{\scriptsize(1,2)}
+    \BinaryInfC{$A \land B \iff B \land A$}
+\end{prooftree}
+
+Para formar $A \land B$ e $B \land A$ precisamos de $A$ e $B$ separadamente. Estes podem ser obtidos a partir das hipóteses. Logo, repetindo as hipóteses e realizando a exclusão do $\land$, formamos a árvore final.
+
+\item Prova de $A \land (B \lor C) \rightarrow (A \land B) \lor (A \land C)$
+
+\begin{prooftree}
+
+\AxiomC{}                   
+\RightLabel{\scriptsize(2)} 
+\UnaryInfC{$A \land (B \lor C)$}                
+\UnaryInfC{$B \lor C$}
+
+\AxiomC{}
+\RightLabel{\scriptsize(2)} 
+\UnaryInfC{$A \land (B \lor C)$}
+\UnaryInfC{A}
+\AxiomC{}
+\RightLabel{\scriptsize(1)} 
+\UnaryInfC{B}
+\BinaryInfC{$A \land B$}
+\UnaryInfC{$(A \land B) \lor (A \land C)$}
+
+\AxiomC{}
+\RightLabel{\scriptsize(2)} 
+\UnaryInfC{$A \land (B \lor C)$}
+\UnaryInfC{A}
+\AxiomC{}
+\RightLabel{\scriptsize(1)} 
+\UnaryInfC{C}
+\BinaryInfC{$A \land C$}
+\UnaryInfC{$(A \land B ) \lor (A \land C)$}
+
+            \RightLabel{\scriptsize(1)} 
+            \TrinaryInfC{$ (A \land B) \lor (A \land C)$}
+            \RightLabel{\scriptsize(2)} 
+           \UnaryInfC{$A \land (B \lor C) \rightarrow (A \land B) \lor (A \land C)$}
+\end{prooftree}
+
+Para escrever essa prova, podemos partir, como nas outras, do objetivo final: $A \land (B \lor C) \rightarrow (A \land B) \lor (A \land C)$. Como estamos provando uma implicação, vamos chegar em $(A \land B) \lor (A \land C)$ na linha anterior. Observamos também que $A \land (B \lor C)$ será uma hipótese. Teremos, então, uma estrutura como essa:
+
+\begin{prooftree}
+ \AxiomC{}
+\RightLabel{\scriptsize(2)} 
+\UnaryInfC{$A \land (B \lor C)$}
+     \noLine
+    \UnaryInfC{$\vdots$}
+    \noLine
+    \UnaryInfC{$(A \land B) \lor (A \land C)$}
+    \RightLabel{\scriptsize(2)}
+    \UnaryInfC{$A \land (B \lor C) \rightarrow (A \land B) \lor (A \land C)$}
+\end{prooftree}
+
+Como proceder a partir dessa estrutura? Para formar o $(A \land B) \lor (A \land C)$ será necessário o $A \land B$ isoladamente ou o $A \land C$ (a partir de qualquer um dos dois é possível realizar a introdução do $\lor$ e assim chegar em $(A \land B) \lor (A \land C)$). Independente de qual dos dois serão utilizados, nota-se que, para formar o ``e'', será necessário: o $A$ e também o $B$ ou o $C$. O $A$ pode ser facilmente obtido  a partir da hipótese. Para obter $B$ ou $C$ isoladamente, será necessário realizar a exclusão do $B \lor C$ contido no ``e'' da hipótese. Nota-se que para realizar a exclusão do ``ou'', é necessário levantar $B$ e $C$ como hipótese. Assim, podemos formar tanto $A \land B$, quanto $A \land C$. Assim, é possível chegar no resultado final descrito acima. 
+
+
+\item Prova do PHP-3
+    O princípio da casa dos pombos afirma que  se n pombos devem ser postos em m casas, e se n > m, então pelo menos uma casa irá conter mais de um pombo. Apesar desse princípio  generalizado ser muito amplo para ser provado por árvores dedutivas, conseguimos provar o caso de 3 pombos e 2 casas de pombo utilizando árvores dedutivas.
+    %tentaremos por a árvore?%
+
+
+
+\end{itemize}
 
 \section{Exercícios}
