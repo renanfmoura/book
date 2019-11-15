@@ -502,9 +502,9 @@ Antes de utilizar a prova por absurdo precisamos abrir o modo clássico do Lean.
 \section{Exemplos adicionais de Dedução Natural}
 
 Nesta seção serão apresentados exemplos adicionais de provas de dedução natural e seus equivalentes no Lean. Também será explicado como construir essas árvores do zero, partindo somente do  que se quer provar.  
-\begin{itemize}
 
-\item Prova de A $\rightarrow$ C a partir de A $\rightarrow$ B e B $\rightarrow$ C
+
+\textbf{1. Prova de A $\rightarrow$ C a partir de A $\rightarrow$ B e B $\rightarrow$ C:}
 
 \begin{prooftree}
     \AxiomC{}
@@ -524,7 +524,7 @@ Como construir essa prova? Primeiro, começamos pelo que se quer provar: $A \rig
 \UnaryInfC{$A \rightarrow C $}
 \end{prooftree}
 
-Agora podemos considerar as hipóteses. Como a prova é de $A\rightarrow B$, vamos utilizar o $A$ em algum momento na árvore. Além disso, pelo enunciado, sabemos que vamos também utilizar o  $A \rightarrow B$ e $B \rightarrow C$. Então teremos uma estrutura razoavelmente parecida com essa: 
+Agora podemos considerar as hipóteses. Como a prova é de $A\rightarrow C$, vamos utilizar o $A$ em algum momento na árvore. Além disso, pelo enunciado, sabemos que vamos também utilizar o  $A \rightarrow B$ e $B \rightarrow C$. Então teremos uma estrutura razoavelmente parecida com essa: 
 
 \begin{prooftree}
     \AxiomC{}
@@ -559,7 +559,7 @@ A partir disso, é possível observar com mais facilidade quais regras de deduç
     \UnaryInfC{$A \rightarrow C $}
 \end{prooftree}
      
-Por fim, obtemos $C$ a partir de $B$ e de $B \rightarrow C$, formando a ávore apresentada de início. 
+Por fim, obtemos $C$ a partir de $B$ e de $B \rightarrow C$, formando a árvore apresentada de início. 
 
 No Lean, essa prova poderia ser feita da seguinte forma: 
 \begin{lstlisting}
@@ -568,6 +568,17 @@ example (h1: A → B) (h2: B → C): A → C :=
 assume h3: A,
 have h4: B, from h1 h3,
 h2 h4
+\end{lstlisting}
+
+Para escrevê-la, adicionamos ao lado de $example$ as hipóteses que não vão ser descartadas. No caso, como o enunciado diz que vamos utilizar $A\rightarrow B$ e $B\rightarrow C$ para realizar a prova, adicionamos os dois depois de $example$. Em seguida, adicionamos $:$ e o que queremos provar, seguido de $:=$. 
+
+Para o teor da prova, devemos considerar que a ordem no qual escrevemos no Lean importa. Logo, devemos seguir razoavelmente a ordem da árvore de dedução natural. Na árvore desse problema, é possível observar que a prova começa com o $A$ (do $A \rightarrow C$). Como essa é uma hipótese que vai ser descartada, escrevemos ela com o $assume$. Como a hipótese $A \rightarrow B$ já está escrita no $example$, podemos utilizá-la para encontrar $B$. Nesse caso, utilizamos o $have$ para atribuir o nome de uma variável ao $B$. Isso permite uma organização maior e evita que, em provas longas, tenha que se repetir muitas vezes como encontrar uma determinada variável. Contudo, não é necessário utilizar o $have$. Nesse caso, por exemplo, somente utilizamos o $B$ uma vez, para aplicá-lo ao $B \rightarrow C$. Logo, poderíamos ter escrito a prova da seguinte forma:
+
+\begin{lstlisting}
+variables A B C: Prop
+example (h1: A → B) (h2: B → C): A → C :=
+assume h3: A,
+h2 (h1 h3)
 \end{lstlisting}
 
 A prova acima também pode ser intuitivamente pensada como (A $\rightarrow$ B) $\land$ (B $\rightarrow$ C) $\rightarrow$ (A $\rightarrow$ C). Nesse caso, teria-se a seguinte árvore:
@@ -592,7 +603,7 @@ A prova acima também pode ser intuitivamente pensada como (A $\rightarrow$ B) $
                           \UnaryInfC{$(A \rightarrow B) \land (B \rightarrow C) \rightarrow (A \rightarrow C)$}
 \end{prooftree}
 
-Nesse caso, seria possível construir a árvore da seguinte forma: primeiro, começamos pelo que se quer provar ($(A \rightarrow B) \land (B \rightarrow C) \rightarrow (A \rightarrow C)$). Como vamos chegar em $A \rightarrow C$, podemos colocá-lo logo acima do que queremos provar. Ainda assim, continuamos com uma implicação, então podemos inserir o $C$ antes do $A \rightarrow C$. 
+Para construir a árvore acima, poderia-se adotar essa estratégia: primeiro, começamos pelo que se quer provar ($(A \rightarrow B) \land (B \rightarrow C) \rightarrow (A \rightarrow C)$). Como vamos chegar em $A \rightarrow C$, podemos colocá-lo logo acima do que queremos provar. Ainda assim, continuamos com uma implicação, então podemos inserir o $C$ antes do $A \rightarrow C$. 
 
 Como hipótese, teremos o o $A$ (de $A \rightarrow C$) e o $(A \rightarrow B) \land (B \rightarrow C)$ (vindo do resultado final: $(A \rightarrow B) \land (B \rightarrow C) \rightarrow (A \rightarrow C)$). Assim, teremos uma estrutura dessa forma: 
 \begin{prooftree}
@@ -625,9 +636,9 @@ have h3: B, from (and.left h1) h2,
 (and.right h1) h3
 \end{lstlisting}
 
-Nos dois casos acima, podemos observar , nas árvores de dedução natural, a utilização de números em determinadas hipóteses. Utilizamos esses para evidenciar onde descartamos as hipóteses marcadas. 
+Nas duas árvores de deduçao natural acima, podemos observar a utilização de números em determinadas hipóteses. Utilizamos esses para evidenciar onde descartamos as hipóteses marcadas. 
 
-\item Prova de $Q\land S$ a partir de $(P\land Q)\land R$ e $S \land T$
+\textbf{2. Prova de $Q\land S$ a partir de $(P\land Q)\land R$ e $S \land T$:}
 
 \begin{prooftree}
     \AxiomC{$(P \land Q) \land S$}
@@ -667,7 +678,7 @@ have h4: S, from and.left h2,
 and.intro h3 h4
 \end{lstlisting}
 
-\item Prova de $(A \rightarrow (B \rightarrow C)) \rightarrow (A \land B \rightarrow C)$ :
+\textbf{3. Prova de $(A \rightarrow (B \rightarrow C)) \rightarrow (A \land B \rightarrow C)$} :
 \begin{prooftree}
     \AxiomC{}
     \RightLabel{\scriptsize(2)}
@@ -690,7 +701,7 @@ and.intro h3 h4
 
 %essa prova é bem parecida com as outras, preciso explicar?
 
-\item Prova de $A \land B \iff B \land A$:
+\textbf{4. Prova de $A \land B \iff B \land A$:}
 \begin{prooftree}
     \AxiomC{}
     \RightLabel{\scriptsize(1)}
@@ -714,7 +725,7 @@ and.intro h3 h4
                                       \BinaryInfC{$A \land B \iff B \land A$}
 \end{prooftree}
 
-Para construir essa prova, partimos do $A \land B \iff B \land A$ ao final da prova. Para obtê-lo, precisamos partir de $B \land A$ e chegar no $A \land B$ e também partir de  $A \land B$ e chegar em $B \land A$. Sabendo que chegaremos nos dois, podemos escrevê-los na linha acima de  $A \land B \iff B \land A$. Sabendo que partiremos também dos dois, podemos escrevê-los como hipóteses. Teremos uma estrutura como essa: 
+Para construir essa prova, partimos do $A \land B \iff B \land A$ ao final da prova. Para obtê-lo, precisamos partir de $B \land A$ e chegar no $A \land B$ e também partir de  $A \land B$ e chegar em $B \land A$. Sabendo que chegaremos nos dois, podemos escrevê-los na linha acima de  $A \land B \iff B \land A$. Sabendo que partiremos também dos dois, podemos escrevê-los como hipóteses. Teremos, assim, uma estrutura como essa: 
 \begin{prooftree}
     \AxiomC{}
     \RightLabel{\scriptsize(1)}
@@ -748,7 +759,7 @@ iff.intro
 
 \end{lstlisting}
 
-\item Prova de $A \land (B \lor C) \rightarrow (A \land B) \lor (A \land C)$
+\textbf{5. Prova de $A \land (B \lor C) \rightarrow (A \land B) \lor (A \land C)$:}
 
 \begin{prooftree}
 
@@ -797,7 +808,7 @@ Para escrever essa prova, podemos partir, como nas outras, do objetivo final: $A
     \UnaryInfC{$A \land (B \lor C) \rightarrow (A \land B) \lor (A \land C)$}
 \end{prooftree}
 
-Como proceder a partir dessa estrutura? Para formar o $(A \land B) \lor (A \land C)$ será necessário o $A \land B$ isoladamente ou o $A \land C$ (a partir de qualquer um dos dois é possível realizar a introdução do $\lor$ e assim chegar em $(A \land B) \lor (A \land C)$). Independente de qual dos dois serão utilizados, nota-se que, para formar o ``e'', será necessário: o $A$ e também o $B$ ou o $C$. O $A$ pode ser facilmente obtido  a partir da hipótese. Para obter $B$ ou $C$ isoladamente, será necessário realizar a exclusão do $B \lor C$ contido no ``e'' da hipótese. Nota-se que para realizar a exclusão do ``ou'', é necessário levantar $B$ e $C$ como hipótese. Assim, podemos formar tanto $A \land B$, quanto $A \land C$. Assim, é possível chegar no resultado final descrito acima. 
+Como proceder a partir dessa estrutura? Para formar o $(A \land B) \lor (A \land C)$ será necessário o $A \land B$ isoladamente ou o $A \land C$ (a partir de qualquer um dos dois é possível realizar a introdução do $\lor$ e assim chegar em $(A \land B) \lor (A \land C)$). Independente de qual dos dois serão utilizados, nota-se que, para formar o ``e'', será necessário: o $A$ e também o $B$ ou o $C$. O $A$ pode ser facilmente obtido  a partir da hipótese. Para obter $B$ ou $C$ isoladamente, será necessário realizar a exclusão do $B \lor C$ contido no ``e'' da hipótese. Nota-se que para realizar a exclusão do ``ou'', é necessário considerar $B$ e $C$ como hipótese. Assim, podemos formar tanto $A \land B$, quanto $A \land C$. Dessa forma, é possível chegar no resultado final descrito acima. 
 
 No Lean, essa prova poderia ser construída da seguinte forma:
 \begin{lstlisting}
@@ -813,8 +824,8 @@ or.elim h2
     or.inr (and.intro h4 h3))
 \end{lstlisting}
 
-\item Prova do PHP-3
-    O princípio da casa dos pombos afirma que  se n pombos devem ser postos em m casas, e se n > m, então pelo menos uma casa irá conter mais de um pombo. Apesar desse princípio  generalizado ser muito amplo para ser provado por árvores dedutivas, conseguimos provar o caso de 3 pombos e 2 casas de pombo utilizando árvores dedutivas.
+\textbf{6. Prova do Princípio da Casa dos Pombos (PHP-3):}
+    O princípio da casa dos pombos afirma que se $n$ pombos devem ser postos em $m$ casas, e se $n > m$, então pelo menos uma casa irá conter mais de um pombo. Apesar desse princípio  generalizado ser muito amplo para ser provado por árvores dedutivas, conseguimos provar o caso de 3 pombos e 2 casas de pombo utilizando árvores dedutivas.
     %tentaremos por a árvore?%
 
 No Lean, essa prova poderia ser construída da seguinte forma: 
