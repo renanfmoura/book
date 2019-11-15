@@ -49,14 +49,13 @@
         O Lean é muito eficiente em expressar Lógica de Primeira Ordem. Vejamos nosso exemplo:
 
         \begin{lstlisting}
-    constant U : Type
-
-    constant zero : U
-    constant par : U → Prop
-    constant primo : U → Prop
-    constant igual : U → U → Prop
-    constant adicao : U → U → U
-        \end{lstlisting}
+constant U : Type
+constant zero : U
+constant par : U → Prop
+constant primo : U → Prop
+constant igual : U → U → Prop
+constant adicao : U → U → U
+\end{lstlisting}
 
         Pelo fato de que o Lean é baseado em \textit{Teoria dos Tipos}, declaramos um novo tipo \lstinline{U}. Podemos intuitivamente considerá-lo como "universo" ou "domínio". Por exemplo, o conjunto dos naturais.
 
@@ -66,43 +65,38 @@
         \lstinline{adicao} é uma função que toma dois elementos do tipo \lstinline{U} e retorna outro do mesmo tipo. Ora, podemos constatar:
 
         \begin{lstlisting}
-    #check par zero
-    #check adicao zero zero
-    #check par (adicao zero zero)
-        \end{lstlisting}
+#check par zero
+#check adicao zero zero
+#check par (adicao zero zero)
+\end{lstlisting}
 
-        \lstinline{#check} informa que a primeira expressão tem tipo \lstinline{Prop}, a segunda tem tipo \lstinline{U} e a terceira, \lstinline{Prop}. Importante observar o papel dos parênteses acima, para que \lstinline{par} receba apenas um elemento.
+        O \lstinline{#check} da linha $1$ informa que a expressão tem tipo \lstinline{Prop}; na linha $2$, tipo \lstinline{U}; e, na linha $3$, tipo \lstinline{Prop}. Importante observar o papel dos parênteses acima, para que \lstinline{par} receba apenas um elemento.
 
         Uma função (ou relação) que recebe mais de um elemento tem notação \lstinline{U → U → U}. A notação para predicados (\lstinline{U → Prop}) e relações (\lstinline{U → U → Prop}) funciona como se ambas fossem funções, porém retornassem \lstinline{Prop}. 
 
         Vários conjuntos estão nas bibliotecas padrão do Lean, como os naturais, utilizados nos exemplos anteriores. O comando para o símbolo \lstinline{ℕ} é \lstinline{\nat} ou \lstinline{\N}.
 
         \begin{lstlisting}
-    constant zero : ℕ
-    #check zero + zero
-        \end{lstlisting}
+constant zero : ℕ
+#check zero + zero
+\end{lstlisting}
 
-        O \lstinline{#check} acima retorna algo do tipo \lstinline{ℕ}.
+        O \lstinline{#check} da linha $2$ retorna algo do tipo \lstinline{ℕ}.
 
         Podemos misturar Lógica Proposicional com Lógica de Primeira Ordem:
 
         \begin{lstlisting}
-    constant U : Type
+constant U : Type
+constant zero : U
+constant par : U → Prop
+constant primo : U → Prop
+constant igual : U → U → Prop
+constant adicao : U → U → U
 
-    constant zero : U
-    constant par : U → Prop
-    constant primo : U → Prop
-    constant igual : U → U → Prop
-    constant adicao : U → U → U
+#check ¬ (par zero ∨ par (adicao zero zero)) ∧ primo zero
+\end{lstlisting}
 
-    #check ¬ (par zero ∨ par (adicao zero zero)) ∧ primo zero
-        \end{lstlisting}
-
-        E o \lstinline{#check} nos retorna:
-        
-        \begin{lstlisting}
-    ¬(par zero ∨ par (adicao zero zero)) ∧ primo zero : Prop
-        \end{lstlisting}
+        E o \lstinline{#check} nos retorna algo do tipo \lstinline{Prop}.
 
     \subsection{Quantificador Universal}
 
@@ -121,15 +115,14 @@
         Vejamos essas expressões no Lean:
 
         \begin{lstlisting}
-    constant U : Type
+constant U : Type
+constant par : U → Prop
+constant impar : U → Prop
+constant sucessor : U → U
 
-    constant par : U → Prop
-    constant impar : U → Prop
-    constant sucessor : U → U
-
-    #check ∀ x : U, par x ∨ impar x
-    #check ∀ y : U, par y → impar (sucessor y)
-        \end{lstlisting}
+#check ∀ x : U, par x ∨ impar x
+#check ∀ y : U, par y → impar (sucessor y)
+\end{lstlisting}
 
         Os dois \lstinline{#check}'s nos retornam \lstinline{Prop}.
 
