@@ -106,8 +106,8 @@ constant adicao : U → U → U
         Por exemplo:
 
         \begin{itemize}
-            \item $\forall x, (par(x) \lor impar(x))$
-            \item $\forall y, (par(y) \rightarrow impar(y + 1))$
+            \item $\forall x (par(x) \lor impar(x))$
+            \item $\forall y (par(y) \rightarrow impar(y + 1))$
         \end{itemize}
 
         A primeira expressão nos diz que todo número é par ou ímpar (no caso dos naturais).
@@ -129,9 +129,9 @@ constant sucessor : U → U
         Observe as três sentenças:
 
         \begin{itemize}
-            \item $\forall x, (par(x) \lor impar(x))$
-            \item $\forall x, par(x) \lor impar(x)$
-            \item $\forall x, (par(x)) \lor impar(x)$
+            \item $\forall x (par(x) \lor impar(x))$
+            \item $\forall x par(x) \lor impar(x)$
+            \item $\forall x (par(x)) \lor impar(x)$
         \end{itemize}
 
         Por uma questão de convenção, as duas últimas sentenças são equivalentes, enquanto a primeira é diferente.
@@ -141,8 +141,57 @@ constant sucessor : U → U
         Ou seja, o Lean busca o maior escopo possível.
 
         Quando estamos lidando com quantificadores, a variável que o acompanha é dita \textbf{limitada} (\textit{bound}, em inglês).
-        na expressão $\forall x, A(x)$, a variável $x$ é limitada.
+        na expressão $\forall x A(x)$, a variável $x$ é limitada.
         Isso significa que o $x$ não representa um valor em si, mas apenas um ``espaço reservado"\space para qualquer outra variável.
         Observe que a expressão $\forall y, A(y)$ representa exatamente a mesma coisa.
+
+        Uma variável que não é limitada é chamada \textbf{livre}. Por exemplo, considere a expressão $\forall x, y \le x$.
+        Ora, sabemos que $x$ representa uma "espaço reservado" para toda variável do domínio. O que representa $y$?
+        Representa um elemento específico do domínio. Digamos que o domínio é $\mathbb{N}$, então podemos considerar o elemento zero como $y$.
+        Sendo assim, se trocarmos $y$ por $z$ (que pode representar outro elemento), então não necessariamente vale a expressão
+        $\forall x z \le x$. Ora, $z$ pode representar o elemento um, então a expressão seria falsa.
+
+        No exemplo anterior, tanto $y$ quanto $z$ são variáveis livres. Quando uma expressão \textbf{não} contém variáveis livres, é chamada sentença.
+
+        Quantificadores também possuem regras de introdução e eliminação. Vejamos:
+        
+        \begin{center}
+            \begin{bprooftree}
+                \AxiomC{$A(y)$}
+                \RightLabel{\scriptsize $\forall I$}
+                \UnaryInfC{$\forall x A(x)$}
+            \end{bprooftree}
+            \begin{bprooftree}
+                \AxiomC{$\forall x A(x)$}
+                \RightLabel{\scriptsize $\forall E$}
+                \UnaryInfC{$A(t)$} 
+            \end{bprooftree}
+        \end{center}
+
+        A regra da esquerda demonstra a \textbf{introdução} do quantificador universal. Ela vale quando $y$ não é livre em nenhuma hipótese não cancelada.
+        A intuição neste caso é que, dado que vale $A(y)$ para algum $y$ qualquer, então podemos dizer que vale para todo $y$. Mudamos o nome da variável apenas
+        pra que a operação fique mais evidente e intuitiva.
+
+        A regra da direita demonstra a \textbf{eliminação} do quantificador universal. A intuição, neste caso,
+        é que, se $A(x)$ vale para todo $x$, então vale para algum $t$ particular do domínio.
+
+        Vejamos um exemplo aplicando essas regras. Observe como derivar $\forall x A(x) \land B(x)$ a partir de $\forall x A(x)$ e $\forall x B(x)$:
+
+        \begin{center}
+            \begin{bprooftree}
+                \AxiomC{$\forall x A(x)$}
+                \RightLabel{\scriptsize $\forall E$}
+                \UnaryInfC{$A(y)$}
+                \AxiomC{$\forall x B(x)$}
+                \RightLabel{\scriptsize $\forall E$}
+                \UnaryInfC{$B(y)$}
+                \RightLabel{\scriptsize $\land I$}
+                \BinaryInfC{$A(y) \land B(y)$}
+                \RightLabel{\scriptsize $\forall I  $}
+                \UnaryInfC{$\forall x A(x) \land B(x)$}
+            \end{bprooftree}
+        \end{center}
+
+        Ora, e como representar isso em Lean?
 
     \subsection{Quantificador Existencial}
