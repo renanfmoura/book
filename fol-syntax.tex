@@ -192,6 +192,45 @@ constant sucessor : U → U
             \end{bprooftree}
         \end{center}
 
-        Ora, e como representar isso em Lean?
+        Ora, e como representar isso em Lean? Esta é a regra de introdução para o quantificador universal:
+
+        \begin{lstlisting}
+constant U : Type
+constant A : U → Prop
+
+example : ∀ x : U, A x :=
+    assume y : U,
+    show A y, from sorry
+\end{lstlisting}
+
+        Estamos mostrando $\forall x A(x)$ assumindo um $y$ qualquer e mostrando que vale $A(y)$.
+Neste caso, necessitaríamos de uma prova de que $A(y)$, por isso o uso do \lstinline{sorry}.
+
+        Observe, agora, a regra da eliminação:
+
+        \begin{lstlisting}
+constant U : Type
+constant A : U → Prop
+constant h1 : ∀ x : U, A x
+constant t : U
+
+example : A t :=
+    h1 t
+\end{lstlisting}
+
+        Dado que sabemos que $\forall x A(x)$, podemos "aplicar" $t$ e obter $A(t)$.
+
+        \begin{lstlisting}
+constant U : Type
+constants A B : U → Prop
+constant h1 : ∀ x : U, A x
+constant h2 : ∀ x : U, B x
+
+example : ∀ x : U, A x ∧ B x :=
+    assume y,
+        have h3 : A y, from h1 y,
+        have h4 : B y, from h2 y,
+    show A y ∧ B y, from and.intro h3 h4
+\end{lstlisting}
 
     \subsection{Quantificador Existencial}
