@@ -433,8 +433,6 @@ show C, from h1 h4)
 (assume h4: B, 
 show C, from h2 h4)
 \end{lstlisting} 
-
-
 \subsection{Negação}
 A negação de $A$ é  representada  em  símbolos por $\neg A $. 
 Mostrar que $\neg A $ ocorre, em termos lógicos, é o mesmo que mostrar que $A $ leva a uma contradição. Em dedução natural, temos uma prova que tem a seguinte árvore, na qual $\bot$ é o símbolo para falso, contradição ou absurdo:
@@ -495,9 +493,18 @@ Uma vez apresentado o símbolo para \textit{falso}, a seguir apresentamos o sím
     \UnaryInfC{$\top $}
 \end{prooftree}
 
-\subsection{Prova por contradição}
+E para $\bot $ , quais regras regem o mundo dos absurdos? A regra de eliminação para $\bot $ possui em latin o nome de \textit{ex falso sequitur quodlibet}, que significa que "a partir de uma contradição, qualquer coisa segue". Essa regra de eliminação é especialmente difícil de traçar um paralelo com o ponto de vista da linguagem natural. Parece não haver sentido em dizer que podemos concluir qualquer coisa a partir de uma contradição.
 
-Existe um estilo de fazer matemática conhecido como "matemática construtivista" que nega a equivalência de $\neg \neg A$ e $ A$. De modo que uma demonstração de que algo é verdadeiro deveria fornecer evidências explícitas de que uma declaração é falsa, em vez de evidências de que ela não pode ser falsa. Uma prova construtivista é aquela que realmente lhe diz como encontrar o objeto que se afirma existir. 
+\begin{prooftree}
+ \AxiomC{$\bot$}
+ \RightLabel{\scriptsize $\bot$ E}
+ \UnaryInfC{A}
+\end{prooftree}
+
+
+\subsection{Prova por contradição}
+% Sugestão de leitura : https://home.sandiego.edu/~shulman/papers/rabbithole.pdf
+Existe um estilo de fazer matemática conhecido como "matemática construtiva" que nega a equivalência de $\neg \neg A$ e $ A$. De modo que uma demonstração de que algo é verdadeiro deveria fornecer evidências explícitas de que uma declaração é falsa, em vez de evidências de que ela não pode ser falsa. Uma prova construtiva é aquela que realmente lhe diz como encontrar o objeto que se afirma existir. 
 
 A prova por contradição é informalmente utilizada para se referir a duas regras diferentes de inferência. Sendo elas:
 \begin{itemize}
@@ -507,7 +514,7 @@ A prova por contradição é informalmente utilizada para se referir a duas regr
 \bigbreak
 É importante que esteja bastante clara a diferença entre as duas regras. No primeiro argumento, uma negação é introduzida na conclusão, enquanto que no segundo, ela é eliminada da hipótese. A regra de inferência que conclui com a sentença positiva "$ P$" é chamada de redução ao absurdo (em latim, \textit{reductio ad absurdum}). De fato, a regra é equivalente ao princípio $ \neg \neg A \leftrightarrow A$. 
 
-A primeira vista é difícil perceber claramente porque em uma delas temos uma prova construtivista e na outra uma que utiliza do raciocínio clássico. Na lógica clássica além de todas as regras de inferência já expostas neste livro, temos o princípio do terceiro excluído que diz que uma proposição $A $ ou é verdadeira ou é falsa, não existindo uma terceira opção. Assim, se é impossível uma proposição $P$ ser falsa, logo ela só pode ser verdadeira. 
+A primeira vista é difícil perceber claramente porque em uma delas temos uma prova construtiva e na outra uma que utiliza do raciocínio clássico. Na lógica clássica além de todas as regras de inferência já expostas neste livro, temos o princípio do terceiro excluído que diz que uma proposição $A $ ou é verdadeira ou é falsa, não existindo uma terceira opção. Assim, se é impossível uma proposição $P$ ser falsa, logo ela só pode ser verdadeira. 
 
 Na linguagem natural, comumente tomamos a frase "Maria não não estava vestida de azul" como um modo redundante e agramatical de dizer que "Maria estava vestida de azul". Ao mesmo tempo que em "Eu não vi ninguém" as duas palavras negativas não se anulam. 
 
@@ -525,7 +532,7 @@ Em dedução natural, a redução ao absurdo é expressa do seguinte modo, onde 
  \UnaryInfC{$A $}
 \end{prooftree}
 
-As regras de introdução e eliminação que vimos até agora no Lean são todas construtivaistas, ou seja, refletem um entendimento computacional dos conectivos lógicos com base na correspondência proposições como tipos. Para utilizar os princípios da lógica clássica, você deve abrir o modo clássico com o comando \verb|open classical| no início do seu arquivo ou em qualquer lugar antes de usá-lo.
+As regras de introdução e eliminação que vimos até agora no Lean são todas construtivas, ou seja, refletem um entendimento computacional dos conectivos lógicos com base na correspondência proposições como tipos. Para utilizar os princípios da lógica clássica, você deve abrir o modo clássico com o comando \verb|open classical| no início do seu arquivo ou em qualquer lugar antes de usá-lo.
 
 \begin{lstlisting} 
 open classical
@@ -563,7 +570,6 @@ by_contradiction
  \RightLabel{\scriptsize(1)}
  \UnaryInfC{$\neg \neg P \to P$}
 \end{prooftree}
-
 
 
 \section{Exemplos adicionais de Dedução Natural}
@@ -890,8 +896,106 @@ or.elim h2
     (assume h3: C,
     or.inr (and.intro h4 h3))
 \end{lstlisting}
+%Usar a direção da implicação pra esquerda?
+\textbf{6. Prova de ¬ (A ↔ ¬ A) }
+\begin{prooftree}
+ \AxiomC{}
+ \RightLabel{\scriptsize(1)} 
+ \UnaryInfC{ A$ \leftrightarrow \neg $A}
+ \UnaryInfC{ A$ \rightarrow \neg $A}
+ \AxiomC{}
+ \RightLabel{\scriptsize(2)} 
+ \UnaryInfC{A}
+ \BinaryInfC{$\neg $A}
+                            \AxiomC{}
+                            \RightLabel{\scriptsize(1)} 
+                            \UnaryInfC{A$ \leftrightarrow \neg $A}
+                            \UnaryInfC{ A$ \leftarrow \neg $A}
+                            \AxiomC{}
+                            \RightLabel{\scriptsize(3)}
+                            \UnaryInfC{$\neg$ A}
+                            \BinaryInfC{A}
+\RightLabel{\scriptsize(2,3)}
+\BinaryInfC{$\bot$}
+\RightLabel{\scriptsize(1)}
+\UnaryInfC{$\neg (A \leftrightarrow \neg A) $}
 
-\textbf{6. Prova do Princípio da Casa dos Pombos (PHP-3):}
+\end{prooftree}
+
+Para construir a prova acima podemos começar deduzindo o passo anterior ao resultado final que é a negação de $(A \leftrightarrow \neg A) $. Essa será nossa hipótese inicial e com ela queremos chegar à uma contradição. A seguir:
+
+\begin{prooftree}
+ \AxiomC{}
+ \RightLabel{\scriptsize(1)} 
+ \UnaryInfC{ A$ \leftrightarrow \neg $A}
+ \UnaryInfC{$\vdots$}
+                            \AxiomC{}
+                            \RightLabel{\scriptsize(1)} 
+                            \UnaryInfC{A$ \leftrightarrow \neg $A}
+                            \UnaryInfC{$\vdots$}
+\BinaryInfC{$\bot$}
+\RightLabel{\scriptsize(1)}
+\UnaryInfC{$\neg (A \leftrightarrow \neg A) $}
+
+\end{prooftree}
+
+Observe que a dupla implicação aparece duas vezes como hipótese, pois utilizaremos a implicação nas direções esquerda e direita para chegar à um absurdo. Parece razoável considerar que podemos chegar de algum modo em $\neg A$ e $A$, um em cada galho (\textit{ou branch}),  e a partir daí obter $\bot$.
+
+Temos no código a seguir um modo de construir essa prova com o auxílio do \verb|have|. É importante ressaltar que existem diferentes modos de escrever no Lean uma mesma prova em dedução natural, aconselhamos que você tente reproduzir à seu modo as demonstrações aqui expostas!
+
+\begin{lstlisting}
+variable A : Prop
+
+example : ¬ (A ↔ ¬ A) := 
+assume h₁ : A ↔ ¬ A, 
+show false, from
+    have h₃ : ¬ A, from
+        assume h₂ : A, 
+         show false, from 
+            (iff.elim_left h₁ h₂) h₂,
+            h₃ (iff.elim_right h₁ h₃)
+
+\end{lstlisting}
+
+\textbf{7. Prova de ¬ A ∨ ¬ B a partir de ¬ (A ∧ B)}
+%Mencionar o escopo das variáveis
+\begin{lstlisting}
+variables A B : Prop
+open classical
+
+example (h: ¬ (A ∧ B)): ¬ A ∨ ¬ B := 
+    by_contradiction 
+    (assume h₁ : ¬ (¬ A ∨ ¬ B),
+    have h₂ : ¬ A, from 
+        assume h₃ : A,
+        have h₄ : ¬ B, from
+            (assume h₅ : B, show false, from h (and.intro h₃ h₅)),
+        have h₅ : ¬ A ∨ ¬ B, from or.inr h₄,
+        show false, from h₁ h₅,   
+    have h₆ : ¬ A ∨ ¬ B, from or.inl h₂, 
+    show false, from h₁ h₆)
+\end{lstlisting}
+
+Um dos recursos sintáticos extras do Lean que costumam ser convenientes e, às vezes, tornam as provas mais bonitas é o uso do \verb|this|.
+
+Para rotular uma hipótese você pode usar números subscritos com uma barra invertida. Por exemplo, você pode escrever h₁ digitando \verb|h \ 1|. Os rótulos são irrelevantes para o Lean, você pode omitir o rótulo em uma declaração assumida, fornecendo uma hipótese "anônima". É possível consultar a última suposição anônima usando a palavra-chave this. Assim, o mesmo exemplo acima fica do seguinte modo a partir da linha 7:
+
+\begin{lstlisting}
+    have ¬ A, from 
+        assume h₁ : A,
+        have ¬ B, from
+            (assume h₂ : B, show false, from h (and.intro h₁ h₂)),
+        have h₄ : ¬ A ∨ ¬ B, from or.inr this,
+        show false, from h₃ h₄,   
+    have ¬ A ∨ ¬ B, from or.inl this, 
+    show false, from h₃ this)
+
+\end{lstlisting}
+
+No entanto, ao passo que a prova possa parecer \textit{mais bonita}, note que o entendimento imediato de alguns passos é dificultado, por isso cuidado ao utilizar esses recursos.
+
+\bigbreak
+\textbf{8. Prova do Princípio da Casa dos Pombos (PHP-3):}
     O princípio da casa dos pombos afirma que se $n$ pombos devem ser postos em $m$ casas, e se $n > m$, então pelo menos uma casa irá conter mais de um pombo. Apesar desse princípio  generalizado ser muito amplo para ser provado por árvores dedutivas, conseguimos provar o caso de 3 pombos e 2 casas de pombo utilizando árvores dedutivas.
     %tentaremos por a árvore?%
 
