@@ -15,8 +15,8 @@ linguagem baseada em Tipos. Dessa forma, estabelece-se uma
 diferença clara entre o Domínio $X$, caracterizado pelos Tipos, e
 o Conjunto $A$, que é do tipo (sub)conjunto de $X$. Em Lean: 
 \begin{lstlisting}
-    variable X : Type
-    variable A : set X    
+variable X : Type
+variable A : set X    
 \end{lstlisting}
 
 Entretanto a visão da função como mapeamento entre conjuntos
@@ -60,7 +60,7 @@ definir algoritmicamente se um número real de entrada é um número racional ou
 Porém, esse não é o objetivo do capítulo.
 
 Note que a escolha das variáveis $x$ e $n$ são arbitrárias. 
-Isto nos leva à definição no capítulo de \textit{\hyperlink{chapter.2}{FOL}} de 
+Isto nos leva à definição no capítulo de \textit{\hyperlink{chapter.4}{FOL}} de 
 variável ligada (\textit{bound}), visto que se renomearmos $x$ com $y$, os valores
 continuam os mesmos. 
 
@@ -71,8 +71,8 @@ Essa notação é mais interessante para cientistas da computação e lógicos d
 propriamente para matemáticos. Em Lean, definimos da seguinte forma: 
 
 \begin{lstlisting}
-    variables X Y : Type
-    variable f : X → Y    
+variables X Y : Type
+variable f : X → Y    
 \end{lstlisting}
 
 Lembre-se que diferenciamos o tipo $X$ do tipo $set~X$ em Lean.
@@ -109,21 +109,21 @@ Podemos ver em Lean as definições de composição e de identidade. Note que es
 hidden para que não haja conflito de definições. 
 
 \begin{lstlisting}
-    namespace hidden
-        variables {X Y Z : Type}
+namespace hidden
+    variables {X Y Z : Type}
 
-        def comp (f : Y → Z) (g : X → Y) : X → Z :=
-        λx, f (g x)
+    def comp (f : Y → Z) (g : X → Y) : X → Z :=
+    λx, f (g x)
 
-        infixr  ` ∘ ` := comp
+    infixr  ` ∘ ` := comp
 
-        #check @comp
+    #check @comp
 
-        def id (x : X) : X := x
+    def id (x : X) : X := x
 
-        #check @id
-        
-    end hidden
+    #check @id
+    
+end hidden
 \end{lstlisting}
 
 \begin{definition}
@@ -143,10 +143,10 @@ a comutativade da soma.
 Em lean, o comando \lstinline{funext} (de "function extensionality") prova a igualdade de funções.
 
 \begin{lstlisting}
-    variables {X Y : Type}
+variables {X Y : Type}
 
-    example (f g : X → Y) (h : ∀ x, f x = g x) : f = g :=
-        funext h
+example (f g : X → Y) (h : ∀ x, f x = g x) : f = g :=
+    funext h
 \end{lstlisting}
 
 \begin{theorem}
@@ -162,14 +162,14 @@ No Lean, podemos mostrar essa proposição da seguinte forma. Para algumas funç
 escrevermos \lstinline{open function}.   
 
 \begin{lstlisting}
-    variables {X Y Z W : Type}
+variables {X Y Z W : Type}
 
-    lemma left_id (f : X → Y) : id ∘ f = f := rfl
+lemma left_id (f : X → Y) : id ∘ f = f := rfl
 
-    lemma right_id (f : X → Y) : f ∘ id = f := rfl
+lemma right_id (f : X → Y) : f ∘ id = f := rfl
 
-    theorem comp.assoc (f : Z → W) (g : Y → Z) (h : X → Y) :
-        (f ∘ g) ∘ h = f ∘ (g ∘ h) := rfl
+theorem comp.assoc (f : Z → W) (g : Y → Z) (h : X → Y) :
+    (f ∘ g) ∘ h = f ∘ (g ∘ h) := rfl
   
 \end{lstlisting}
 
@@ -210,32 +210,32 @@ aquela que sentir mais confortável. Note que neste exemplo, já foi necessário
 visto que \lstinline{left_inverse} e \lstinline{right_inverse} já estão predefinidas. 
 
 \begin{lstlisting}
-    open function 
+open function 
 
-    variables {X Y Z: Type}
+variables {X Y Z: Type}
 
-    -- Term and Calc Mode
-    example (f: X → Y) (h: Y → X) (k: Y → X) 
-        (hf: left_inverse h f) (fk: right_inverse k f): h = k :=
-        have H: ∀ ( x : Y ), h x = k x, from 
-            assume x, 
-            have h1: h (f (k x)) = k x , from calc
-                h ( f (k x)) = k x: by apply hf, 
-            have h2: h (f (k x)) = h x, from calc
-                h (f (k x)) = h x: by rw fk,         
-            show h x = k x, from eq.trans (eq.symm h2) h1,
-        show h = k, from funext H
+-- Term and Calc Mode
+example (f: X → Y) (h: Y → X) (k: Y → X) 
+    (hf: left_inverse h f) (fk: right_inverse k f): h = k :=
+    have H: ∀ ( x : Y ), h x = k x, from 
+        assume x, 
+        have h1: h (f (k x)) = k x , from calc
+            h ( f (k x)) = k x: by apply hf, 
+        have h2: h (f (k x)) = h x, from calc
+            h (f (k x)) = h x: by rw fk,         
+        show h x = k x, from eq.trans (eq.symm h2) h1,
+    show h = k, from funext H
 
-    -- Tatics Mode
-    example (f: X → Y) (h: Y → X) (k: Y → X) 
-        (hf: left_inverse h f) (fk: right_inverse k f): h = k :=
-        begin
-            apply funext, 
-            assume x, 
-            have hf: h (f (k x)) = k x, by apply hf, 
-            rw ←hf,
-            rw fk, 
-        end
+-- Tatics Mode
+example (f: X → Y) (h: Y → X) (k: Y → X) 
+    (hf: left_inverse h f) (fk: right_inverse k f): h = k :=
+    begin
+        apply funext, 
+        assume x, 
+        have hf: h (f (k x)) = k x, by apply hf, 
+        rw ←hf,
+        rw fk, 
+    end
 \end{lstlisting}
 
 \begin{theorem}
@@ -312,15 +312,15 @@ Em Lean, essas definições são descritas no \lstinline{namespace function}.
 \end{example}
 
 \begin{lstlisting}
-    variables {X Y: Type}
+variables {X Y: Type}
 
-    def injective (f : X → Y) : Prop :=
-    ∀ x₁ x₂, f x₁ = f x₂ → x₁ = x₂
+def injective (f : X → Y) : Prop :=
+∀ x₁ x₂, f x₁ = f x₂ → x₁ = x₂
 
-    def surjective (f : X → Y) : Prop :=
-    ∀ y, ∃ x, f x = y
+def surjective (f : X → Y) : Prop :=
+∀ y, ∃ x, f x = y
 
-    def bijective (f : X → Y) := injective f ∧ surjective f
+def bijective (f : X → Y) := injective f ∧ surjective f
 \end{lstlisting}
 
 \begin{theorem}
@@ -342,25 +342,25 @@ Em Lean, essas definições são descritas no \lstinline{namespace function}.
 \end{proof}
 
 \begin{lstlisting}
-    open function 
+open function 
 
-    variables {X Y : Type}
+variables {X Y : Type}
 
-    theorem inj_of_left_inverse {g : Y → X} {f : X → Y} :
-    left_inverse g f → injective f :=
-        assume h, assume x₁ x₂, assume feq, 
-        calc x₁ = g (f x₁) : by rw h
-            ... = g (f x₂) : by rw feq
-            ... = x₂       : by rw h
+theorem inj_of_left_inverse {g : Y → X} {f : X → Y} :
+left_inverse g f → injective f :=
+    assume h, assume x₁ x₂, assume feq, 
+    calc x₁ = g (f x₁) : by rw h
+        ... = g (f x₂) : by rw feq
+        ... = x₂       : by rw h
 
-    theorem surj_of_right_inverse {g : Y → X} {f : X → Y} :
-    right_inverse g f → surjective f :=
-        assume h, assume y,
-        let  x : X := g y in
-        have f x = y, from calc
-            f x  = (f (g y))    : rfl
-            ... = y            : by rw [h y],
-        show ∃ x, f x = y, from exists.intro x this
+theorem surj_of_right_inverse {g : Y → X} {f : X → Y} :
+right_inverse g f → surjective f :=
+    assume h, assume y,
+    let  x : X := g y in
+    have f x = y, from calc
+        f x  = (f (g y))    : rfl
+        ... = y            : by rw [h y],
+    show ∃ x, f x = y, from exists.intro x this
 \end{lstlisting}
 
 \begin{theorem}
@@ -415,42 +415,42 @@ Utilizando conceitos e resultados da seção anterior, podemos provar a seguinte
 \end{proof} 
 
 \begin{lstlisting}
-    open function
+open function
 
-    namespace hidden
-        variables {X Y Z : Type}
+namespace hidden
+    variables {X Y Z : Type}
 
-        theorem injective_comp {g : Y → Z} {f : X → Y}
-        (Hg : injective g) (Hf : injective f) :
-        injective (g ∘ f) :=
-            assume x₁ x₂,
-            assume : (g ∘ f) x₁ = (g ∘ f) x₂,
-            have f x₁ = f x₂, from Hg this,
-            show x₁ = x₂, from Hf this
+    theorem injective_comp {g : Y → Z} {f : X → Y}
+    (Hg : injective g) (Hf : injective f) :
+    injective (g ∘ f) :=
+        assume x₁ x₂,
+        assume : (g ∘ f) x₁ = (g ∘ f) x₂,
+        have f x₁ = f x₂, from Hg this,
+        show x₁ = x₂, from Hf this
 
-        theorem surjective_comp {g : Y → Z} {f : X → Y}
-            (hg : surjective g) (hf : surjective f) :
-        surjective (g ∘ f) :=
-        begin
-            assume z, 
-            apply exists.elim (hg z),
-            assume y (hy: g y = z),
-            apply exists.elim (hf y),
-            assume x (hx: f x = y),
-            rw ←hx at hy,
-            apply exists.intro x hy
-        end
+    theorem surjective_comp {g : Y → Z} {f : X → Y}
+        (hg : surjective g) (hf : surjective f) :
+    surjective (g ∘ f) :=
+    begin
+        assume z, 
+        apply exists.elim (hg z),
+        assume y (hy: g y = z),
+        apply exists.elim (hf y),
+        assume x (hx: f x = y),
+        rw ←hx at hy,
+        apply exists.intro x hy
+    end
 
-        theorem bijective_comp {g : Y → Z} {f : X → Y}
-            (hg : bijective g) (hf : bijective f) : 
-            bijective (g ∘ f) :=
-        have ginj : injective g, from hg.left,
-        have gsurj : surjective g, from hg.right, 
-        have finj : injective f, from hf.left,
-        have fsurj : surjective f, from hf.right,
-        and.intro (injective_comp ginj finj) 
-                  (surjective_comp gsurj fsurj)
-    end hidden       
+    theorem bijective_comp {g : Y → Z} {f : X → Y}
+        (hg : bijective g) (hf : bijective f) : 
+        bijective (g ∘ f) :=
+    have ginj : injective g, from hg.left,
+    have gsurj : surjective g, from hg.right, 
+    have finj : injective f, from hf.left,
+    have fsurj : surjective f, from hf.right,
+    and.intro (injective_comp ginj finj) 
+                (surjective_comp gsurj fsurj)
+end hidden       
 \end{lstlisting}
 
 \begin{example}
@@ -539,7 +539,7 @@ dizemos que $f^{-1}[B]$ é a imagem de $B$ sobre $f^{-1}$ ou a pré-imagem de $B
 
 Seguem algumas propriedades sobre imagens e pré-imagens. Aqui, $f$ denota uma função
 arbitrária de $X$ em $Y$. $A, A_1, A_2, ...$ denotam subconjuntos arbitrários de $X$, 
-e $B, B_1, B_2,...$ denotam subconjuntos arbitrários. 
+e $B, B_1, B_2,...$ denotam subconjuntos arbitrários de $Y$.
 
 \begin{enumerate}
     \item $A \subseteq f^{-1}[f[A]]$, e se $f$ é injetiva, $A = f^{-1}[f[A]]$.
@@ -559,4 +559,123 @@ e $B, B_1, B_2,...$ denotam subconjuntos arbitrários.
 \end{enumerate}
 
 A partir de agora, vamos demonstrar algumas dessas proporições, ora 
-com descrições da demonstração e ora com provas em Lean. 
+com descrições da demonstração e ora com provas em Lean. Tambémm sugerimos
+que essas proposições sejam exercícios para a leitora ou o leitor. 
+
+\subsection{Demonstrações com linguagem natural}
+
+\begin{theorem}[Item 7]
+    \label{exerc1}
+    Sejam $X$ e $Y$ conjuntos, $A_1, A_2 \in X$ e $f: X \to Y$.
+\end{theorem}
+
+\begin{proof}
+    Se $y \in f[A_1 \cap A_2]$, temos que existe $x \in A_1 \cap A_2$, com $f(x) = y$. 
+    Nesse caso, $f(x) \in f[A_1]$, e $f(x) \in f[A_2]$, o que demonstra a primeira parte. 
+
+    Agora, suponha a injetividade de $f$. Suponha também que $y \in f[A_1] \cap f[A_2]$. Assim, existem 
+    $x_1 \in A_1$ e $x_2 \in A_2$, com as propriedades de $f(x_1) = y = f(x_2)$. Como a função é injetiva, 
+    $f(x_1) = f(x_2) \Rightarrow x_1 = x_2$. Assim $x_1 \in A_2$, que implica $x_1 \in A_1 \cap A_2$. Logo, 
+    $y \in f[A_1 \cap A_2]$.
+\end{proof}
+
+\begin{theorem}[Item 11]
+    \label{exerc2}
+    Sejam $X$ e $Y$ conjuntos, $f: X \to Y, A \subseteq X$ e $B \subseteq Y$. Então, 
+    $f[A] \cap B = f[A \cap f^{-1}[B]]$
+\end{theorem}
+
+\begin{proof}
+    Suponha, inicialmente, que $y \in f[A] \cap B$. Então $y \in B$ e para algum $x \in A$, $f(x) = y$.
+    Nesse sentido, $x \in f^{-1}[B]$. Assim, $x \in A \cap f^{-1}[B]$ e, portanto, $y \in f[A \cap f^{-1}[B]]$.
+
+    Alternativamente, se $y \in f[A \cap f^{-1}[B]]$, existe $x \in A \cap f^{-1}[B]$, com $f(x) = y$. 
+    Daqui, concluímos que $y = f(x) \in f[A]$ e $y \in B$, pela definição de pré-imagem. Então $y \in f[A] \cap B$,
+    como queríamos provar. 
+\end{proof}
+
+\subsection{Demontrações em Lean}
+
+Nós podemos utilizar variáveis limitadas para falar sobre o comportamento de funções
+em conjuntos particulares. 
+
+\begin{lstlisting}
+import data.set -- inclui o símbolo de subconjunto da imagem ''
+open set function 
+
+variables {X Y : Type}
+variables (A  : set X) (B : set Y)
+
+def maps_to (f : X → Y) (A : set X) (B : set Y) := 
+    ∀ x ∈ A, f x ∈ B
+
+def inj_on (f : X → Y) (A : set X) := 
+    ∀ (x₁ ∈ A) (x₂ ∈ A), f x₁ = f x₂ → x₁ = x₂
+
+def surj_on (f : X → Y) (A : set X) (B : set Y) := 
+    B ⊆ f '' A
+    
+\end{lstlisting}
+
+A definição de \lstinline{maps_on} é a ideia de que a imagem de um subconjunto do
+domínio $X$ está totamente inclusa em um subconjunto específico do contradomínio. As
+definições de \lstinline{inj_on} e \lstinline{surj_on} são as definições usuais. 
+
+\begin{theorem}[Item 3]
+\end{theorem}
+
+\begin{theorem}[Item 9]
+\end{theorem}
+
+Observe que para o item 9, trataremos $X$ e $Y$ como conjuntos iguais. Caso não sejam, 
+$f[B]$ pode nem estar definida. 
+
+\begin{lstlisting}
+import data.set 
+open set function 
+
+variables {X Y : Type}
+variables (A B A₁ A₂ : set X)
+
+theorem item3 (f: X → Y) : A₁ ⊆ A₂ → f '' A₁ ⊆ f '' A₂ := 
+    assume h : A₁ ⊆ A₂, 
+    assume y,
+    assume h₁ : y ∈ f '' A₁,
+    have h₂ : ∃ x, x ∈ A₁ ∧ f(x) = y, from h₁,
+    show y ∈ f '' A₂, from exists.elim h₂
+        (assume (x' : X) (ha: x' ∈ A₁ ∧ f(x') = y ), 
+        have h₃ : x' ∈ A₂ ∧ f(x') = y, from and.intro (h ha.left)  ha.right, 
+        show y ∈ f '' A₂, from exists.intro x' h₃)
+
+theorem item9 (f: X → X) : f '' A \ f '' B ⊆ f '' (A \ B) :=
+begin
+    intros y h,
+    have h₁ : y ∈ f '' A, from mem_of_mem_diff h,
+    have h₂ : ¬ (y ∈ f '' B), from not_mem_of_mem_diff h,
+    apply exists.elim h₁, 
+    intros x h₃, 
+    apply exists.intro x,
+    apply and.intro,
+    apply mem_diff_of_mem, 
+        exact h₃.left,
+        assume h₄ : x ∈ B, 
+        exact false.elim (h₂ (exists.intro x (and.intro h₄ h₃.right))),
+        exact h₃.right 
+end
+
+#check @mem_of_mem_diff
+#check @not_mem_of_mem_diff
+#check @mem_diff_of_mem
+
+\end{lstlisting}
+
+As funções \lstinline{mem_of_mem_diff, not_mem_of_mem_diff} e \lstinline{mem_diff_of_mem} 
+tem o objetivo de lidar com a diferença esua relação com a interseção. Note que usar táticas
+auxilia o passo a passo, porém dificulta o posterior entendimento. Por isso, é recomendável, 
+nesses exemplos, utilizar alguma ferramenta para Lean.
+
+\subsection{Definindo a inversa Classicamente}
+
+\section{Lógica de Segunda ou Mais Alta Ordem}
+
+\section{Funções e Relações}
