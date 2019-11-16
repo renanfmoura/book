@@ -507,7 +507,7 @@ A prova por contradição é informalmente utilizada para se referir a duas regr
 \bigbreak
 É importante que esteja bastante clara a diferença entre as duas regras. No primeiro argumento, uma negação é introduzida na conclusão, enquanto que no segundo, ela é eliminada da hipótese. A regra de inferência que conclui com a sentença positiva "$ P$" é chamada de redução ao absurdo (em latim, \textit{reductio ad absurdum}). De fato, a regra é equivalente ao princípio $ \neg \neg A \leftrightarrow A$. 
 
-A primeira vista é difícil perceber claramente porque em uma delas temos uma prova construtivista e na outra uma que utiliza do raciocínio clássico. Na lógica clássica além de todas as regras de inferência já expostas neste livro, temos o princípio do terceiro excluído que diz que uma proposição $A $ ou é verdadeira ou é falsa, não existe uma terceira opção. Assim, se é impossível uma proposição $P$ ser falsa, logo ela só pode ser verdadeira. 
+A primeira vista é difícil perceber claramente porque em uma delas temos uma prova construtivista e na outra uma que utiliza do raciocínio clássico. Na lógica clássica além de todas as regras de inferência já expostas neste livro, temos o princípio do terceiro excluído que diz que uma proposição $A $ ou é verdadeira ou é falsa, não existindo uma terceira opção. Assim, se é impossível uma proposição $P$ ser falsa, logo ela só pode ser verdadeira. 
 
 Na linguagem natural, comumente tomamos a frase "Maria não não estava vestida de azul" como um modo redundante e agramatical de dizer que "Maria estava vestida de azul". Ao mesmo tempo que em "Eu não vi ninguém" as duas palavras negativas não se anulam. 
 
@@ -525,19 +525,45 @@ Em dedução natural, a redução ao absurdo é expressa do seguinte modo, onde 
  \UnaryInfC{$A $}
 \end{prooftree}
 
-As regras de introdução e eliminação que vimos até agora no Lean são todas construtivistas, ou seja, refletem um entendimento computacional dos conectivos lógicos com base na correspondência proposições como tipos. Para utilizar os princípios da lógica clássica, você deve abrir o modo clássico com o comando \verb|open classical| no início do seu arquivo ou em qualquer lugar antes de usá-lo.
+As regras de introdução e eliminação que vimos até agora no Lean são todas construtivaistas, ou seja, refletem um entendimento computacional dos conectivos lógicos com base na correspondência proposições como tipos. Para utilizar os princípios da lógica clássica, você deve abrir o modo clássico com o comando \verb|open classical| no início do seu arquivo ou em qualquer lugar antes de usá-lo.
 
 \begin{lstlisting} 
 open classical
 
-variable p : Prop
-#check em p
+variable P : Prop
+#check em P
 \end{lstlisting} 
 Na linha 4, o comando \verb|#check| permite verificar se expressões que escrevemos estão bem formadas, e também pedir ao sistema para nos dizer que tipo de objeto eles denotam. Para o exemplo acima obtemos como output:
 \begin{verbatim}
 4:0: information: check result
-em p : p ∨ ¬p
+em P : P ∨ ¬P
 \end{verbatim}
+
+No exemplo abaixo provamos $P$ a partir de $\neg \neg P$ utilizando redução ao absurdo. Note que não é preciso escrever explicitamente ao final o que queremos provar uma vez que o Lean, no caso da prova por contradição, infere que o resultado é ($\neg \neg P \to P $ ) a partir das hipóteses assumidas. 
+
+\begin{lstlisting}
+open classical
+
+variable P : Prop
+
+example (h : ¬¬ P) : P :=
+by_contradiction
+  (assume h1 : ¬ P,
+    show false, from h h1)
+
+\end{lstlisting}
+
+%Verificar se a árvore está correta
+\begin{prooftree}
+ \AxiomC{}
+ \RightLabel{\scriptsize(1)}
+ \UnaryInfC{$\neg P$}
+ \AxiomC{$\neg \neg P$}
+ \BinaryInfC{$\bot $}
+ \RightLabel{\scriptsize(1)}
+ \UnaryInfC{$\neg \neg P \to P$}
+\end{prooftree}
+
 
 
 \section{Exemplos adicionais de Dedução Natural}
