@@ -436,15 +436,17 @@ show C, from h2 h4)
 
 
 \subsection{Negação}
-%Incluir um exemplo de algum "quebra-cabeça"
 A negação de $A$ é  representada  em  símbolos por $\neg A $. 
 Mostrar que $\neg A $ ocorre, em termos lógicos, é o mesmo que mostrar que $A $ leva a uma contradição. Em dedução natural, temos uma prova que tem a seguinte árvore, na qual $\bot$ é o símbolo para falso, contradição ou absurdo:
 \begin{prooftree}
-    \AxiomC{A}
+    \AxiomC{}
+    \RightLabel{\scriptsize(1)}
+    \UnaryInfC{A}
     \noLine
     \UnaryInfC{$\vdots$}
     \noLine
     \UnaryInfC{$\bot$}
+    \RightLabel{\scriptsize(1) $\neg$ I}
     \UnaryInfC{$\neg A$}
 \end{prooftree}
 
@@ -456,8 +458,11 @@ Em dedução natural, representamos essa ideia por:
 \begin{prooftree}
     \AxiomC{$\neg B$}
     \AxiomC{B}
+    \RightLabel{\scriptsize $\neg $ E}
     \BinaryInfC{$\bot$}
 \end{prooftree}
+
+A tabela verdade reforça o fato de que é impossível que uma proposição e sua negação sejam ambas verdadeiras ao mesmo tempo.
 
 \begin{table}[htb]
 \centering
@@ -469,9 +474,7 @@ F          & V                            \\ \hline
 \end{tabular}
 \end{table}
 
-A tabela verdade reforça o fato de que é ímpossível que uma proposição e sua negação sejam ambas verdadeiras ao mesmo tempo.
-
-Ao utilizarmos o Lean, as regras de inferência de eliminação e introdução da negação podem ser obtidas atráves dos comandos a seguir: 
+Ao utilizarmos o Lean, as regras de inferência de eliminação e introdução da negação podem ser obtidas através dos comandos a seguir: 
 
 \begin{lstlisting} 
 variables p q : Prop
@@ -482,22 +485,86 @@ assume hp : P,
     show false, from h2 (h1 hp)
 \end{lstlisting} 
 
-Note que a hipotése que contém a negação vem primeiro após o \verb|from| e \textit{Q} é resultado do uso da regra de eliminação da implicação, além disso o símbolo $\neg Q$ é escrito como \verb| \not Q|. Na biblioteca padrão do Lean, $ \neg P$ é na verdade uma abreviação de $ P \rightarrow false $, ou seja, o fato de que $P$ implica uma contradição.
+Note que a hipótese que contém a negação vem primeiro após o \verb|from| e \textit{Q} é resultado do uso da regra de eliminação da implicação, além disso o símbolo $\neg Q$ é escrito como \verb| \not Q|. Na biblioteca padrão do Lean, $ \neg P$ é na verdade uma abreviação de $ P \rightarrow false $, ou seja, o fato de que $P$ implica uma contradição.
 
-Uma vez apresentado o símbolo para \textit{falso}, a seguir apresentamos o símbolo para \textit{verdadeiro}. No entanto,  \textit{verdadeiro} ou \textit{true} não possui regra de eliminação, apenas a regra de introdução:
-
+Uma vez apresentado o símbolo para \textit{falso}, a seguir apresentamos o símbolo para \textit{verdadeiro}. No entanto,  \textit{verdadeiro} ou \textit{true} não possui regra de eliminação, apenas uma regra de introdução:
+ \verb|true.intro: true|, às vezes abreviado como \verb|trivial: true|. Em outras palavras, verdadeiro é simplesmente verdadeiro e tem uma prova canônica, trivial.
+ 
 \begin{prooftree}
     \AxiomC{}
     \UnaryInfC{$\top $}
 \end{prooftree}
 
-%Citar mais alguma info sobre o símbolo true?
-
 \subsection{Prova por contradição}
 
-Existe um estilo de fazer matemático conhecido como "matemática construtivista" que nega a equivalência de $\neg \neg A$ e $ A$. Uma prova de que algo é verdadeiro deveria fornecer evidências explícitas de que uma declaração é falsa, em vez de evidências de que ela não pode ser falsa.
+Existe um estilo de fazer matemática conhecido como "matemática construtivista" que nega a equivalência de $\neg \neg A$ e $ A$. De modo que uma demonstração de que algo é verdadeiro deveria fornecer evidências explícitas de que uma declaração é falsa, em vez de evidências de que ela não pode ser falsa. Uma prova construtivista é aquela que realmente lhe diz como encontrar o objeto que se afirma existir. 
 
-Antes de utilizar a prova por absurdo precisamos abrir o modo clássico do Lean.
+A prova por contradição é informalmente utilizada para se referir a duas regras diferentes de inferência. Sendo elas:
+\begin{itemize}
+    \item Para provar "$\neg  P$"  é suficiente assumir "$P $" e derivar uma contradição;
+    \item Para provar $ P$, basta assumir "não $ P$"  e derivar uma contradição.
+\end{itemize}
+\bigbreak
+É importante que esteja bastante clara a diferença entre as duas regras. No primeiro argumento, uma negação é introduzida na conclusão, enquanto que no segundo, ela é eliminada da hipótese. A regra de inferência que conclui com a sentença positiva "$ P$" é chamada de redução ao absurdo (em latim, \textit{reductio ad absurdum}). De fato, a regra é equivalente ao princípio $ \neg \neg A \leftrightarrow A$. 
+
+A primeira vista é difícil perceber claramente porque em uma delas temos uma prova construtivista e na outra uma que utiliza do raciocínio clássico. Na lógica clássica além de todas as regras de inferência já expostas neste livro, temos o princípio do terceiro excluído que diz que uma proposição $A $ ou é verdadeira ou é falsa, não existindo uma terceira opção. Assim, se é impossível uma proposição $P$ ser falsa, logo ela só pode ser verdadeira. 
+
+Na linguagem natural, comumente tomamos a frase "Maria não não estava vestida de azul" como um modo redundante e agramatical de dizer que "Maria estava vestida de azul". Ao mesmo tempo que em "Eu não vi ninguém" as duas palavras negativas não se anulam. 
+
+Em dedução natural, a redução ao absurdo é expressa do seguinte modo, onde a hipótese $\neg A$ é cancelada no final da inferência:
+
+\begin{prooftree}
+ \AxiomC{}
+ \RightLabel{\scriptsize(1)}
+ \UnaryInfC{$\neg A$}
+ \noLine
+ \UnaryInfC{$\vdots$}
+ \noLine
+ \UnaryInfC{$\bot $}
+ \RightLabel{\scriptsize(1) R.A.A}
+ \UnaryInfC{$A $}
+\end{prooftree}
+
+As regras de introdução e eliminação que vimos até agora no Lean são todas construtivaistas, ou seja, refletem um entendimento computacional dos conectivos lógicos com base na correspondência proposições como tipos. Para utilizar os princípios da lógica clássica, você deve abrir o modo clássico com o comando \verb|open classical| no início do seu arquivo ou em qualquer lugar antes de usá-lo.
+
+\begin{lstlisting} 
+open classical
+
+variable P : Prop
+#check em P
+\end{lstlisting} 
+Na linha 4, o comando \verb|#check| permite verificar se expressões que escrevemos estão bem formadas, e também pedir ao sistema para nos dizer que tipo de objeto eles denotam. Para o exemplo acima obtemos como output:
+\begin{verbatim}
+4:0: information: check result
+em P : P ∨ ¬P
+\end{verbatim}
+
+No exemplo abaixo provamos $P$ a partir de $\neg \neg P$ utilizando redução ao absurdo. Note que não é preciso escrever explicitamente ao final o que queremos provar uma vez que o Lean, no caso da prova por contradição, infere que o resultado é ($\neg \neg P \to P $ ) a partir das hipóteses assumidas. 
+
+\begin{lstlisting}
+open classical
+
+variable P : Prop
+
+example (h : ¬¬ P) : P :=
+by_contradiction
+  (assume h1 : ¬ P,
+    show false, from h h1)
+
+\end{lstlisting}
+
+%Verificar se a árvore está correta
+\begin{prooftree}
+ \AxiomC{}
+ \RightLabel{\scriptsize(1)}
+ \UnaryInfC{$\neg P$}
+ \AxiomC{$\neg \neg P$}
+ \BinaryInfC{$\bot $}
+ \RightLabel{\scriptsize(1)}
+ \UnaryInfC{$\neg \neg P \to P$}
+\end{prooftree}
+
+
 
 \section{Exemplos adicionais de Dedução Natural}
 
@@ -856,8 +923,6 @@ or.elim ha
                             (assume h3: P32, or.inr (or.inr (or.inr (or.inr (or.inl (and.intro h1 h3)))))))
                 (assume h2: P22, or.inr (or.inr (or.inl (and.intro h1 h2)))))
 \end{lstlisting}
-
-%\end{itemize}
 
 %Exemplos adicionais que eu tenho em Lean (temos que decidir quais vamos colocar como exercício, quais como exemplo e quais vamos fazer a árvore de dedução natural -- acho que faltam árvores contendo negação e contradição):
 \begin{lstlisting}
