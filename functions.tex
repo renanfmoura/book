@@ -60,7 +60,7 @@ definir algoritmicamente se um número real de entrada é um número racional ou
 Porém, esse não é o objetivo do capítulo.
 
 Note que a escolha das variáveis $x$ e $n$ são arbitrárias. 
-Isto nos leva à definição no capítulo de \textit{\hyperlink{chapter.2}{FOL}} de 
+Isto nos leva à definição no capítulo de \textit{\hyperlink{chapter.4}{FOL}} de 
 variável ligada (\textit{bound}), visto que se renomearmos $x$ com $y$, os valores
 continuam os mesmos. 
 
@@ -559,4 +559,46 @@ e $B, B_1, B_2,...$ denotam subconjuntos arbitrários.
 \end{enumerate}
 
 A partir de agora, vamos demonstrar algumas dessas proporições, ora 
-com descrições da demonstração e ora com provas em Lean. 
+com descrições da demonstração e ora com provas em Lean. Tambémm sugerimos
+que essas proposições sejam exercícios para a leitora ou o leitor. 
+
+\subsection{Demonstrações com linguagem natural}
+
+\begin{theorem}[Item 7]
+    \label{exerc1}
+    Sejam $X$ e $Y$ conjuntos, $A_1, A_2 \in X$ e $f: X \to Y$.
+\end{theorem}
+
+\begin{proof}
+    Se $y \in f[A_1 \cap A_2]$, temos que existe $x \in A_1 \cap A_2$, com $f(x) = y$. 
+    Nesse caso, $f(x) \in f[A_1]$, e $f(x) \in f[A_2]$, o que demonstra a primeira parte. 
+
+    Agora, suponha a injetividade de $f$. Suponha também que $y \in f[A_1] \cap f[A_2]$. Assim, existem 
+    $x_1 \in A_1$ e $x_2 \in A_2$, com as propriedades de $f(x_1) = y = f(x_2)$. Como a função é injetiva, 
+    $f(x_1) = f(x_2) \Rightarrow x_1 = x_2$. Assim $x_1 \in A_2$, que implica $x_1 \in A_1 \cap A_2$. Logo, 
+    $y \in f[A_1 \cap A_2]$.
+\end{proof}
+
+\begin{theorem}[Item 11]
+    \label{exerc2}
+    Sejam $X$ e $Y$ conjuntos, $f: X \to Y, A \subseteq X$ e $B \subseteq Y$. Então, 
+    $f[A] \cap B = f[A \cap f^{-1}[B]]$
+\end{theorem}
+
+\begin{proof}
+    Suponha, inicialmente, que $y \in f[A] \cap B$. Então $y \in B$ e para algum $x \in A$, $f(x) = y$.
+    Nesse sentido, $x \in f^{-1}[B]$. Assim, $x \in A \cap f^{-1}[B]$ e, portanto, $y \in f[A \cap f^{-1}[B]]$.
+
+    Alternativamente, se $y \in f[A \cap f^{-1}[B]]$, existe $x \in A \cap f^{-1}[B]$, com $f(x) = y$. 
+    Daqui, concluímos que $y = f(x) \in f[A]$ e $y \in B$, pela definição de pré-imagem. Então $y \in f[A] \cap B$,
+    como queríamos provar. 
+\end{proof}
+
+\subsection{Demontrações em Lean}
+
+Nós podemos utilizar variáveis limitadas para falar sobre o comportamento de funções
+em conjuntos particulares. 
+
+\section{Lógica de Segunda ou Mais Alta Ordem}
+
+\section{Funções e Relações}
