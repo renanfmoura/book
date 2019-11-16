@@ -250,7 +250,7 @@ visto que \lstinline{left_inverse} e \lstinline{right_inverse} já estão predef
     $$g_1(f(g_2(x))) = g_1(x), ~para~todos~os~valores~de~x.$$ Logo $g_1 = g_2$. 
 \end{proof}
 
-Quando a inversa de $f$ existe, então, podemos escrevê-la como $f^{-1}$. Dada a Definição \ref{def4}, 
+Quando a inversa de $f$ existe, então, podemos escrevê-la como $f^{-1}$. Dada a Definição \hyperlink{def4}, 
 podemos afirmar que $(f^{-1})^{-1} = f$.  
 
 Observe que uma função pode possuir mais de uma função inversa à esquerda ou mais de uma função inversa 
@@ -461,3 +461,102 @@ Utilizando conceitos e resultados da seção anterior, podemos provar a seguinte
         \item $Y = \{n \in \mathbb{N} | n~par\}$. $f$ é bijetiva. 
     \end{itemize} 
 \end{example}
+
+\section{Funções e Subconjuntos do Domínio}
+
+Nós podemos querer saber o comportamento de uma função em algum subconjunto
+$A$ de  $X$. Por exemplo, podemos dizer que $f$ é injetiva em $A$ se para 
+todo $x_1$ e $x_2$ em A, $f(x_1) = f(x_2) $ implicar $x_1 = x_2 $. 
+
+\begin{definition}
+    \label{def8}
+    Se $f$ é função de $X$ e $Y$, dizemos que $f[A]$ denota a imagem de $f$ em 
+    $A$, definido por $f[A] = \{y \in Y | ~\exists x \in A, y = f(x)\}$.        
+\end{definition}
+
+\begin{theorem}
+    \label{prop7}
+    Seja $f: X \to Y $ e $A$ um subconjunto de $X$. Então, para todo $x$ em 
+    $A$, $f(x)$ está em $f[A]$. 
+\end{theorem}
+
+\begin{proof}
+    Por definição, $f(x) \in f[A] $ se, e somente se, existe $x'$ em $A$ tal que
+    $f(x') = f(x)$. Isto vale para  $x' = x $. 
+\end{proof}
+
+\begin{theorem}
+    \label{prop8}
+    Seja $f: X \to Y$ e $g: Y \to Z$. Seja $A$ subconjunto de $X$. Então
+    $$(g \circ f)[A] = g[f[A]]$$ 
+\end{theorem}
+
+\begin{proof}
+    Seja $z \in (g \circ f)[A]$. Então, para algum $x \in A$, $z = (g \circ f)(x) = g(f(x))$.
+    Pelo que acabamos de provar na Proposição \ref{prop8}, $f(x) \in f[A]$. Novamente, pelo 
+    que acabamos de provar, $g(f(x)) \in g[f[A]] $. 
+    
+    Alternativamente, seja $z \in g[f[A]]$. Então, existe $y$ em $f[A]$ tal que 
+    $f(y) = z$. Como $y \in f[A]$, existe $x \in A$, tal que $f(x) = y$. Então 
+    $(g \circ f)(x) = g(f(x)) = g(y) = z$, então $z \in (g \circ f)[A] $
+\end{proof}
+
+Uma prova de que a composição de funções sobrejetivas é 
+sobrejetiva é a que descrevemos cima, pois $f: X \to Y$ é 
+sobrejetiva se, e somente se, $f[X] = Y$. 
+
+Nós podemos ver $f$ como uma função de $A$, um subconjunto de $X$ a $Y$, simplesmente 
+ignorando o comportamento de $f$ nos elementos fora de $A$. 
+
+\begin{definition}
+    \label{def9}
+    Denotamos $f \upharpoonright A$ como restrição de $f$ para $A$. Isto é, dadas $f: X \to Y$ 
+    e $A \subseteq X$, $f \upharpoonright A : A \to Y$ é definida por $(f \upharpoonright A)(x) = x$, 
+    para todo $x$ em $A$. 
+\end{definition}
+
+Agora, $f$ é injetiva em $A$ significa que a restrição de $f$ em $A$ é injetiva.
+
+\begin{definition}[Pré-imagem]
+    \label{def10}
+    Se $f: X \to Y$ e $B \subseteq Y$, então a pré-imagem de $B$ em $f$, denotado por $f^{-1}[B]$ é
+    definida por $f^{-1}[B] = \{x \in X | f(x) \in B\}$. Ou seja, é o conjunto de elementos de $X$ que 
+    são mapeados em $B$.
+\end{definition}
+
+Note que essa definição faz sentido mesmo que $f$ não tenha inversa, visto que dado $y \in B$ pode não 
+haver $x \in X$ com a propriedade de $f(x) \in B$, como podem ter vários. Se $f$ tem inversa ($f^{-1}$), 
+então, para todo $y$ em $B$, existe exatamente um elemento $x$ em $X$ com $f(x) \in B$. Neste caso, 
+dizemos que $f^{-1}[B]$ é a imagem de $B$ sobre $f^{-1}$ ou a pré-imagem de $B$ sobre $f$. 
+
+\begin{theorem}
+    Seja $f: X \to Y$, $g: Y \to Z$ e $C \subseteq Z$. Então $$(g \circ f)^{-1}[C] = f^{-1}[g^{-1}[C]]$$.
+\end{theorem}
+\begin{proof}
+    Para qualquer $y$, $y \in (g \circ f)^{-1}[C]$ se, e somente se, $g(f(y))$ está em $C$. 
+    Isto acontece se, e somente se, $f(y) \in g^{-1}[C]$, o que acontece se, e somente se $y \in f^{-1}[g^{-1}[C]]$.
+\end{proof}
+
+Seguem algumas propriedades sobre imagens e pré-imagens. Aqui, $f$ denota uma função
+arbitrária de $X$ em $Y$. $A, A_1, A_2, ...$ denotam subconjuntos arbitrários de $X$, 
+e $B, B_1, B_2,...$ denotam subconjuntos arbitrários. 
+
+\begin{enumerate}
+    \item $A \subseteq f^{-1}[f[A]]$, e se $f$ é injetiva, $A = f^{-1}[f[A]]$.
+    \item $f[f^{-1}[B]] \subseteq B$, e se $f$ é sobrejetiva, $B = f[f^{-1}[B]]$.
+    \item Se $A_1 \subseteq A_2$, então $f[A_1] \subseteq f[A_2]$.
+    \item Se $B_1 \subseteq B_2$, então $f^{-1}[B_1] \subseteq f^{-1}[B_2]$.
+    \item $f[A_1 \cup A_2] = f[A_1] \cup f[A_2]$.
+    \item $f^{-1}[B_1 \cup B_2] = f^{-1}[B_1] \cup f^{-1}[B_2]$.
+    \item $f[A_1 \cap A_2] \subseteq f[A_1] \cap f[A_2]$ e, se $f$ é injetiva, $f[A_1 \cap A_2] = f[A_1] \cap f[A_2]$.
+    \item $f^{-1}[B_1 \cap B_2] = f^{-1}[B_1] \cap f^{-1}[B_2]$.
+    \item $f[A] \setminus f[B] \subseteq f[A\setminus B]$.
+    \item $f^{-1}[A] \setminus f^{-1}[B] \subseteq f[A \setminus B]$.
+    \item $f[A] \cap B = f[A \cap f^{-1}[B]]$.
+    \item $f[A \cup f^{-1}[B]] \subset f[A] \cup B $.
+    \item $A \cap f^{-1}[B] \subseteq f^{-1}[f[A] \cap B]$.
+    \item $A \cup f^{-1}[B] \subseteq f^{-1}[f[A] \cup B]$.
+\end{enumerate}
+
+A partir de agora, vamos demonstrar algumas dessas proporições, ora 
+com descrições da demonstração e ora com provas em Lean. 
