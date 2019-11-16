@@ -1,50 +1,50 @@
 \chapter{Funções}
 
-Desde o final do século XIX, diversas áreas da matemática 
-estudam consistentemente \textit{\hyperlink{chapter.4}{conjuntos}}, 
-\textit{\hyperlink{chapter.5}{relações}}, já apresentadas 
-nesse texto, e funções. Neste capítulo, debruçaremos nossa 
-atenção nas propriedades dessa terceira área. 
+Desde o final do século XIX, diversas áreas da matemática
+estudam consistentemente \textit{\hyperlink{chapter.4}{conjuntos}},
+\textit{\hyperlink{chapter.5}{relações}}, já apresentadas
+nesse texto, e funções. Neste capítulo, debruçaremos nossa
+atenção nas propriedades dessa terceira área.
 
-Entende-se que uma função $f$ é um mapeamento entre um 
-domínio $X$ e um domínio $Y$, este que será conhecido como 
-contradomínio, posteriormente. Entretanto, para teóricos 
-de conjuntos, esses domínios são simplesmente considerados 
-conjuntos. Vimos que \textit{\hyperlink{chapter.2}{Lean}} é uma 
-linguagem baseada em Tipos. Dessa forma, estabelece-se uma 
+Entende-se que uma função $f$ é um mapeamento entre um
+domínio $X$ e um domínio $Y$, este que será conhecido como
+contradomínio, posteriormente. Entretanto, para teóricos
+de conjuntos, esses domínios são simplesmente considerados
+conjuntos. Vimos que \textit{\hyperlink{chapter.2}{Lean}} é uma
+linguagem baseada em Tipos. Dessa forma, estabelece-se uma
 diferença clara entre o Domínio $X$, caracterizado pelos Tipos, e
-o Conjunto $A$, que é do tipo (sub)conjunto de $X$. Em Lean: 
+o Conjunto $A$, que é do tipo (sub)conjunto de $X$. Em Lean:
 \begin{lstlisting}
     variable X : Type
-    variable A : set X    
+    variable A : set X
 \end{lstlisting}
 
 Entretanto a visão da função como mapeamento entre conjuntos
 é comum entre os matemáticos e será considerada nesse texto,
-fazendo as devidas comparações com a linguagem de referência, 
-o Lean. 
+fazendo as devidas comparações com a linguagem de referência,
+o Lean.
 
 \section{O Conceito de Função}
 
-Considere dois conjuntos quaisquer $X$ e $Y$ e um mapeamento $f$ 
-do conjunto $X$ para o conjunto $Y$. Se $f$ atribui um e apenas 
+Considere dois conjuntos quaisquer $X$ e $Y$ e um mapeamento $f$
+do conjunto $X$ para o conjunto $Y$. Se $f$ atribui um e apenas
 um valor para cada elemento de $X$, dizemos que $f$ é uma função total, e
-escrevemos $f: X \to Y$.  Chamamos $X$ de domínio de $f$, enquanto 
-$Y$ é o contradomínio de $f$ e $\forall x, (x \in X  \Rightarrow f(x) \in Y)$. 
+escrevemos $f: X \to Y$.  Chamamos $X$ de domínio de $f$, enquanto
+$Y$ é o contradomínio de $f$ e $\forall x, (x \in X  \Rightarrow f(x) \in Y)$.
 Nesse sentido, $\forall x_1 \in X, \forall x_2 \in X, x_1 = x_2 \Rightarrow f(x_1) = f(x_2)$.
-Uma função também pode ser parcial quando ela não é definida para alguns valores 
-do domínio. Como toda função parcial é total ao restringir o domínio, trateremos 
-nesse texto das funções totais. 
+Uma função também pode ser parcial quando ela não é definida para alguns valores
+do domínio. Como toda função parcial é total ao restringir o domínio, trateremos
+nesse texto das funções totais.
 
-A maneira mais simples de se representar uma função é escrevê-la explicitamente 
+A maneira mais simples de se representar uma função é escrevê-la explicitamente
 para cada elemento do domínio. Por exemplo, podemos escrever as seguintes expressões:
 
 \begin{itemize}
-    \item Seja $f: \mathbb{N} \to \mathbb{N}$ definida por 
+    \item Seja $f: \mathbb{N} \to \mathbb{N}$ definida por
     $f(n) = 2\cdot n + 1$
-    \item Seja $g : \mathbb{N} \to \mathbb{R}$ definida por 
+    \item Seja $g : \mathbb{N} \to \mathbb{R}$ definida por
     $g(n) = \frac{n}{n+1}$
-    \item Seja $h : \mathbb{R} \to \{0,1\}$ definida por 
+    \item Seja $h : \mathbb{R} \to \{0,1\}$ definida por
     $$\left \{ \begin{array}{c}
     h(x) = 1 ~if~x \in \mathbb{Q} \\
     h(x) = 0 ~ if ~ x \not \in \mathbb{Q} \\
@@ -52,27 +52,27 @@ para cada elemento do domínio. Por exemplo, podemos escrever as seguintes expre
     \right. $$
  \end{itemize}
 
-A questão que se levanta é: o que torna uma expressão explícita legítima? 
-Neste momento, deixaremos essa questão de lado e notaremos que a matemática 
-é confortável com diversos tipos de definições, como, por exemplo, a definição 
-de $h(x)$ no exemplo acima. Nesse mesmo exemplo, não fica claro em como podemos 
+A questão que se levanta é: o que torna uma expressão explícita legítima?
+Neste momento, deixaremos essa questão de lado e notaremos que a matemática
+é confortável com diversos tipos de definições, como, por exemplo, a definição
+de $h(x)$ no exemplo acima. Nesse mesmo exemplo, não fica claro em como podemos
 definir algoritmicamente se um número real de entrada é um número racional ou não.
 Porém, esse não é o objetivo do capítulo.
 
-Note que a escolha das variáveis $x$ e $n$ são arbitrárias. 
-Isto nos leva à definição no capítulo de \textit{\hyperlink{chapter.2}{FOL}} de 
+Note que a escolha das variáveis $x$ e $n$ são arbitrárias.
+Isto nos leva à definição no capítulo de \textit{\hyperlink{chapter.2}{FOL}} de
 variável ligada (\textit{bound}), visto que se renomearmos $x$ com $y$, os valores
-continuam os mesmos. 
+continuam os mesmos.
 
 Lógicos frequentemente utilizam a notação $\lambda x e(x)$ para denotar a função
-que mapeia $x$ para $e(x)$. Essa notação chama-se \textit{notação lambda} e pode 
-ser usada da seguinte forma: $f = \lambda x(x + 1)$, que significa $f(x) = x + 1$. 
-Essa notação é mais interessante para cientistas da computação e lógicos do que 
-propriamente para matemáticos. Em Lean, definimos da seguinte forma: 
+que mapeia $x$ para $e(x)$. Essa notação chama-se \textit{notação lambda} e pode
+ser usada da seguinte forma: $f = \lambda x(x + 1)$, que significa $f(x) = x + 1$.
+Essa notação é mais interessante para cientistas da computação e lógicos do que
+propriamente para matemáticos. Em Lean, definimos da seguinte forma:
 
 \begin{lstlisting}
     variables X Y : Type
-    variable f : X → Y    
+    variable f : X → Y
 \end{lstlisting}
 
 Lembre-se que diferenciamos o tipo $X$ do tipo $set~X$ em Lean.
@@ -80,33 +80,33 @@ Lembre-se que diferenciamos o tipo $X$ do tipo $set~X$ em Lean.
 \section{Primeiras Definições}
 
 \theoremstyle{definition}
-\newtheorem{definition}{Definição}[section]
+%\newtheorem{definition}{Definição}[section]
 
 \theoremstyle{definition}
 \newtheorem{example}{Exemplo}[section]
 
 \theoremstyle{plain}
-\newtheorem{theorem}{Proposição}[section]
+%\newtheorem{theorem}{Proposição}[section]
 
 \theoremstyle{plain}
 \newtheorem{corollary}{Corolário}[section]
 
 \begin{definition}
     \label{def1}
-    Seja um conjunto $X$. A função identidade de $A$ é a função 
+    Seja um conjunto $X$. A função identidade de $A$ é a função
     $i_A : A \rightarrow A$ definida para todos os valores $x \in A$ tal que $i_A(x) = x$.
 \end{definition}
 
 \begin{definition}
     \label{def2}
-    Sejam $f : X \rightarrow Y$ e $g : Y \rightarrow Z$ funções. 
+    Sejam $f : X \rightarrow Y$ e $g : Y \rightarrow Z$ funções.
     Defina $k : X \rightarrow Z$ por $k(x) = g(f(x))$. A função $k$ é chamada de composição
-    de $f$ e $g$ ou $f$ composta com $g$ e é escrita $g \circ f$. Desta forma, para cada elemento, 
-    primeiro  avaliamos $f(x) \in Y$ e depois avaliamos $g(f(x)) \in Z$. 
+    de $f$ e $g$ ou $f$ composta com $g$ e é escrita $g \circ f$. Desta forma, para cada elemento,
+    primeiro  avaliamos $f(x) \in Y$ e depois avaliamos $g(f(x)) \in Z$.
 \end{definition}
 
-Podemos ver em Lean as definições de composição e de identidade. Note que estamos em um namespace 
-hidden para que não haja conflito de definições. 
+Podemos ver em Lean as definições de composição e de identidade. Note que estamos em um namespace
+hidden para que não haja conflito de definições.
 
 \begin{lstlisting}
     namespace hidden
@@ -122,23 +122,23 @@ hidden para que não haja conflito de definições.
         def id (x : X) : X := x
 
         #check @id
-        
+
     end hidden
 \end{lstlisting}
 
 \begin{definition}
     \label{def3}
-    Considere $f,g : X \to Y$. Dizemos que essas funções são iguais, 
-    quando para todos os valores do domínio $X$, a correspondência no contradomínio $Y$ é a 
-    mesma. Em lógica simbólica, $\forall x (x \in X \to (f(x) = g(x)) \iff f = g $. 
+    Considere $f,g : X \to Y$. Dizemos que essas funções são iguais,
+    quando para todos os valores do domínio $X$, a correspondência no contradomínio $Y$ é a
+    mesma. Em lógica simbólica, $\forall x (x \in X \to (f(x) = g(x)) \iff f = g $.
 \end{definition}
 
-Obseve que em termos de lógica formal de tipos, poderíamos reescrever como 
-$\forall x : X (f(x) = g(x)) \iff f = g$. Escrevemos essa equivalência entre lógica e funções 
-utilizando a extensionalidade das funções, muito semelhante à descrita no capítulo de 
-\textit{\hyperlink{chapter.5}{conjuntos}}. Por exemplo, se $f, g : \mathbb{R} \to \mathbb{R}$ 
-definidas por $f(x) = x + 1$ e $g(x) = 1 + x$, então $f = g$, pois para cada valor de $x$, vale 
-a comutativade da soma. 
+Obseve que em termos de lógica formal de tipos, poderíamos reescrever como
+$\forall x : X (f(x) = g(x)) \iff f = g$. Escrevemos essa equivalência entre lógica e funções
+utilizando a extensionalidade das funções, muito semelhante à descrita no capítulo de
+\textit{\hyperlink{chapter.5}{conjuntos}}. Por exemplo, se $f, g : \mathbb{R} \to \mathbb{R}$
+definidas por $f(x) = x + 1$ e $g(x) = 1 + x$, então $f = g$, pois para cada valor de $x$, vale
+a comutativade da soma.
 
 Em lean, o comando \lstinline{funext} (de "function extensionality") prova a igualdade de funções.
 
@@ -155,11 +155,11 @@ Em lean, o comando \lstinline{funext} (de "function extensionality") prova a igu
 \end{theorem}
 \begin{proof}
     Seja $x$ um elemento qualquer de $X$. Então $(f \circ i_X)(x) = f(i_X(x)) = f(x)$
-     e $(i_Y \circ f)(x) = i_Y(f(x)) = f(x)$, o que mostra a igualdade. 
+     e $(i_Y \circ f)(x) = i_Y(f(x)) = f(x)$, o que mostra a igualdade.
 \end{proof}
 
 No Lean, podemos mostrar essa proposição da seguinte forma. Para algumas funções, será necessário
-escrevermos \lstinline{open function}.   
+escrevermos \lstinline{open function}.
 
 \begin{lstlisting}
     variables {X Y Z W : Type}
@@ -170,99 +170,99 @@ escrevermos \lstinline{open function}.
 
     theorem comp.assoc (f : Z → W) (g : Y → Z) (h : X → Y) :
         (f ∘ g) ∘ h = f ∘ (g ∘ h) := rfl
-  
+
 \end{lstlisting}
 
 \begin{definition}
     \label{def4}
-    Suponha $f:X \to Y$ e $g : Y \to X$ satisfaz $g \circ f = i_X$. Assim, 
+    Suponha $f:X \to Y$ e $g : Y \to X$ satisfaz $g \circ f = i_X$. Assim,
     $g(f(x)) = i_X(x) = x$, para todos os elementos de $X$. Neste caso $g$ é dita inversa à esquerda
     de $f$ e $f$ é dita inversa à direita de $g$. Quando $g$ é inversa à direita e é inversa à esquerda
-    de $f$, então $g$ é dita simplesmente inversa de $f$. 
+    de $f$, então $g$ é dita simplesmente inversa de $f$.
 \end{definition}
 
 \begin{example}
     \label{ex1}
-    Defina $f,g : \mathbb{R} \to \mathbb{R}$ por $f(x) = x + 1$ e $g(x) = x - 1$. Então $g$ 
+    Defina $f,g : \mathbb{R} \to \mathbb{R}$ por $f(x) = x + 1$ e $g(x) = x - 1$. Então $g$
     é inversa à direita e à esquerda de $f$ e vice-versa.
 \end{example}
 \begin{example}
     \label{ex2}
-    $\mathbb{R}^{+}$ denota os reais não negativos. Defina $f : \mathbb{R} \to \mathbb{R}^{+}$ 
-    por $f(x) = x^2$ e defina $g : \mathbb{R}^2 \to \mathbb{R}$ por $g(x) = \sqrt{x}$. Então 
+    $\mathbb{R}^{+}$ denota os reais não negativos. Defina $f : \mathbb{R} \to \mathbb{R}^{+}$
+    por $f(x) = x^2$ e defina $g : \mathbb{R}^2 \to \mathbb{R}$ por $g(x) = \sqrt{x}$. Então
     $f(g(x)) = (\sqrt{x})^2 = x$, para todo $x$ no domínio de $g$. Então $f$ é inversa à esquerda de $g$
-    e $g$ inversa à direita de $f$. Por outro lado, $g(f(x)) = \sqrt{x^2} = |x|$. Logo $g$ não é inversa à 
-    esquerda de $f$ e $f$ não é inversa à direita de $g$. 
+    e $g$ inversa à direita de $f$. Por outro lado, $g(f(x)) = \sqrt{x^2} = |x|$. Logo $g$ não é inversa à
+    esquerda de $f$ e $f$ não é inversa à direita de $g$.
 \end{example}
 
 \begin{theorem}
     \label{prop2}
     Suponha que $f : X \to Y $ tem inversa à esquerda, $h : Y \to X $ e uma inversa à direita, $k : Y \to X $.
-    Então $h = k$. 
+    Então $h = k$.
 \end{theorem}
 \begin{proof}
-    Seja $y \in Y$. $h(f(k(y))) = k(y)$, pois $h$ é uma inversa à esquerda de $f$. 
-    Por outro lado, $f(k(y)) = y$ e, portanto $h(f(k(y))) = h(y)$. Assim $k(y) = h(y) $ e as funções são iguais. 
+    Seja $y \in Y$. $h(f(k(y))) = k(y)$, pois $h$ é uma inversa à esquerda de $f$.
+    Por outro lado, $f(k(y)) = y$ e, portanto $h(f(k(y))) = h(y)$. Assim $k(y) = h(y) $ e as funções são iguais.
 \end{proof}
 
-Essa proposição pode também ser vista em Lean. Considerarei a prova utilizando táticas. O leitor pode estudar 
-aquela que sentir mais confortável. Note que neste exemplo, já foi necessário o \lstinline{namespace function}, 
-visto que \lstinline{left_inverse} e \lstinline{right_inverse} já estão predefinidas. 
+Essa proposição pode também ser vista em Lean. Considerarei a prova utilizando táticas. O leitor pode estudar
+aquela que sentir mais confortável. Note que neste exemplo, já foi necessário o \lstinline{namespace function},
+visto que \lstinline{left_inverse} e \lstinline{right_inverse} já estão predefinidas.
 
 \begin{lstlisting}
-    open function 
+    open function
 
     variables {X Y Z: Type}
 
     -- Term and Calc Mode
-    example (f: X → Y) (h: Y → X) (k: Y → X) 
+    example (f: X → Y) (h: Y → X) (k: Y → X)
         (hf: left_inverse h f) (fk: right_inverse k f): h = k :=
-        have H: ∀ ( x : Y ), h x = k x, from 
-            assume x, 
+        have H: ∀ ( x : Y ), h x = k x, from
+            assume x,
             have h1: h (f (k x)) = k x , from calc
-                h ( f (k x)) = k x: by apply hf, 
+                h ( f (k x)) = k x: by apply hf,
             have h2: h (f (k x)) = h x, from calc
-                h (f (k x)) = h x: by rw fk,         
+                h (f (k x)) = h x: by rw fk,
             show h x = k x, from eq.trans (eq.symm h2) h1,
         show h = k, from funext H
 
     -- Tatics Mode
-    example (f: X → Y) (h: Y → X) (k: Y → X) 
+    example (f: X → Y) (h: Y → X) (k: Y → X)
         (hf: left_inverse h f) (fk: right_inverse k f): h = k :=
         begin
-            apply funext, 
-            assume x, 
-            have hf: h (f (k x)) = k x, by apply hf, 
+            apply funext,
+            assume x,
+            have hf: h (f (k x)) = k x, by apply hf,
             rw ←hf,
-            rw fk, 
+            rw fk,
         end
 \end{lstlisting}
 
 \begin{theorem}
     \label{prop3}
-    Seja $f: X \to Y$. Se a inversa de $f$ existe, então ela é única. Isto é, se $g_1, g_2: Y \to X$ são inversas 
-    de $f$, então $g_1 = g_2$        
-\end{theorem}   
+    Seja $f: X \to Y$. Se a inversa de $f$ existe, então ela é única. Isto é, se $g_1, g_2: Y \to X$ são inversas
+    de $f$, então $g_1 = g_2$
+\end{theorem}
 \begin{proof}
-    Sabemos que $g_1$ é inversa à esquerda de $f$. Então, 
-    $$g_1(f(g_2(x))) = g_2(x), ~para~todos~os~valores~de~x.$$ 
-    Também, $g_2$ é inversa de $f$. Então, 
-    $$g_1(f(g_2(x))) = g_1(x), ~para~todos~os~valores~de~x.$$ Logo $g_1 = g_2$. 
+    Sabemos que $g_1$ é inversa à esquerda de $f$. Então,
+    $$g_1(f(g_2(x))) = g_2(x), ~para~todos~os~valores~de~x.$$
+    Também, $g_2$ é inversa de $f$. Então,
+    $$g_1(f(g_2(x))) = g_1(x), ~para~todos~os~valores~de~x.$$ Logo $g_1 = g_2$.
 \end{proof}
 
-Quando a inversa de $f$ existe, então, podemos escrevê-la como $f^{-1}$. Dada a Definição \hyperlink{def4}, 
-podemos afirmar que $(f^{-1})^{-1} = f$.  
+Quando a inversa de $f$ existe, então, podemos escrevê-la como $f^{-1}$. Dada a Definição \hyperlink{def4},
+podemos afirmar que $(f^{-1})^{-1} = f$.
 
-Observe que uma função pode possuir mais de uma função inversa à esquerda ou mais de uma função inversa 
-à direita. Ainda, quando uma função possui mais de uma função inversa à esquerda, ela não possui inversa 
-à direita. Se ela possuisse, ela seria igual a todas as funções inversas à esquerda pela Proposição \ref{prop2}, 
-portanto elas seriam iguais, o que é uma contradição, por hipótese. O mesmo vale para inversas à direita. 
+Observe que uma função pode possuir mais de uma função inversa à esquerda ou mais de uma função inversa
+à direita. Ainda, quando uma função possui mais de uma função inversa à esquerda, ela não possui inversa
+à direita. Se ela possuisse, ela seria igual a todas as funções inversas à esquerda pela Proposição \ref{prop2},
+portanto elas seriam iguais, o que é uma contradição, por hipótese. O mesmo vale para inversas à direita.
 
 \begin{theorem}
      \label{prop4}
-     Seja $f: X \to Y $ e $g: Y \to Z$. Se $h: Y \to X$ e $k: Z \to Y$ são inversas à esqueda de $f$ e $g$, 
+     Seja $f: X \to Y $ e $g: Y \to Z$. Se $h: Y \to X$ e $k: Z \to Y$ são inversas à esqueda de $f$ e $g$,
      respectivamente, então $h \circ k$ é inversa à esquerda de $g \circ f$. O mesmo vale quando substituimos
-     esquerda por direita na proposição. 
+     esquerda por direita na proposição.
 \end{theorem}
 
 \begin{proof}
@@ -272,43 +272,43 @@ portanto elas seriam iguais, o que é uma contradição, por hipótese. O mesmo 
 
 \begin{corollary}
     \label{cor1}
-    Se $f: X \to Y$ e $g: Y \to Z$ possuem inversas, então $(f \circ g)^{-1}$ existe e 
+    Se $f: X \to Y$ e $g: Y \to Z$ possuem inversas, então $(f \circ g)^{-1}$ existe e
     $(f \circ g)^{-1} = f^{-1} \circ g^{-1}$.
 \end{corollary}
 
 \begin{proof}
-    Segue diretamente da Proposição \ref{prop4} e Proposição \ref{prop2}.  
+    Segue diretamente da Proposição \ref{prop4} e Proposição \ref{prop2}.
 \end{proof}
 
 \section{Funções Injetiva, Sobrejetiva e Bijetiva}
 
 \begin{definition}[Função Injetiva]
     \label{def5}
-    Também conhecida como função injetora, é uma função em que elementos distintos do domínio são 
-    mapeados para elementos diferentes do contradomínio. Dessa forma, seja $f: X \to Y$. Se 
-    $\forall x_1 \in X, \forall x_2 \in X, x_1 \neq x_2 \Rightarrow f(x_1) \neq f(x_2) $, f é injetiva. 
+    Também conhecida como função injetora, é uma função em que elementos distintos do domínio são
+    mapeados para elementos diferentes do contradomínio. Dessa forma, seja $f: X \to Y$. Se
+    $\forall x_1 \in X, \forall x_2 \in X, x_1 \neq x_2 \Rightarrow f(x_1) \neq f(x_2) $, f é injetiva.
     A definição pode ser feita pela contrapositiva dessa afirmação, também. A definição pela contrapositiva
-    será bastante utilizada nas demonstrações. 
+    será bastante utilizada nas demonstrações.
 \end{definition}
 
 \begin{definition}[Função Sobrejetiva]
     \label{def6}
-    Também conhecida como função bijetora, é uma função em que todos os elementos do contradomínio 
-    estão na imagem da função. Dessa forma, seja $f: X \to Y$. Se $\forall y \in Y, \exists x \in X, f(x) = y$, 
-    f é sobrejetiva. 
+    Também conhecida como função bijetora, é uma função em que todos os elementos do contradomínio
+    estão na imagem da função. Dessa forma, seja $f: X \to Y$. Se $\forall y \in Y, \exists x \in X, f(x) = y$,
+    f é sobrejetiva.
    \end{definition}
 
 \begin{definition}[Função Bijetiva]
     \label{def7}
-    Também conhecida como bijeção ou correspondência um a um, é uma função simultaneamente injetiva e 
-    sobrejetiva. 
+    Também conhecida como bijeção ou correspondência um a um, é uma função simultaneamente injetiva e
+    sobrejetiva.
 \end{definition}
 
-Em Lean, essas definições são descritas no \lstinline{namespace function}. 
+Em Lean, essas definições são descritas no \lstinline{namespace function}.
 
 \begin{example}
-    Considere $X = {1,2,3,4}$ e $Y = \{John, Paul, George, Ringo\}$. É possível construir uma função bijetiva 
-    entre o conjunto $X$ e o conjunto $Y$.  
+    Considere $X = {1,2,3,4}$ e $Y = \{John, Paul, George, Ringo\}$. É possível construir uma função bijetiva
+    entre o conjunto $X$ e o conjunto $Y$.
 \end{example}
 
 \begin{lstlisting}
@@ -329,26 +329,26 @@ Em Lean, essas definições são descritas no \lstinline{namespace function}.
     \renewcommand{\labelenumi}{\Roman{enumi}}
     \begin{enumerate}
         \item Se $f$ possui inversa à esquerda, $f$ é injetiva.
-        \item Se $f$ possui inversa à direita, $f$ é sobrejetiva. 
-        \item Se $f$ possui inversa, $f$ é bijetiva. 
+        \item Se $f$ possui inversa à direita, $f$ é sobrejetiva.
+        \item Se $f$ possui inversa, $f$ é bijetiva.
     \end{enumerate}
 \end{theorem}
 \begin{proof}
     Para provar I), suponha que $f(x_1) = f(x_2)$ e que $g$ é inversa à esquerda
-    de $f$. Assim $g(f(x_1)) = x_1$ e $g(f(x_2)) = x_2)$. Portanto $x_1 = x_2$ e 
-    está provado. Para provar II), considere $h$ inversa à direita de $f$. Seja 
-    $y \in Y$ e $x = h(y)$. Então $f(x) = f(h(y)) = y$. A terceira sai diretemente 
-    das duas anteriores.  
+    de $f$. Assim $g(f(x_1)) = x_1$ e $g(f(x_2)) = x_2)$. Portanto $x_1 = x_2$ e
+    está provado. Para provar II), considere $h$ inversa à direita de $f$. Seja
+    $y \in Y$ e $x = h(y)$. Então $f(x) = f(h(y)) = y$. A terceira sai diretemente
+    das duas anteriores.
 \end{proof}
 
 \begin{lstlisting}
-    open function 
+    open function
 
     variables {X Y : Type}
 
     theorem inj_of_left_inverse {g : Y → X} {f : X → Y} :
     left_inverse g f → injective f :=
-        assume h, assume x₁ x₂, assume feq, 
+        assume h, assume x₁ x₂, assume feq,
         calc x₁ = g (f x₁) : by rw h
             ... = g (f x₂) : by rw feq
             ... = x₂       : by rw h
@@ -376,29 +376,29 @@ Em Lean, essas definições são descritas no \lstinline{namespace function}.
 
 \begin{proof}
     Seja $\hat{x} \in X$. Defina uma função $g: Y \to X$ com $g(y) = x$, tal que $f(x) = y$,
-    caso exista esse $x$. Caso ele não exista, $g(y) = \hat{x}$. Agora, suponha que 
+    caso exista esse $x$. Caso ele não exista, $g(y) = \hat{x}$. Agora, suponha que
     $g(f(x)) = x'$. Pela definição de $g$, $f(x) = y$, logo $g(y) = x$. Assim, $f(x) = f(x')$.
-    Como $f$ é injetiva $x = x'$. 
+    Como $f$ é injetiva $x = x'$.
 
-    Para a segunda afirmação, defina $h: Y \to X$, onde, para cada $y \in Y$, escolha um elemento 
+    Para a segunda afirmação, defina $h: Y \to X$, onde, para cada $y \in Y$, escolha um elemento
     $x \in X$, tal que $h(y) = x$. Note que a sobrejetividade garante a existência desse elemento,
-    mas não garante a unicidade. Então $f(h(y)) = f(x) = y$, por definição de $h$. 
+    mas não garante a unicidade. Então $f(h(y)) = f(x) = y$, por definição de $h$.
 
-    A fim de provar a terceira, basta as demonstrações das anteriores. 
+    A fim de provar a terceira, basta as demonstrações das anteriores.
 \end{proof}
 
-Algumas observações sobre essa demonstração são importantes. Ao definir $g$ na primeira parte, 
-precisa-se decidir se $x \in X$ existe tal que $f(x) = y$. Isso pode não ser algoritmicamente 
-feito, logo $g$ poderia não ser computável. Na construção de $h$, a prova requere que haja 
-uma escolha de valor de $x$ entre os possíveis candidatos. Isto é uma versão do 
-\href{https://pt.wikipedia.org/wiki/Axioma_da_escolha#Enunciado}{\textit{axioma da escolha}}. 
+Algumas observações sobre essa demonstração são importantes. Ao definir $g$ na primeira parte,
+precisa-se decidir se $x \in X$ existe tal que $f(x) = y$. Isso pode não ser algoritmicamente
+feito, logo $g$ poderia não ser computável. Na construção de $h$, a prova requere que haja
+uma escolha de valor de $x$ entre os possíveis candidatos. Isto é uma versão do
+\href{https://pt.wikipedia.org/wiki/Axioma_da_escolha#Enunciado}{\textit{axioma da escolha}}.
 Este axioma foi muito debatido no século XX, mas hoje já é comum para demonstrações. O paradoxo
 de Banach-Tarski é um argumento contra o axioma.
 
 Utilizando conceitos e resultados da seção anterior, podemos provar a seguinte proposição.
 
 \begin{theorem}
-    Seja $f: X \to Y$ e $g: Y \to Z$. 
+    Seja $f: X \to Y$ e $g: Y \to Z$.
     \renewcommand{\labelenumi}{\Roman{enumi}}
     \begin{enumerate}
         \item Se $f$ e $g$ são injetivas, $g \circ f$ também será.
@@ -407,12 +407,12 @@ Utilizando conceitos e resultados da seção anterior, podemos provar a seguinte
 \end{theorem}
 
 \begin{proof}
-    Basta aplicarmos a Proposição \ref{def4} e definirmos $h$ e $k$ como 
-    inversas à esquerd ade $f$ e $g$ respefticamente. Logo $(h \circ k)$ 
-    é inversa à esquerda de  $(g \circ f)$ e, portanto, ela é injetiva. 
+    Basta aplicarmos a Proposição \ref{def4} e definirmos $h$ e $k$ como
+    inversas à esquerd ade $f$ e $g$ respefticamente. Logo $(h \circ k)$
+    é inversa à esquerda de  $(g \circ f)$ e, portanto, ela é injetiva.
 
     O mesmo vale para a segunda afirmação.
-\end{proof} 
+\end{proof}
 
 \begin{lstlisting}
     open function
@@ -432,7 +432,7 @@ Utilizando conceitos e resultados da seção anterior, podemos provar a seguinte
             (hg : surjective g) (hf : surjective f) :
         surjective (g ∘ f) :=
         begin
-            assume z, 
+            assume z,
             apply exists.elim (hg z),
             assume y (hy: g y = z),
             apply exists.elim (hf y),
@@ -442,77 +442,77 @@ Utilizando conceitos e resultados da seção anterior, podemos provar a seguinte
         end
 
         theorem bijective_comp {g : Y → Z} {f : X → Y}
-            (hg : bijective g) (hf : bijective f) : 
+            (hg : bijective g) (hf : bijective f) :
             bijective (g ∘ f) :=
         have ginj : injective g, from hg.left,
-        have gsurj : surjective g, from hg.right, 
+        have gsurj : surjective g, from hg.right,
         have finj : injective f, from hf.left,
         have fsurj : surjective f, from hf.right,
-        and.intro (injective_comp ginj finj) 
+        and.intro (injective_comp ginj finj)
                   (surjective_comp gsurj fsurj)
-    end hidden       
+    end hidden
 \end{lstlisting}
 
 \begin{example}
     Considere $f: \mathbb{N} \to Y$, tal que $f(n) = 2n$. Podemos, ter:
     \begin{itemize}
-        \item $Y = \mathbb{N}$. $f$ é injetiva, mas não é sobrejetiva. 
+        \item $Y = \mathbb{N}$. $f$ é injetiva, mas não é sobrejetiva.
         \item $Y = \mathbb{R}$. $f$ é injetiva, mas não é sobrejetiva.
-        \item $Y = \{n \in \mathbb{N} | n~par\}$. $f$ é bijetiva. 
-    \end{itemize} 
+        \item $Y = \{n \in \mathbb{N} | n~par\}$. $f$ é bijetiva.
+    \end{itemize}
 \end{example}
 
 \section{Funções e Subconjuntos do Domínio}
 
 Nós podemos querer saber o comportamento de uma função em algum subconjunto
-$A$ de  $X$. Por exemplo, podemos dizer que $f$ é injetiva em $A$ se para 
-todo $x_1$ e $x_2$ em A, $f(x_1) = f(x_2) $ implicar $x_1 = x_2 $. 
+$A$ de  $X$. Por exemplo, podemos dizer que $f$ é injetiva em $A$ se para
+todo $x_1$ e $x_2$ em A, $f(x_1) = f(x_2) $ implicar $x_1 = x_2 $.
 
 \begin{definition}
     \label{def8}
-    Se $f$ é função de $X$ e $Y$, dizemos que $f[A]$ denota a imagem de $f$ em 
-    $A$, definido por $f[A] = \{y \in Y | ~\exists x \in A, y = f(x)\}$.        
+    Se $f$ é função de $X$ e $Y$, dizemos que $f[A]$ denota a imagem de $f$ em
+    $A$, definido por $f[A] = \{y \in Y | ~\exists x \in A, y = f(x)\}$.
 \end{definition}
 
 \begin{theorem}
     \label{prop7}
-    Seja $f: X \to Y $ e $A$ um subconjunto de $X$. Então, para todo $x$ em 
-    $A$, $f(x)$ está em $f[A]$. 
+    Seja $f: X \to Y $ e $A$ um subconjunto de $X$. Então, para todo $x$ em
+    $A$, $f(x)$ está em $f[A]$.
 \end{theorem}
 
 \begin{proof}
     Por definição, $f(x) \in f[A] $ se, e somente se, existe $x'$ em $A$ tal que
-    $f(x') = f(x)$. Isto vale para  $x' = x $. 
+    $f(x') = f(x)$. Isto vale para  $x' = x $.
 \end{proof}
 
 \begin{theorem}
     \label{prop8}
     Seja $f: X \to Y$ e $g: Y \to Z$. Seja $A$ subconjunto de $X$. Então
-    $$(g \circ f)[A] = g[f[A]]$$ 
+    $$(g \circ f)[A] = g[f[A]]$$
 \end{theorem}
 
 \begin{proof}
     Seja $z \in (g \circ f)[A]$. Então, para algum $x \in A$, $z = (g \circ f)(x) = g(f(x))$.
-    Pelo que acabamos de provar na Proposição \ref{prop8}, $f(x) \in f[A]$. Novamente, pelo 
-    que acabamos de provar, $g(f(x)) \in g[f[A]] $. 
-    
-    Alternativamente, seja $z \in g[f[A]]$. Então, existe $y$ em $f[A]$ tal que 
-    $f(y) = z$. Como $y \in f[A]$, existe $x \in A$, tal que $f(x) = y$. Então 
+    Pelo que acabamos de provar na Proposição \ref{prop8}, $f(x) \in f[A]$. Novamente, pelo
+    que acabamos de provar, $g(f(x)) \in g[f[A]] $.
+
+    Alternativamente, seja $z \in g[f[A]]$. Então, existe $y$ em $f[A]$ tal que
+    $f(y) = z$. Como $y \in f[A]$, existe $x \in A$, tal que $f(x) = y$. Então
     $(g \circ f)(x) = g(f(x)) = g(y) = z$, então $z \in (g \circ f)[A] $
 \end{proof}
 
-Uma prova de que a composição de funções sobrejetivas é 
-sobrejetiva é a que descrevemos cima, pois $f: X \to Y$ é 
-sobrejetiva se, e somente se, $f[X] = Y$. 
+Uma prova de que a composição de funções sobrejetivas é
+sobrejetiva é a que descrevemos cima, pois $f: X \to Y$ é
+sobrejetiva se, e somente se, $f[X] = Y$.
 
-Nós podemos ver $f$ como uma função de $A$, um subconjunto de $X$ a $Y$, simplesmente 
-ignorando o comportamento de $f$ nos elementos fora de $A$. 
+Nós podemos ver $f$ como uma função de $A$, um subconjunto de $X$ a $Y$, simplesmente
+ignorando o comportamento de $f$ nos elementos fora de $A$.
 
 \begin{definition}
     \label{def9}
-    Denotamos $f \upharpoonright A$ como restrição de $f$ para $A$. Isto é, dadas $f: X \to Y$ 
-    e $A \subseteq X$, $f \upharpoonright A : A \to Y$ é definida por $(f \upharpoonright A)(x) = x$, 
-    para todo $x$ em $A$. 
+    Denotamos $f \upharpoonright A$ como restrição de $f$ para $A$. Isto é, dadas $f: X \to Y$
+    e $A \subseteq X$, $f \upharpoonright A : A \to Y$ é definida por $(f \upharpoonright A)(x) = x$,
+    para todo $x$ em $A$.
 \end{definition}
 
 Agora, $f$ é injetiva em $A$ significa que a restrição de $f$ em $A$ é injetiva.
@@ -520,26 +520,26 @@ Agora, $f$ é injetiva em $A$ significa que a restrição de $f$ em $A$ é injet
 \begin{definition}[Pré-imagem]
     \label{def10}
     Se $f: X \to Y$ e $B \subseteq Y$, então a pré-imagem de $B$ em $f$, denotado por $f^{-1}[B]$ é
-    definida por $f^{-1}[B] = \{x \in X | f(x) \in B\}$. Ou seja, é o conjunto de elementos de $X$ que 
+    definida por $f^{-1}[B] = \{x \in X | f(x) \in B\}$. Ou seja, é o conjunto de elementos de $X$ que
     são mapeados em $B$.
 \end{definition}
 
-Note que essa definição faz sentido mesmo que $f$ não tenha inversa, visto que dado $y \in B$ pode não 
-haver $x \in X$ com a propriedade de $f(x) \in B$, como podem ter vários. Se $f$ tem inversa ($f^{-1}$), 
-então, para todo $y$ em $B$, existe exatamente um elemento $x$ em $X$ com $f(x) \in B$. Neste caso, 
-dizemos que $f^{-1}[B]$ é a imagem de $B$ sobre $f^{-1}$ ou a pré-imagem de $B$ sobre $f$. 
+Note que essa definição faz sentido mesmo que $f$ não tenha inversa, visto que dado $y \in B$ pode não
+haver $x \in X$ com a propriedade de $f(x) \in B$, como podem ter vários. Se $f$ tem inversa ($f^{-1}$),
+então, para todo $y$ em $B$, existe exatamente um elemento $x$ em $X$ com $f(x) \in B$. Neste caso,
+dizemos que $f^{-1}[B]$ é a imagem de $B$ sobre $f^{-1}$ ou a pré-imagem de $B$ sobre $f$.
 
 \begin{theorem}
     Seja $f: X \to Y$, $g: Y \to Z$ e $C \subseteq Z$. Então $$(g \circ f)^{-1}[C] = f^{-1}[g^{-1}[C]]$$.
 \end{theorem}
 \begin{proof}
-    Para qualquer $y$, $y \in (g \circ f)^{-1}[C]$ se, e somente se, $g(f(y))$ está em $C$. 
+    Para qualquer $y$, $y \in (g \circ f)^{-1}[C]$ se, e somente se, $g(f(y))$ está em $C$.
     Isto acontece se, e somente se, $f(y) \in g^{-1}[C]$, o que acontece se, e somente se $y \in f^{-1}[g^{-1}[C]]$.
 \end{proof}
 
 Seguem algumas propriedades sobre imagens e pré-imagens. Aqui, $f$ denota uma função
-arbitrária de $X$ em $Y$. $A, A_1, A_2, ...$ denotam subconjuntos arbitrários de $X$, 
-e $B, B_1, B_2,...$ denotam subconjuntos arbitrários. 
+arbitrária de $X$ em $Y$. $A, A_1, A_2, ...$ denotam subconjuntos arbitrários de $X$,
+e $B, B_1, B_2,...$ denotam subconjuntos arbitrários.
 
 \begin{enumerate}
     \item $A \subseteq f^{-1}[f[A]]$, e se $f$ é injetiva, $A = f^{-1}[f[A]]$.
@@ -558,5 +558,5 @@ e $B, B_1, B_2,...$ denotam subconjuntos arbitrários.
     \item $A \cup f^{-1}[B] \subseteq f^{-1}[f[A] \cup B]$.
 \end{enumerate}
 
-A partir de agora, vamos demonstrar algumas dessas proporições, ora 
-com descrições da demonstração e ora com provas em Lean. 
+A partir de agora, vamos demonstrar algumas dessas proporições, ora
+com descrições da demonstração e ora com provas em Lean.
