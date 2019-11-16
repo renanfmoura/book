@@ -239,3 +239,24 @@ example : ∀ x, A x ∧ B x :=
 \end{lstlisting}
 
     \subsection{Quantificador Existencial}
+
+        O quantificador existencial é representado pelo símbolo $\exists$ e representa ``existe algum".
+        Seguido de uma variável e uma expressão, ele significa que existe algum elemento no domínio tal que a expressão seja verdadeira.
+        Alguns exemplos para o domínio dos naturais:
+
+        \begin{itemize}
+            \item $\exists x \ x \times x = x$
+            \item $\exists y \ y \le 0$
+            \item $\forall x \ \exists y \ par(y) \land y > x$
+        \end{itemize}
+
+        Ora, as expressões significam:
+
+        \begin{itemize}
+            \item Existe número natural que é igual ao seu quadrado ($0$ e $1$)
+            \item Existe número menor do que ou igual a zero (o próprio zero)
+            \item Para todo natural, existe um número que é par e maior do que ele
+        \end{itemize}
+
+        Como no caso do quantificador universal, a variável que acompanha o quantificador é dita \textbf{limitada}. Por exemplo, $x$ em $\exists x \ A(x)$.
+        Variáveis não limitadas são \textbf{livres}.
