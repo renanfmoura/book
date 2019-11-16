@@ -1082,8 +1082,38 @@ show false, from
 
 \end{lstlisting}
 
-\textbf{8. Prova de ¬ A ∨ ¬ B a partir de ¬ (A ∧ B)} % exercicio
+\textbf{8. Prova de $ \neg A \lor \neg B$ a partir de $\neg (A \land B)$} % exercicio
 %Mencionar o escopo das variáveis
+\begin{prooftree}
+  \AxiomC{}
+ \RightLabel{\scriptsize(1)} 
+ \UnaryInfC{$A$}
+  \AxiomC{}
+ \RightLabel{\scriptsize(2)} 
+ \UnaryInfC{$B$}
+ \BinaryInfC{$A \land B$}
+ \AxiomC{$\neg (A \land B)$}
+ \BinaryInfC{$\bot$}
+ \RightLabel{\scriptsize(2)} 
+ \UnaryInfC{$\neg B$}
+ \UnaryInfC{$\neg A \lor \neg B$}
+  \AxiomC{}
+ \RightLabel{\scriptsize(3)} 
+ \UnaryInfC{$\neg (\neg A \lor \neg B)$}
+ \BinaryInfC{$\bot$}
+ \RightLabel{\scriptsize(1)} 
+ \UnaryInfC{$\neg A$}
+ \UnaryInfC{$\neg A \lor \neg B$}
+  \AxiomC{}
+ \RightLabel{\scriptsize(3)} 
+ \UnaryInfC{$\neg (\neg A \lor \neg B)$}
+ \BinaryInfC{$\bot$}
+ \RightLabel{\scriptsize(3)} 
+ \UnaryInfC{$\neg A \lor \neg B$}
+ 
+\end{prooftree}
+
+No Lean, essa prova poderia ser escrita da seguinte forma:
 \begin{lstlisting} 
 variables A B : Prop
 open classical
