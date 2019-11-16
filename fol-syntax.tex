@@ -178,6 +178,10 @@ constant sucessor : U → U
         A regra da direita demonstra a \textbf{eliminação} do quantificador universal. A intuição, neste caso,
         é que, se $A(x)$ vale para todo $x$, então vale para algum $t$ qualquer do domínio.
 
+        Observe a semelhança dessas regras com aquelas relativas à implicação. No caso da introdução da implicação, assumimos $A$ e provamos $B$, então $A \rightarrow B$.
+        No caso da introdução do quantificador universal, assumimos $x$ e mostramos $A(x)$, então $\forall x \ A(x)$.
+        Para a eliminação da implicação, temos $A \rightarrow B$ e $A$, então temos $B$. Já no caso da eliminação do quantificador, temos $\forall x \ A(x)$ e $y$, então $A(y)$.
+
         Vejamos um exemplo aplicando essas regras. Observe como derivar $\forall x \ A(x) \land B(x)$ a partir de $\forall x \ A(x)$ e $\forall x \ B(x)$:
 
         \begin{center}
