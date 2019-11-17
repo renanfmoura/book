@@ -584,3 +584,40 @@ calc
           ... ↔ A ∧ (A ∨ B)        : by rw or_self
           ... ↔ A                  : by rw left_of_and
 \end{lstlisting}
+
+A função calc, já apresentada em outras frentes desse livro, aparece novamente, agora para conjuntos. A próxima seção explanará como aplicar calc em conjuntos no Lean e mostrará a diferença entre resolver questões da forma clássica e com calc.
+
+\subsection{Aplicação de calc em Conjuntos}
+
+\subsection{Famílias Indexadas}
+
+\subsection{Power Set}
+
+\subsection{Exercícios}
+
+\begin{enumerate}
+    
+\item Questões de Identidades de conjuntos
+    
+\begin{lstlisting}
+section
+  variable U : Type
+  variables A B C : set U
+
+--Comutatividade em ∩ e ∪ 
+  example : A ∩ B = A ∩ B := sorry
+
+  example : A ∪ B = A ∪ B:= sorry
+
+--Associatividade
+  example : (A ∩ B) ∩ C = (A ∩ B) ∩ C := sorry
+
+--De Morgan
+  example : A \ (B ∩ C) = (A \ B) ∪ (A \ C) := sorry
+end
+\end{lstlisting}
+
+\item Questões com calc
+    
+    
+\end{enumerate}
