@@ -1,26 +1,112 @@
-\chapter{Introdução ao Lean}
-% dessa vez baseado mais fortemente em
+\chapter{Introdução ao Lean }
 % https://leanprover.github.io/theorem_proving_in_lean/introduction.html
-Ao final do último capítulo, definimos duas classes fundamentais de ferramentas de auxílio a prova de teoremas, os \textit{ATPs} e \textit{ITPs}.
-Essas grupos de ferramentas em geral são muito bem definidos, e distanciados, mantendo um espaço vazio entre eles, o que pode parecer desvantajoso.
-O matemático pode desejar algo entre a prova automática e interativa, ou o acesso a ambos os recursos numa mesma ferramenta.
-Para isso serve o Lean.
 
-O provador de teoremas Lean busca preencher essa lacuna: uma única ferramenta contendo o melhor de ambos os mundos acessíveis.
+Ao final do último capítulo, definimos duas classes fundamentais de ferramentas de auxílio a prova de teoremas, os \textit{ATPs} e \textit{ITPs}.
+Esses grupos de ferramentas em geral são muito bem definidos, e distanciados, mantendo um espaço vazio entre si, o que pode parecer desvantajoso:o  matemático pode desejar algo entre a prova automática e interativa, ou o acesso a ambos os recursos numa mesma ferramenta.
+
+O provador de teoremas Lean\footnote{documentação, ambiente e tutoriais estão disponiveis em: leanprover.github.io} busca preencher essa lacuna: uma única ferramenta contendo o melhor de ambos os mundos acessíveis.
 Nesse sentido, age como uma \textit{ponte entre os dois mundos}.
 
 O ambiente do Lean suporta interação, construção de termos, e verificação passo-a-passo das expressões desenvolvidas.
 Lean implementa o chamado \textit{calculus of constructions}, ou cálculo de contruções, um sistema dedutivo bastante poderoso, que contém os demais sistemas a serem discutidos ao longo do livro, tais como Lógica de Proposições, ou Lógica de Primeira Ordem.
 
+Um usuário inicial pode se deparar com algumas dúvidas pertinentes: \textit{porque contruir um termo é uma prova?}, \textit{consigo desenvolver provas top-down e botton-up?}, ou \textit{como conhecer as bibliotecas que o Lean já tem implementadas?}Algumas dessas dúvidas são esclarecidas logo mais, enquanto outras serão deixadas para pŕatica ao longo dos proximos capítulos.
+
 \section{Teoria dos tipos}
-Descrição superficial do teoria dos tipos para justificar o pardigma PAT.
-Tambem justifica como o LEAN provas as coisas.
+% https://leanprover.github.io/theorem_proving_in_lean/dependent_type_theory.html
+% https://en.wikipedia.org/wiki/Type_theory
+\textit{Teoria dos Tipos} é uma classe de linguagens poderosa, que permite desenvolver assertivas bem definidas sobre definições matemáticas, ou exprimir conceitos desde os abstratos aos mais paupáveis.
+De fato, essa é uma linguagem bastante expressiva, e útil para definição de elementos formais; até certo ponto, é semelhante a noção de teoria dos conjuntos.
+
+No entanto, em muitos contextos, é razoável utilizar uma linguagem com ferramental teórico capaz de lidar com uma gama de elementos distitos, pertencentes a diversas classes, \textit{tipos distintos}.
+Isso ocorre frequentemente quando tratamos de objetos matemáticos, e formalismos nesse sentido: o elemento $1$ pode ter o tipo natural ou real, assim como $[1,2,3, ...]$ pode expressar o tipo de uma lista de inteiros, dependendo da interpretação e contexto dados.
+Claramente lidamos constantemente com elementos de tipos distintos, objetos que se relacionam, e tipos que se relacionam.
+Pra isso, \textit{teoria dos tipos} se mostra extremamante útil.
+
+Lean, em especial, implementa uma versão da linguagem chamada \textit{Calculo das Construções}, ou \textit{Calculus of Constructions}. A partir dos próximos exemplos, o leitor é convidado a acompanhar fazendo a intelação da ferramenta, ou através do \textit{Lean Web Editor\footnote{leanprover.github.io/live/latest/}}.
+
+\subsection{Noções Fundamentais}
+Em teoria dos tipos, tudo tem um tipo definido. Essa é uma exigência razoável; de fato, somos capazes de \textit{tipar} qualquer elemento dentro de um contexto definido, em uma linguagem adequada. Vejamos alguns exemplos em Lean:
+
+\vspace{5mm}
+\begin{lstlisting}
+    -- abaixo declaramos algumas variaveis e usamos o
+    -- comando #check para checar o tipo do elemento
+    variable b : bool
+    variable n : ℕ
+    variable f : ℕ → ℕ
+    variable g : ℕ × ℕ → ℕ
+
+    #check b            -- b : bool
+    #check 1            -- 1 : ℕ
+    #check n + 1        -- n + 1 : ℕ
+
+    #check f n          -- f n : ℕ
+    #check g (1,n)      -- g (1, n) : ℕ
+\end{lstlisting}
+\vspace{5mm}
+
+\noindent O comando \textit{variable} declara uma nova variável no contexto.
+A partir disso, somos capazes de checar os tipo.
+
+Note nas linhas $5$ e $6$ que $f$ e $g$ podem ser interpretadas como funções de naturais em naturais, então pudemos fazer a aplicação em $12$ e $13$, recebendo $f n$ e $g (1,n)$ como naturais.
+Essa saída faz sentido em termos de tipo: sabemos que a aplicação tem tipo natural, embora não saibamos \textit{qual} natural.
+
+Um leitor curioso pode questionar \textit{se tudo tem um tipo, qual tipo dos tipos?} ou ainda ir além, e \textit{qual o tipo do tipo dos tipos?} E essas perguntas podem ser respondidas novamente através do Lean:
+
+\vspace{5mm}
+\begin{lstlisting}
+    #check ℕ            -- ℕ : Type
+    #check bool         -- bool : Type
+
+    -- considere Type = Type 0
+    #check Type 0       -- Type : Type 1
+    #check Type 1       -- Type : Type 2
+    #check Type 2       -- Type : Type 3
+\end{lstlisting}
+\vspace{5mm}
+
+\noindent Essa pode ser uma resposta \textit{frustrante} ou \textit{brilhante}.
+Os tipos básicos em Lean tem o tipo \textit{Type}, ou \textit{Type 0}, enquanto o proprio tipo \textit{Type 0} tem tipo \textit{Type 1} quem tem tipo \textit{Type 2} e assim por diante.
+
+Essa noção de hierarquia de tipos é uma solução proposta inicialmente por Russel, e posteriormente desenvolvida por Chwistek e Ramsey, em sua \textit{teoria simples dos tipos}, para evitar o conflito entre a teoria dos conjuntos de Frege, e o paradoxo de Russel.
+De forma simples, a hierarquia de tipos evita o autorreferenciamento, em que um elemento tem o próprio tipo.
+
+O que o Lean se propõe a fazer, portanto, é oferencer um ambiente para tratar da álgebra de tipos, implementando conceitos como \textit{abstração} e \textit{aplicação}, ou \textit{tipos dependentes}.
 
 \subsection{Proposições como Tipos}
-ou Terms as Proofs
+% leanprover.github.io/theorem_proving_in_lean/propositions_and_proofs.html
+Entramos em uma das discussões mais fundamentais sobre o \textit{como Lean provas um teorema}, e para isso, introduzimos a noção de \textit{Proposições como Tipos}, através do tipo \textit{Prop}.
+
+Considere um tipo \textit{Prop} cujos habitantes (elementos daquele tipo) representam uma \textit{prova daquela proposição}.
+Em outras palavras, dada uma proposição que se deseje provar, basta construirmos um termo \textit{habitante daquela proposição} através de aplicações, abstrações ou outras ténicas formais para lidar com os tipos.
+Vejamoas um exemplo:
+
+\vspace{5mm}
+\begin{lstlisting}
+    variables A B : Prop    -- A e B sao proposicoes
+
+    variable h1 : A         -- h1 uma prova para A
+    variable h2 : A → B     -- h2 uma prova para A → B
+
+    example : B := h2 h1    -- h2 h1 prova para B
+    #check h2 h1            -- h2 h1 : B
+\end{lstlisting}
+\vspace{5mm}
+
+Acima, introduzimos sem maiores explicações algumas noções profundas sobre Lean, e lógica proposicional, que serão discutidas nos próximos capítulos.
+No entanto, note que no contexto dado, fomos capazes de construir um termo \textit{h2 h1} que tem tipo \textit{B}, então costruimos uma prova para \textit{B}, na linha $6$; ainda podemos checar se esse termo tem o tipo desejado, em $7$.
+
+Observe ainda, na linha $4$, em que criamos um elemento do tipo $A → B$, que anteriormente citamos como a noção de uma função que leva tipo $A$ em um tipo $B$.
+Aqui, essa noção será extendida para a de \textit{implicação lógica}, tambem discutida no capítulo sobre lógica proposicional.
 
 \section{Provas usando LEAN}
-Exemplos (avancados) de provas utilizado LEAN.
+\begin{itemize}
+    \item Exemplos (avancados) de provas utilizado LEAN.
+    \item Podemos falar sobre o que é o tal "example" do item anterior.
+    \item Talvez tambem falar sobre "theorem", e "lemma".
+    \item Acho que "sections e namespaçes", não.
+\end{itemize}
 
 \subsection{Modo Termo}
 Apresentação e exemplos
