@@ -688,6 +688,25 @@ open function
 
 \section{Lógica de Segunda ou Mais Alta Ordem}
 
+Até agora, formalmente, definimos lógica de primeira ordem, onde iniciamoscom um estoque 
+fixo de símbolos de funções e relações, nos últimos tópicos que  consideramos, ocorre a motivação 
+de extender a linguagem para funções e relações. Por exemplo, ao afirmar que $f: X \to Y$ possui 
+inversa a esquerda pode ser dito como: $$\exists g, \forall x, g(f(x)) = x.$$
+Outro exemplo é o seguinte teorema, descrito em linguagem lógica 
+$$\forall x_1, x_2, (f(x_1) = f(x_2) \to x_1 = x_2) \to \exists g, \forall x, g(f(x)) = x.$$
+Isto é, se $f: X \to Y$ é injetiva, então existe inversa à sua esquerda.
+
+Nesse sentido, existe uma quantificação sobre as funções e relações, o que se distancia do que a lógica 
+de primeira ordem cobre. Como forma de resolver esse impasse, podemos desenvolver uma teoria na linguagem 
+de lógica de primeira ordem no qual o universo contém funções e relações como objetos ou extender essa linguagem
+para envolver novos tipos de quantificadores e variáveis, que é o caso descrito nessa sessão. Isto é o que Lógica
+de Ordem mais Alta faz. 
+
+Alonzo Church (1903 - 1995) foi um matemático e lógico estadunidense, conhecido pelo cálculo lambda, formula a ideia
+de ordens mais altas na lógica. Isso é algumas vezes descrito como Teoria Simples dos Tipos.
+
+
+
 \subsection{Definindo a inversa Classicamente}
 
 Para definir funções inversas, é necessário que utilizemos o racionínio clássico. 
@@ -782,3 +801,5 @@ dessa prova. A versão em Táticas foi inserida como instrução de aplicação 
 como o modo em termos. 
 
 \section{Funções e Relações}
+
+\section{Exercícios}
