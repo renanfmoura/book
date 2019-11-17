@@ -12,11 +12,10 @@ A formalização do processo de raciocínio garante que \textit{construimos um c
 
 %Não devemos, no entanto, nos limitar a discutir lógica como ferramenta relacionada a teoremas ou metafísica. Esse ramo é presente no estudo da linguagem (lógica informal), processos industriais e computação (métodos formais), por exemplo.
 
-\section{História Recente}
-Aristóteles, Frege, Gentzen, Russel... Problemas abertos na lógica?
+%\section{História Recente}
+%Aristóteles, Frege, Gentzen, Russel... Problemas abertos na lógica?
 
 \section{Lógica formal e linguagem natural}
-% uma referencia interssante
 % http://www.pucrs.br/edipucrs/online/pesquisa/pesquisa/artigo11.html
 A linguagem humana é conhecidamente um emaranhado gigantesco de simbolos, gestos, palavras, sentidos, interpretações.
 Essa é fruto de lapidação através de milênios, do que se iniciou com uma linguagem básica animalesca, chegando a complexidade atual em um processo evolutivo constante; assim ocorreu com a fala e escrita.
@@ -43,20 +42,16 @@ Junto a cada porta há um guarda. Um dos guardas é sempre sincero, enquanto o o
 Esse é claramente um problema envolvendo um raciocínio complexo, e, se tratando da sua vida em jogo, exige plena certeza da solução antes de uma resposta definitiva.
 De fato, seremos capazes de formalizar problemas desse tipo, e obter métodos de derivação para obter um prova para a resposta.
 
-% Dedução Natural:
-
+\subsection{Dedução Natural}
 Uma das maneiras de formalizar e demonstrar problemas lógicos é utilizar sistemas dedutivos como a Dedução Natural, que consiste em um grupo de regras e axiomas que nos permitem manipular expressões formalizadas, ou seja, traduzidas da forma linguística para uma forma lógica matemática de notação, afim de criar demonstrações de provas e solucionar...
 
-% Cálculo de Sequentes:
+\subsection{Cálculo de Sequentes}
 
-O Cálculo de Sequentes é um estilo de apresentação de provas que foi proposto por Gentzen, em 1934, com o objetivo de servir como uma ferramenta auxiliar para o estudo de dedução natural em lógica de primeira ordem. Assim como outros sistemas dedutivos, o Cálculo de Sequentes também possui suas regras e propriedades que funcionam de maneira harmônica e mantém o aspecto de árvore para as provas em si. 
+O Cálculo de Sequentes é um estilo de apresentação de provas que foi proposto por Gentzen, em 1934, com o objetivo de servir como uma ferramenta auxiliar para o estudo de dedução natural em lógica de primeira ordem. Assim como outros sistemas dedutivos, o Cálculo de Sequentes também possui suas regras e propriedades que funcionam de maneira harmônica e mantém o aspecto de árvore para as provas em si.
 
 Gentzen apresentou duas formas para o seu sistema dedutivo: os sistemas LK e LJ. O sistema LK, que é uma abreviação para logistischer klassischer Kalkül, tem como estrutura de prova uma sequência de sequentes, onde cada sequente é derivado dos sequentes anteriores na sequência de prova e essa estrutura é formada respeitando as regras de Inferência do sistema em si. Já o sistema LJ é tido como mais intuitivo e é oriundo de algumas mudanças nas regras do sistema Lk...
 
-% Atualização de sistemas dedutivos
-
-
-[incompleto]
+\subsection{Resolução}
 
 \section{Provadores, ATP e ITP}
 % referencia que bem diferencia ATPs e ITPs
@@ -68,11 +63,11 @@ Verificação formal envolve o uso de lógica e, mais recentemente, de aparato c
 A partir disso, passamos utilizar teoremas matemáticos para verificar assertivas sobre os elementos abstraídos, que podem bem representar todo tipo de objeto de interesse.
 De fato, somos capazes de descrever matematicamente \textit{softwares}, processos industriais, sistemas de gerenciamento de cargas, ou teoremas sobre conjuntos, por exemplo, utilizando dos mesmos aparatos.
 Isso significa que na prática, não há distinção entre ferramentas provando teoremas, ou verificando assertivas sobre um objeto qualquer de interesse.
-De fato, reduzimos os problemas de verificação formal a problemas de provas de teoremas e, mais relevante, podemos utilizar computadores nessa tarefa.
+Reduzimos os problemas de verificação formal a problemas de provas de teoremas e, mais relevante, podemos utilizar computadores nessa tarefa.
 
 Esse tipo de discussão se tornou possível após os recentes avanços no campo de estudo da lógica.
 Reduzimos regras de inferencia e derivação presentes na maior parte das provas a um conjunto pequeno de axiomas fundamentais.
-Provadores desse tipo se tornaram viáveis após o desenvolvimento por Frege de uma base formal adequada a descrição da matemática, em sua \textit{Begriffsschrift}.
+Provadores desse tipo se tornaram viáveis com o desenvolvimento por Frege de uma base formal adequada a descrição da matemática, em sua \textit{Begriffsschrift}.
 Após Frege, outros nomes, como Alas, Russeau, Hilbert, e Gentzen se esforlaram a desenvolver bases sólidas e compactas para o pensamento matemático que viriam a ser implementadas pelos computadores.
 
 A compactação do conjunto de regras de demonstração viabilizaria computadores implementando ferramentas para auxílio a prova de teoremas, divididas em basicamente duas classes: auxílio a obtebção de uma prova, ou verificação de uma assertiva dada. Esses são os \textit{ATPs} e o \textit{ITPs}.
@@ -89,14 +84,11 @@ Note que nesse processo, a participação do ser humano está restrita apenas a 
 Isso expressa o sentido em que esses provadores são \textit{Automáticos}.
 
 De fato, algumas provadores implementam sistemas dedutivos que lidam internamente com o problema, desenvolvendo soluções pouco inteligíveis (resolução, p.ex.).
-Pode-se dizer que o processo de prova nesses casos é pouco acessível.
-Alguns provadores ou sistemas de dedução automática comuns são:
+Pode-se dizer que o processo de prova nesses casos é pouco acessível. Exemplos de sietmas, ou algoritmos populares são:
 
 \begin{itemize}
-    \item \textbf{Tecnica A} : breve história, características. Poucas linhas.
-    \item \textbf{Tecnica B} : breve história, características. Poucas linhas
-    \item \textbf{Tecnica C} : breve história, características. Poucas linhas
-    \item \textbf{Provador D} : breve história, características. Poucas linhas
+    \item \textbf{Algoritmo de Presburguer} : permite concluir se uma assertiva na \textit{aritmética de presburguer} para números naturais é válida. Em 1954, um aluno da universidade de Princeton implementou o algoritmo de Presburguer em um computador JOHNNIAC que foi capaz de provar que o produto entre números pares é par.
+    \item \textbf{Vampire\footnote{Vampire: www.vprover.org}}: é um poderoso provador automático implementado em \textit{C++}, para lógica de primeira ordem. Seu desenvolvimento se iniciou em 1994, e já venceu a \textit{copa mundial de provadores de teoremas}, além de diversas premiações menores.
 \end{itemize}
 
 Em 1976, o computador IBM360 participou da prova dada por Apel e Haken para o \textit{Teorema das quatro cores}, mostrando que o uso de computadores poderia ser relevante no desenvolvimento da matemática.
@@ -113,20 +105,15 @@ Nesse processo, a intervenção da máquina pode ser superficial, por exemplo na
 A vantagem nesse tipo de método está presente justamente quando trabalhamos provas que se tornam extremamanete complicadas, e um provador automático se torna incapaz de solucionar, ou quando desejamos ter certeza de um resultado, pela dificuldade em garantir a validade do resultado dado por um \textit{ATP}.
 Problemas desse tipo abrem espaço para o paradigma que garante provas desenvolvidas pela intervenção humana, com assistência computacional.
 
-Alguns \textit{ITPs} que implementam esse tipo de técnica são:
-
+Alguns \textit{ITPs} populares são:
 \begin{itemize}
-    \item \textbf{Provador A} : breve história, características. Poucas linhas.
-    \item \textbf{Provador B} : breve história, características. Poucas linhas
-    \item \textbf{Provador C} : breve história, características. Poucas linhas
-    \item \textbf{Provador D} : breve história, características. Poucas linhas
+    \item \textbf{Coq Proof Assistant\footnote{Coq: coq.inria.fr}} : sistema de gestão de provas que permite exprimir assertivas matemáticas, checagem de provas, além de executa algumas provas automáticas. Embora Permita essa forte automação, é ainda considerado sistema de provas interativo, oferecendo um ambiente para provas checadas por máquina.
+
+    \item \textbf{Isabelle\footnote{Isabelle: isabelle.in.tum.de}}: desenvolvido em parceria entre a Universidade de Cambridge e a Universidade Tecnica de Munique, Isabelle foi pensada para servir de assistente de provas geral, implementando lógica de alta ordem. Teve sua verão inicial lançada em 1986.
 \end{itemize}
 
 Mais a frente discutioms como o Lean implementa um plataforma entre os dois paradigmas: permite o desenvolvimento de provas interativas, sem abrir mão da automação.
 Podemos discutir \textit{em que ponto o sistema deixa de agir como assistente, e passa a ser considerado autônomo}, ou ainda, \textit{o que é automação}.
-
-% aqui entramos na discussão da automação como pequenas utilidades implementadas.
-% sugesão de proxima seção.
 
 %\subsection{O que é Automacão}
 %fiquei interessafo em defender o que discutimos tantas vezes com o Rdmkr, sobre até onde, e como, o computador está automatizando as tarefas...
