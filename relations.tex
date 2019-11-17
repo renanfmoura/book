@@ -8,14 +8,93 @@ Podemos abstrair a noção semântica de relação para um universo $R$ de tupla
 
 Considere, a partir disso, o universo de objetos $u = \{Ana, Bia, Cid\}$, e a relação \textit{conhece}, definida por $U\times U \supseteq A = \{(Ana, Bia), (Bia, Cid)\}$. Podemos dizer que \textit{Bia conhece Ana}?
 
-\section{Definições}
-Iniciamos a seção propondo uma série de definições de relações extremamente úteis a partir das próximas subseções.
+%\section{Definições}
+\theoremstyle{definition}
+\newtheorem{definition}{Definição}[section]
 
-\subsection{Relações de Ordem}
-Definições usando $\leq$ e o $<$... Podemos definir uma relação estrita por uma parcial, e uma parcial por uma estrita... etc. Algum exemplo não numérico!
+%\theoremstyle{definition}
+%\newtheorem{example}{Exemplo}[section]
 
-\subsection{Relações de Equivalência}
-Descrevemos as propriedades que definem esse tipo de relação, e damos exemplos. Mostramos as notações $a\sim b $, $a\equiv b$. Sugiro as relações de equivalencia "paralelo a", "modulo n", "mesma idade".
+\theoremstyle{plain}
+\newtheorem{theorem}{Proposição}[section]
+
+%\theoremstyle{plain}
+%\newtheorem{corollary}{Corolário}[section]
+
+Definimos uma série de tipos de relações importantes, frequentemente encontradas na literatura.
+Note que muitas das definições se aplicam a relações conhecidas como \textit{maior que}, nos naturais, ou \textit{pertence} para conjuntos.
+
+\section{Relações de Ordem}
+Discutimos uma classe de relações binárias importantes: as chamadas relações de ordem.
+Aqui, definimos relações de\textit{parciais} ou \textit{estritas}.
+Usaremos os símbolos $\leq$ e $<$ para nos referir a relações quaisquer entre elementos de alguma estrutura $A$, e os usamos infixados: $x \leq y$ ou $x < y$.
+
+\begin{definition}
+    \label{partial_order}
+    Seja $\leq$ uma relação. Dizemos que $\leq$ é de \textit{ordem parcial} se respeita as seguintes propriedades:
+
+    \begin{itemize}
+        \item \textbf{reflexividade:} para todo $x \in A$, $x\leq x$.
+        \item \textbf{transitividade:} para todo $xy,z \in A$, se $x\leq y$, e $yleq z$, então $x\leq z$.
+        \item \textbf{antissimetria:} para todo $x,y \in A$, se $x\leq y$ e $y \leq x$, então $x=y$.
+    \end{itemize}
+\end{definition}
+
+\noindent Note que se entendemos $\leq$ por um predicado binário, as definições acima são facilmente expressos em lógica de primeira ordem.
+Exemplos desse tipo são: $\leq$ em $\mathbb{N}$, $\mathbb{Z}$, $\mathbb{Q}$, e $\mathbb{R}$ ou a inclusão $\supseteq$ para a classe dos conjuntos.
+
+Há ainda uma classe especial de relações de ordem vistas a seguir:
+
+\begin{definition}
+    \label{partial_order_total}
+    Dizemos que a relação de \textit{ordem parcial} $\leq$ é \textit{total} se:
+
+    \begin{itemize}
+        \item para todo $x, y \in A$, $x\leq y$ ou $y\leq x$.
+    \end{itemize}
+\end{definition}
+
+\noindent Vale observar que nos exemplos anteriores, apenas $\leq$ é total.
+De fato, tome $A = \mathcal{P}(\mathbb{N}) $, os conjuntos $x={3}$ e $y={5}$ subconjuntos de $A$; claramente não vale a completude de $\subseteq$ em $A$. % Ainda, as relações \textit{divide}, $x|y$, nos inteiros, e outras...
+
+O que dizer, no entanto, das relações \textit{menor} ou \textit{pertence}? De fato, essas pertencem a classe a seguir, as chamadas relações de \textit{ordem estrita}:
+
+\begin{definition}
+    \label{estrict_order}
+    Considere $<$ relação em um conjunto $A$. Dizemos que a relação é de \textit{ordem estrita} $\leq$ é \textit{total} se:
+
+    \begin{itemize}
+        \item \textbf{transitividade: } para todo $x,y,z \in A$, se $x<y$ e $y<z$ então $x<z$.
+        \item \textbf{irreflexividade: } para todo $x\in A$, $x\nless x$.
+    \end{itemize}
+    dizemos, ainda, que essa relação estrita é total em $A$ se:
+    \begin{itemize}
+        \item \textbf{tricotomia:} para todo $x,y \in A$, vale $x<y$, $x>y$ ou $x=y$.
+    \end{itemize}
+\end{definition}
+
+\noindent Novamente, é facil ver como formalizar essas noções utilizando proposições em lógica de primiera ordem.
+
+% uma relação estrita é assimétrica: prova.
+
+A seguir, discutimos um resultado intuitivo que estabelece uma ligação importante entre as relações de ordem \textit{parciais} e \textit{estritas}:
+
+\begin{theorem}
+    \label{estrict_by_partial}
+    Considere $\leq$ parcial em $A$. Podemos definir uma relação estrita $<$ em $A$, em que $x<y$ significa que $x\leq y$ e $x \neq y$. Ainda, se $\leq $ for total, então $<$ também será total.
+\end{theorem}
+\begin{theorem}
+    \label{partial_by_estrict}
+    Considere $<$ estrita em $A$. Podemos definir a relação de ordem parcial $\leq $ em $A$, em que $x\leq y$ significa que $x < y$ ou $x = y$. Ainda, se $<$ for total, então $\leq$ também será total.
+\end{theorem}
+
+\begin{proof}
+    Exercício para o leitor!
+\end{proof}
+
+\section{Relações de Equivalência}
+%Descrevemos as propriedades que definem esse tipo de relação, e damos exemplos. Mostramos as notações $a\sim b $, $a\equiv b$. Sugiro as relações de equivalencia "paralelo a", "modulo n", "mesma idade".
+
 
 \subsection{Equivalencia e Igualdade}
 Apenas discutimos brevemente como e porque Equivalencia e Igualdade são animais completamente diferentes. Toma os exemplos acima pra discutir.
