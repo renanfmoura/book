@@ -12,7 +12,7 @@ Quando nos comunicamos, é habitual utilizar diferentes estruturas de linguagem 
 %Depois dessa seção mostraríamos as árvores mais complexas de dedução natural tb dessa forma. 
 
 \subsection{Implicação} 
-A implicação é essencial para o condicionamento de sentenças. Se na lingua falada utilizamos a estrutura "Se ... então" para nos referirmos a acontecimentos que dependem de outros, na logica a ideia é muito semelhante.
+A implicação é essencial para o condicionamento de sentenças. Se na língua falada utilizamos a estrutura ``Se ... então"  para nos referirmos a acontecimentos que dependem de outros, na lógica a ideia é muito semelhante.
 
 Retornando aos primeiros problemas do capítulo, relembramos um dos problemas descritos: % lembrar de add os exemplos na introdução %
 \begin{center}
@@ -21,10 +21,10 @@ Retornando aos primeiros problemas do capítulo, relembramos um dos problemas de
 \textbf{Se a família real não tivesse vindo ao Brasil, então o território se desintegraria}
 \end{center}
 
-Apesar das duas sentenças terem a mesma estrutura "Se... então", podemos perceber que as duas tem suas diferenças. Em particular, chamamos a segunda proposição de implicação contrafactual, pois ela afirma como o mundo possivelmente seria, caso a realidade fosse diferentes do que ela realmente é. Esse assunto é discutido por filósofos há seculos e Spinoza e Saul Kripke são nomes de destaque nesses estudos. Entretanto, a lógica matemática se debruça mais especialmente na primeira sentença.
+Apesar das duas sentenças terem a mesma estrutura ``Se... então", podemos perceber que as duas tem suas diferenças. Em particular, chamamos a segunda proposição de implicação contrafactual, pois ela afirma como o mundo possivelmente seria, caso a realidade fosse diferentes do que ela realmente é. Esse assunto é discutido por filósofos há seculos e Spinoza e Saul Kripke são nomes de destaque nesses estudos. Entretanto, a lógica matemática se debruça mais especialmente na primeira sentença.
 
 Dessa forma, tomando a primeira sentença como objeto de estudo, como podemos valorar essa implicação?
-Para começar a analisar a valoração dessa implicação pensemos em A correspondendo o evento "Ana viaja para o Chile" e B ao evento "Ana compra pesos chilenos". Temos, então, dois casos e uma tabela verdade correpondente:
+Inicialmente, podemos atribuir a letra $A$ ao evento ``Ana viaja para o Chile" e $B$ ao evento ``Ana compra pesos chilenos". Temos, então, dois casos e uma tabela verdade correpondente:
 
 \begin{center}
 
@@ -48,9 +48,9 @@ F          & F          & V                  \\ \hline
 \end{tabular}
 \end{table}
 
-No primeiro caso, Ana viaja para o Chile e A é verdadeiro. Dessa forma, para a implicação ser verdadeira, B precisa ver também verdadeiro.
+No primeiro caso, Ana viaja para o Chile e $A$ é verdadeiro. Dessa forma, para a implicação ser verdadeira, $B$ precisa ver também verdadeiro.
 
-No segundo caso, Ana não viaja para o Chile e A é falso.
+No segundo caso, Ana não viaja para o Chile e $A$ é falso.
 Dessa forma, nada podemos dizer sobre o evento B e qualquer valor atribuído a ele torna a implicação verdadeira. A esse tipo de afirmação, chamamos de \textbf{verdadeira por vacuidade}.\\
 
 Vamos agora analisar a implicação contrária:
@@ -59,7 +59,7 @@ Vamos agora analisar a implicação contrária:
 \textbf{Se Ana comprar pesos chilenos, viajará para o Chile}
 
 \end{center}
-Ainda analisando o evento A como "Ana viaja para o Chile" e B como "Ana compra pesos chilenos", temos a seguinte tabela verdade:
+Ainda analisando o evento $A$ como ``Ana viaja para o Chile" e $B$ como ``Ana compra pesos chilenos", temos a seguinte tabela verdade:
 
 \begin{table}[htb]
 \centering
@@ -75,9 +75,9 @@ F          & F          & V                  \\ \hline
 \end{tabular}
 \end{table}
 
-A partir da comparação das duas tabelas podemos perceber que a segunda e terceira linhas evidenciam que, apesar de A e B terem o mesmo valor nas duas tabelas, a implicação tem uma valoração diferente. Ou seja, A $\to$ B $\neq$ B $\to$ A. Esse resultado condiz com a nossa intuição pois uma vez que embora saibamos que se Ana viaja para o Chile, comprará pesos chilenos, uma vez que Ana comprou pesos chilenos, não podemos afirmar com certeza que ela viajará para o Chile. Quem sabe Ana seja uma colecionadora de moedas internacionais?\\
+A segunda e a terceira linhas das duas tabelas evidenciam que, apesar de $A$ e $B$ terem o mesmo valor em ambas, a implicação tem uma valoração diferente. Ou seja, $A \to B \neq B \to A$. Esse resultado condiz com a nossa intuição, pois embora saibamos que se Ana viaja para o Chile, ela comprará pesos chilenos, não podemos afirmar com certeza que uma vez que Ana comprou pesos chilenos, ela viajará para o Chile. Quem sabe Ana seja uma colecionadora de moedas internacionais?\\
 
-Além disso, a implicação é protagonista da regra chamada "regra da exclusão da implicação" ou \textit{Modus Ponens}("A maneira que afirma afirmando" ), ou seja:
+Nesse contexto, a implicação é protagonista da  chamada ``regra da exclusão da implicação" ou \textit{Modus Ponens} (``A maneira que afirma afirmando" ), ou seja:
 
 \begin{center}
 
@@ -99,7 +99,6 @@ Escrito em dedução natural como:
 
 E com seu correspondente no Lean, sendo:
 
-\vspace{5mm}
 \begin{lstlisting} 
 variables A B: Prop
 section
@@ -110,9 +109,8 @@ example : B := h1 h2
 end
 
 \end{lstlisting}
-\vspace{5mm}
 
-Por outro lado, existe também a "regra de inclusão da implicação". Uma vez que temos uma variável A e conseguimos derivar uma variável B, dizemos que \textbf{A implica em B}. E utilizamos em nossas árvores de dedução natural de tal forma:
+Por outro lado, existe também a ``regra de inclusão da implicação". Uma vez que temos uma variável $A$ e conseguimos derivar uma variável $B$, dizemos que \textbf{A implica em B}. Essa regra é utilizada nas árvores de dedução natural da seguinte forma:
 
 \begin{prooftree}
     \AxiomC{$A$}
@@ -125,28 +123,31 @@ Por outro lado, existe também a "regra de inclusão da implicação". Uma vez q
 
 Enquanto no Lean:
 
-\vspace{5mm}
 \begin{lstlisting} 
 variables A B : Prop
 
 example : A → B :=
 assume h : A,
 show B, from sorry
-
 \end{lstlisting}
-\vspace{5mm}
+
+Note que no caso acima não é necessário utilizar o comando $show$ para indicar que se quer chegar em $B$. O Lean consegue inferir isso a partir do que é escrito no lugar do $sorry$ e também a partir do que é colocado no $example$. Contudo, o $show$ pode ser um facilitador na hora de escrever provas no Lean, já que evidencia o que se busca provar naquela parte.  
 
 \subsection{Se e somente se}
 
-Já vimos anteriormente que $A \rightarrow B \neq B \rightarrow A$. Entretanto, em muitos casos na Matemática conseguimos chegar na igualdade dessas duas implicações e precisamos expressar a estrutura da linguagem falada "Se, e somente se". Dessa forma, faz-se uso do símbolo chamado de "bi-implicação" e representado por $\iff$ \\
-Poderíamos também utilizar a formalização $A \rightarrow B \land B \rightarrow A$, mas por questões ligadas a praticidade da abreviação, é preferível o uso do novo símbolo apresentado.\\
+Já vimos anteriormente que $A \rightarrow B \neq B \rightarrow A$. Entretanto, em muitos casos na Matemática, conseguimos chegar na igualdade dessas duas implicações e precisamos expressar a estrutura da linguagem falada ``Se, e somente se". Dessa forma, faz-se uso do símbolo chamado de ``bi-implicação" e representado por $\iff$.
+
+
+Poderíamos também utilizar a formalização $A \rightarrow B \land B \rightarrow A$, mas, por questões ligadas à praticidade da abreviação, é preferível o uso do novo símbolo apresentado.
+
+
 Para entender melhor a interpretação dessa regra, usaremos o exemplo abaixo:
 
 \begin{center}
     \textbf{Ana viajará para o Chile se, e somente se, comprar pesos chilenos}
 \end{center}
 
-Novamente construiremos a bi-implicação tratando o evento A como sendo "Ana viaja ao Chile" e B "Ana compra pesos chilenos". A tabela verdade então será:
+Novamente construíremos a bi-implicação tratando o evento A como sendo ``Ana viaja ao Chile" e B como ``Ana compra pesos chilenos". A tabela verdade então será:
 
 \begin{table}[htb]
 \centering
@@ -162,7 +163,7 @@ F          & F          & V                  \\ \hline
 \end{tabular}
 \end{table}
 
-Para melhor visualização dos resultados, vamos também mostrar uma tabela verdade que utiliza a definição da bi-implicação com o "e":
+Para melhor visualização dos resultados, vamos também mostrar uma tabela verdade que utiliza a definição da bi-implicação com o ``e":
 
 \begin{table}[htb]
 \centering
@@ -190,8 +191,9 @@ Caso 3: Ana compra pesos chilenos
 Caso 4: Ana não compra pesos chilenos
 
 \end{center}
-Assim, com essa sentença sabemos que o caso 1 acontece se, e somente se o caso 3 acontece, e o caso 2 acontece se, e somente se o caso 4 também acontece.\\
-Em dedução natural a regra da inclusão bi-implicação evidencia a necessidade de possuirmos duas implicações verdadeiras. Escrevemos a regra como:
+Assim, com essa sentença, sabemos que o caso 1 acontece se, e somente se, o caso 3 acontece, e o caso 2 acontece se, e somente se, o caso 4 também acontece.
+
+Em dedução natural a regra da inclusão da bi-implicação evidencia a necessidade de possuirmos duas implicações verdadeiras. Escrevemos essa regra como:
 
 \begin{prooftree}
     \AxiomC{$A$}
@@ -207,8 +209,8 @@ Em dedução natural a regra da inclusão bi-implicação evidencia a necessidad
     \BinaryInfC{$A \iff B$}
 \end{prooftree}
 
-No lean, temos o comando "iff.intro" que introduz o símbolo dado a verdade das duas implicações:
-\vspace{5mm}
+No Lean, temos o comando ``iff.intro" que introduz o símbolo dado a verdade das duas implicações:
+
 \begin{lstlisting} 
 variables A B: Prop
 
@@ -218,11 +220,9 @@ iff.intro
     show B, from sorry)
   (assume h : B,
     show A, from sorry)
-
 \end{lstlisting}
-\vspace{5mm}
 
-Enquanto para a exclusão, a regra em dedução natural é muito semelhante a regra da exclusão da implicação:
+Para a exclusão, a regra em dedução natural é muito semelhante à regra da exclusão da implicação:
 
 \begin{prooftree}
     \AxiomC{$A \iff B$}
@@ -235,9 +235,8 @@ Enquanto para a exclusão, a regra em dedução natural é muito semelhante a re
     \BinaryInfC{$A$}
 \end{prooftree}
 
-E seu correspondente no lean é feito pelos comandos de eliminação a direita e a esquerda:
+O seu correspondente no Lean é feito pelos comandos de eliminação à direita e à esquerda:
 
-\vspace{5mm}
 \begin{lstlisting} 
 variables A B: Prop
 section
@@ -255,11 +254,10 @@ section
 end
 
 \end{lstlisting}
-\vspace{5mm}
 
 
 \subsection{Conjunção}
-A regra da conjunção se refere ao uso ``e'' na linguagem informal, de forma que juntamos duas informações. Podemos ter frases como:
+A regra da conjunção se refere ao uso do ``e'' na linguagem informal, de forma que juntamos duas informações. Podemos ter frases como:
 \begin{center}
 \textbf{Santiago é a capital do Chile e o deserto do Atacama está localizado no Chile.}
 \end{center}
@@ -270,7 +268,7 @@ Ao mesmo tempo, podemos utilizar o ``e'' para conectar duas informações que ne
 \end{center}
 Quando utilizamos o ``e'', representado pelo símbolo $\land$ na lógica, o que de fato importa é estarmos unindo duas informações que são verdadeiras. Isso fica claro na tabela verdade abaixo, na qual é possível ver que quando $A$ ou quando $B$ são falsos, $A\land B$ é falso:
 
-\begin{table}[htb]
+\begin{table}[htb!]
 \centering
 \begin{tabular}{|l|l|l|}
 \hline
@@ -291,14 +289,13 @@ Dessa forma, na dedução natural, podemos introduzir um ``e'', quando temos $A$
 \end{prooftree}
 
 No Lean, representamos essa operação pela função $and.intro$, conforme o exemplo abaixo:
-\vspace{5mm}
+
 \begin{lstlisting} 
 variables A B : Prop
 
 example (h1 : A) (h2 : B) : A ∧ B :=
 and.intro h1 h2
 \end{lstlisting}
-\vspace{5mm}
 
 Seguindo esse raciocínio, é possível observar que sempre que temos $A \land B$, teremos $A$ e $B$ separadamente. Essa é a operação chamada de exclusão do ``e''.
 
@@ -310,24 +307,23 @@ Para excluir o $B$ de, por exemplo, $A \land B$, temos a chamada exclusão pela 
 \end{prooftree}
 
 No Lean, essa operação pode ser feita utilizando a função $and.left$, conforme o código a seguir: 
-\vspace{5mm}
+
 \begin{lstlisting} 
 variables A B : Prop
 
 example (h1 : A ∧ B): A :=
 and.left h1
 \end{lstlisting}
-\vspace{5mm}
 
 Alternativamente, é possível realizar a mesma operação da seguinte forma:
-\vspace{5mm}
+
 \begin{lstlisting} 
 variables A B : Prop
 
 example (h1 : A ∧ B): A :=
 h1.left
 \end{lstlisting}
-\vspace{5mm}
+
 Para excluir o $A$, temos a chamada exclusão pela direita:
 
  \begin{prooftree}
@@ -395,6 +391,9 @@ example (h1 : B): A ∨ B :=
 or.inr h1
 \end{lstlisting} 
 
+É possível notar que, no caso acima, não foi necessário indicar explicitamente para o Lean que o $A$ seria adicionada à esquerda do $B$. Isso acontece pois o Lean consegue inferir o que vai ser adicionado, de acordo com o que se quer provar. 
+
+
 Para excluir o ``ou'' de $A \lor B$ é preciso estruturar uma árvore de dedução natural de forma que $A$ e $B$ resultem em um mesmo resultado $C$. Chegando nesse $C$, é possível substituir o $A \lor B$ pelo C. A seguinte árvore de dedução natural demonstra essa estrutura:
 
 \begin{prooftree}
@@ -412,7 +411,7 @@ Para excluir o ``ou'' de $A \lor B$ é preciso estruturar uma árvore de deduç�
     \TrinaryInfC{$C$}
 \end{prooftree}
      
-No Lean, para excluir o ``ou'', utiliza-se a função $or.elim$. Ao lado do $or.elim$ é necessário inserir a hipótese contendo o ``ou'',  que deseja-se eliminar. Em seguida, deve-se abrir dois parênteses. Esses dois parênteses serão equivalentes às duas colunas contendo, respectivamente, $A$ e $B$ na árvore de dedução natural acima. Dessa forma, um parênteses começa com o $assume$ de $A$ e o outro com o$assume$ de $B$. O objetivo é que a partir deles chegue-se à hipótese C.  O código abaixo mostra a estrutura de como ficaria uma operação de eliminação do ``ou''(o ``sorry'' nas provas abaixo representa a etapa em que se prova que a partir de $A$ é possível chegar em $C$) :
+No Lean, para excluir o ``ou'', utiliza-se a função $or.elim$. Ao lado do $or.elim$ é necessário inserir a hipótese contendo o ``ou''  que deseja-se eliminar. Em seguida, deve-se abrir dois parênteses. Esses dois parênteses serão equivalentes às duas colunas contendo, respectivamente, $A$ e $B$ na árvore de dedução natural acima. Dessa forma, um parênteses começa com o $assume$ de $A$ e o outro com o $assume$ de $B$. O objetivo é que a partir deles chegue-se à hipótese C.  O código abaixo mostra a estrutura de como ficaria uma operação de eliminação do ``ou'' (o ``sorry'' nas provas abaixo representa a etapa em que se prova que a partir de $A$ é possível chegar em $C$) :
 
 \begin{lstlisting}
 variables A B C D : Prop
@@ -430,14 +429,16 @@ variables A B C D : Prop
 
 example (h1 : A → C) (h2 : B → C) (h3: A ∨ B): C :=
 or.elim h3
-(assume h4: A,
-show C, from h1 h4)
-(assume h4: B, 
-show C, from h2 h4)
+    (assume h4: A,
+    show C, from h1 h4)
+    (assume h4: B, 
+    show C, from h2 h4)
 \end{lstlisting} 
+
 \subsection{Negação}
 A negação de $A$ é  representada  em  símbolos por $\neg A $. 
-Mostrar que $\neg A $ ocorre, em termos lógicos, é o mesmo que mostrar que $A $ leva a uma contradição. Em dedução natural, temos uma prova que tem a seguinte árvore, na qual $\bot$ é o símbolo para falso, contradição ou absurdo:
+Mostrar que $\neg A $ ocorre, em termos lógicos, é o mesmo que mostrar que $A $ leva a uma contradição. Em dedução natural, a seguinte estrutura para representar regra de introdução da negação, na qual $\bot$ é o símbolo para falso, contradição ou absurdo:
+
 \begin{prooftree}
     \AxiomC{}
     \RightLabel{\scriptsize(1)}
@@ -450,10 +451,10 @@ Mostrar que $\neg A $ ocorre, em termos lógicos, é o mesmo que mostrar que $A 
     \UnaryInfC{$\neg A$}
 \end{prooftree}
 
-Esta é uma outra forma de raciocínio hipotético, similar a utilizada em "se ... então" . Começamos supondo $A$. Em seguida, continuamos a prova aplicando as regras  já apresentadas, representadas pelos três pontinhos na árvore de dedução natural, até chegarmos a uma contradição.
+Esta é uma outra forma de raciocínio hipotético, similar a utilizada em ``se ... então" . Começamos supondo $A$. Em seguida, continuamos a prova aplicando as regras  já apresentadas, representadas pelos três pontinhos na árvore de dedução natural, até chegarmos a uma contradição.
 
-A pergunta a se fazer em seguida é: de que forma uma contradição aparece numa prova, ou seja, como a encontramos? Suponha, por exemplo, que ao construir uma prova temos uma hipótese $A$ que nos leva a concluir que uma outra hipotése $B$ ocorre ao mesmo tempo que $\neg B$ também ocorre, no entanto se temos $B$ e  $ \neg B $, então temos uma contradição.
-Em dedução natural, representamos essa ideia por:
+A pergunta a se fazer em seguida é: de que forma uma contradição aparece numa prova, ou seja, como a encontramos? Suponha, por exemplo, que ao construir uma prova temos uma hipótese $A$ que nos leva a concluir que uma outra hipotése $B$ ocorre ao mesmo tempo que $\neg B$ também ocorre. Nesse caso, se temos $B$ e  $ \neg B $, então temos uma contradição.
+Em dedução natural, representamos essa ideia (a regra de eliminação da negação) por:
 
 \begin{prooftree}
     \AxiomC{$\neg B$}
@@ -462,7 +463,7 @@ Em dedução natural, representamos essa ideia por:
     \BinaryInfC{$\bot$}
 \end{prooftree}
 
-A tabela verdade reforça o fato de que é impossível que uma proposição e sua negação sejam ambas verdadeiras ao mesmo tempo.
+A tabela verdade a seguir reforça o fato de que é impossível que uma proposição e sua negação sejam ambas verdadeiras ao mesmo tempo.
 
 \begin{table}[htb]
 \centering
@@ -485,17 +486,17 @@ assume hp : P,
     show false, from h2 (h1 hp)
 \end{lstlisting} 
 
-Note que a hipótese que contém a negação vem primeiro após o \verb|from| e \textit{Q} é resultado do uso da regra de eliminação da implicação, além disso o símbolo $\neg Q$ é escrito como \verb| \not Q|. Na biblioteca padrão do Lean, $ \neg P$ é na verdade uma abreviação de $ P \rightarrow false $, ou seja, o fato de que $P$ implica uma contradição.
+Note que a hipótese que contém a negação vem primeiro após o $from $, sendo $Q$ o resultado do uso da regra de eliminação da implicação. Além disso, o símbolo $\neg Q$ é escrito como \verb| \not Q|. Na biblioteca padrão do Lean, $ \neg P$ é, na verdade, uma abreviação de $ P \rightarrow false $, ou seja, o fato de que $P$ implica em uma contradição.
 
 Uma vez apresentado o símbolo para \textit{falso}, a seguir apresentamos o símbolo para \textit{verdadeiro}. No entanto,  \textit{verdadeiro} ou \textit{true} não possui regra de eliminação, apenas uma regra de introdução:
- \verb|true.intro: true|, às vezes abreviado como \verb|trivial: true|. Em outras palavras, verdadeiro é simplesmente verdadeiro e tem uma prova canônica, trivial.
+$true.intro: true$, às vezes abreviado como $trivial: true$. Em outras palavras, verdadeiro é simplesmente verdadeiro e tem uma prova canônica, trivial.
  
 \begin{prooftree}
     \AxiomC{}
     \UnaryInfC{$\top $}
 \end{prooftree}
 
-E para $\bot $ , quais regras regem o mundo dos absurdos? A regra de eliminação para $\bot $ possui em latin o nome de \textit{ex falso sequitur quodlibet}, que significa que "a partir de uma contradição, qualquer coisa segue". Essa regra de eliminação é especialmente difícil de traçar um paralelo com o ponto de vista da linguagem natural. Parece não haver sentido em dizer que podemos concluir qualquer coisa a partir de uma contradição.
+E para $\bot $ , quais regras regem o mundo dos absurdos? A regra de eliminação para $\bot $ possui em latim o nome de \textit{ex falso sequitur quodlibet}, que significa que ``a partir de uma contradição, qualquer coisa segue". É especialmente difícil traçar um paralelo na linguagem natural para essa regra de eliminação, já que parece não haver sentido em dizer que podemos concluir qualquer coisa a partir de uma contradição. Contudo, essa regra existe na lógica e é representada da seguinte forma na dedução natural (é a chamada exclusão do absurdo):
 
 \begin{prooftree}
  \AxiomC{$\bot$}
@@ -503,24 +504,23 @@ E para $\bot $ , quais regras regem o mundo dos absurdos? A regra de eliminaçã
  \UnaryInfC{A}
 \end{prooftree}
 
-
 \subsection{Prova por contradição}
 % Sugestão de leitura : https://home.sandiego.edu/~shulman/papers/rabbithole.pdf
-Existe um estilo de fazer matemática conhecido como "matemática construtiva" que nega a equivalência de $\neg \neg A$ e $ A$. De modo que uma demonstração de que algo é verdadeiro deveria fornecer evidências explícitas de que uma declaração é falsa, em vez de evidências de que ela não pode ser falsa. Uma prova construtiva é aquela que realmente lhe diz como encontrar o objeto que se afirma existir. 
+Existe um estilo de fazer matemática conhecido como ``matemática construtiva" que nega a equivalência de $\neg \neg A$ e $ A$. Desse modo, uma demonstração de que algo é verdadeiro deveria fornecer evidências explícitas de que uma declaração é falsa, em vez de evidências de que ela não pode ser falsa. Uma prova construtiva é aquela que realmente lhe diz como encontrar o objeto que se afirma existir. 
 
 A prova por contradição é informalmente utilizada para se referir a duas regras diferentes de inferência. Sendo elas:
 \begin{itemize}
-    \item Para provar "$\neg  P$"  é suficiente assumir "$P $" e derivar uma contradição;
-    \item Para provar $ P$, basta assumir "não $ P$"  e derivar uma contradição.
+    \item Para provar $\neg  P$ é suficiente assumir $P $ e derivar uma contradição;
+    \item Para provar $ P$, basta assumir $ \neg P$  e derivar uma contradição.
 \end{itemize}
 \bigbreak
-É importante que esteja bastante clara a diferença entre as duas regras. No primeiro argumento, uma negação é introduzida na conclusão, enquanto que no segundo, ela é eliminada da hipótese. A regra de inferência que conclui com a sentença positiva "$ P$" é chamada de redução ao absurdo (em latim, \textit{reductio ad absurdum}). De fato, a regra é equivalente ao princípio $ \neg \neg A \leftrightarrow A$. 
+É importante que esteja bastante clara a diferença entre as duas regras. No primeiro argumento, uma negação é introduzida na conclusão, enquanto que no segundo, ela é eliminada da hipótese. A regra de inferência que conclui com a sentença positiva $ P$ é chamada de redução ao absurdo (em latim, \textit{reductio ad absurdum}). De fato, a regra é equivalente ao princípio $ \neg \neg A \leftrightarrow A$. 
 
-A primeira vista é difícil perceber claramente porque em uma delas temos uma prova construtiva e na outra uma que utiliza do raciocínio clássico. Na lógica clássica além de todas as regras de inferência já expostas neste livro, temos o princípio do terceiro excluído que diz que uma proposição $A $ ou é verdadeira ou é falsa, não existindo uma terceira opção. Assim, se é impossível uma proposição $P$ ser falsa, logo ela só pode ser verdadeira. 
+A primeira vista é difícil perceber claramente porque em uma delas temos uma prova construtiva e na outra uma que utiliza do raciocínio clássico. Na lógica clássica, além de todas as regras de inferência já expostas neste livro, temos o princípio do terceiro excluído que diz que uma proposição $A $ ou é verdadeira ou é falsa, não existindo uma terceira opção. Assim, se é impossível uma proposição $P$ ser falsa, logo ela só pode ser verdadeira. 
 
-Na linguagem natural, comumente tomamos a frase "Maria não não estava vestida de azul" como um modo redundante e agramatical de dizer que "Maria estava vestida de azul". Ao mesmo tempo que em "Eu não vi ninguém" as duas palavras negativas não se anulam. 
+Na linguagem natural, comumente tomamos a frase ``Maria não não estava vestida de azul" como um modo redundante e agramatical de dizer que ``Maria estava vestida de azul". Ao mesmo tempo que em ``Eu não vi ninguém" as duas palavras negativas não se anulam. 
 
-Em dedução natural, a redução ao absurdo é expressa do seguinte modo, onde a hipótese $\neg A$ é cancelada no final da inferência:
+Em dedução natural, a redução ao absurdo é expressa do seguinte modo, no qual a hipótese $\neg A$ é cancelada no final da inferência:
 
 \begin{prooftree}
  \AxiomC{}
@@ -534,7 +534,7 @@ Em dedução natural, a redução ao absurdo é expressa do seguinte modo, onde 
  \UnaryInfC{$A $}
 \end{prooftree}
 
-As regras de introdução e eliminação que vimos até agora no Lean são todas construtivas, ou seja, refletem um entendimento computacional dos conectivos lógicos com base na correspondência proposições como tipos. Para utilizar os princípios da lógica clássica, você deve abrir o modo clássico com o comando \verb|open classical| no início do seu arquivo ou em qualquer lugar antes de usá-lo.
+As regras de introdução e eliminação que vimos até agora no Lean são todas construtivas, ou seja, refletem um entendimento computacional dos conectivos lógicos com base na correspondência das proposições como tipos. Para utilizar os princípios da lógica clássica, você deve abrir o modo clássico com o comando $open classical$ no início do seu arquivo ou em qualquer lugar antes de usá-lo.
 
 \begin{lstlisting} 
 open classical
@@ -542,13 +542,15 @@ open classical
 variable P : Prop
 #check em P
 \end{lstlisting} 
-Na linha 4, o comando \verb|#check| permite verificar se expressões que escrevemos estão bem formadas, e também pedir ao sistema para nos dizer que tipo de objeto eles denotam. Para o exemplo acima obtemos como output:
+
+Na linha 4, o comando \verb|#check| permite verificar se expressões que escrevemos estão bem formadas e tamnbém qual tipo de objeto eles denotam. Para o exemplo acima obtemos como output:
+
 \begin{verbatim}
 4:0: information: check result
 em P : P ∨ ¬P
 \end{verbatim}
 
-No exemplo abaixo provamos $P$ a partir de $\neg \neg P$ utilizando redução ao absurdo. Note que não é preciso escrever explicitamente ao final o que queremos provar uma vez que o Lean, no caso da prova por contradição, infere que o resultado é ($\neg \neg P \to P $ ) a partir das hipóteses assumidas. 
+No exemplo abaixo, provamos $P$ a partir de $\neg \neg P$ utilizando a redução ao absurdo. Note que não é preciso escrever explicitamente ao final o que queremos provar, uma vez que o Lean, no caso da prova por contradição, infere que o resultado é $\neg \neg P \to P $  a partir das hipóteses assumidas. 
 
 \begin{lstlisting}
 open classical
@@ -562,7 +564,8 @@ by_contradiction
 
 \end{lstlisting}
 
-%Verificar se a árvore está correta
+Em dedução natural, a seguinte árvore corresponderia ao exemplo acima:
+
 \begin{prooftree}
  \AxiomC{}
  \RightLabel{\scriptsize(1)}
@@ -578,7 +581,7 @@ by_contradiction
 
 Nesta seção serão apresentados exemplos adicionais de provas de dedução natural e seus equivalentes no Lean. Também será explicado como construir essas árvores do zero, partindo somente do  que se quer provar.  
 
-
+\bigbreak
 \textbf{1. Prova de A $\rightarrow$ C a partir de A $\rightarrow$ B e B $\rightarrow$ C:}
 
 \begin{prooftree}
@@ -648,7 +651,7 @@ h2 h4
 
 Para escrevê-la, adicionamos ao lado de $example$ as hipóteses que não vão ser descartadas. No caso, como o enunciado diz que vamos utilizar $A\rightarrow B$ e $B\rightarrow C$ para realizar a prova, adicionamos os dois depois de $example$. Em seguida, adicionamos $:$ e o que queremos provar, seguido de $:=$. 
 
-Para o teor da prova, devemos considerar que a ordem no qual escrevemos no Lean importa. Logo, devemos seguir razoavelmente a ordem da árvore de dedução natural. Na árvore desse problema, é possível observar que a prova começa com o $A$ (do $A \rightarrow C$). Como essa é uma hipótese que vai ser descartada, escrevemos ela com o $assume$. Como a hipótese $A \rightarrow B$ já está escrita no $example$, podemos utilizá-la para encontrar $B$. Nesse caso, utilizamos o $have$ para atribuir o nome de uma variável ao $B$. Isso permite uma organização maior e evita que, em provas longas, tenha que se repetir muitas vezes como encontrar uma determinada variável. Contudo, não é necessário utilizar o $have$. Nesse caso, por exemplo, somente utilizamos o $B$ uma vez, para aplicá-lo ao $B \rightarrow C$. Logo, poderíamos ter escrito a prova no lean da seguinte forma no modo termo:
+Para o teor da prova, devemos considerar que a ordem no qual escrevemos no Lean importa. Logo, devemos seguir razoavelmente a ordem da árvore de dedução natural. Na árvore desse problema, é possível observar que a prova começa com o $A$ (do $A \rightarrow C$). Como essa é uma hipótese que vai ser descartada, escrevemos ela com o $assume$. Como a hipótese $A \rightarrow B$ já está escrita no $example$, podemos utilizá-la para encontrar $B$. Nesse caso, utilizamos o $have$ para atribuir o nome de uma variável ao $B$. Isso permite uma organização maior e evita que, em provas longas, tenha que se repetir muitas vezes como encontrar uma determinada variável. Contudo, não é necessário utilizar o $have$. Nesse caso, por exemplo, somente utilizamos o $B$ uma vez, para aplicá-lo ao $B \rightarrow C$. Logo, poderíamos ter escrito a prova acima no modo termo do Lean da seguinte forma:
 
 \begin{lstlisting}
 variables A B C: Prop
@@ -713,7 +716,7 @@ Como hipótese, teremos o o $A$ (de $A \rightarrow C$) e o $(A \rightarrow B) \l
      
 Como sabemos que queremos chegar em um $C$, podemos utilizar o $B \rightarrow C$ para isso ($B \rightarrow C$ pode ser obtido a partir da operação de exclusão do $\land$ na hipótese de número 2) . Contudo, é necessário ter $B$ para realizar essa operação. O $B$ pode ser obtido a partir do $A$ e do $A \rightarrow B$. Logo, é possível construir a árvore. 
 
-No Lean essa prova poderia ser feita da seguinte forma no modo termo: 
+No Lean essa prova poderia ser escrita no modo termo da seguinte forma: 
 \begin{lstlisting}
 variables A B C: Prop
 example: ((A → B) ∧ (B → C)) → (A → C) :=
@@ -736,7 +739,7 @@ end
 \end{lstlisting}
 
 Nas duas árvores de deduçao natural acima, podemos observar a utilização de números em determinadas hipóteses. Utilizamos esses para evidenciar onde descartamos as hipóteses marcadas. 
-
+\bigbreak
 \textbf{2. Prova de $Q\land S$ a partir de $(P\land Q)\land R$ e $S \land T$:}
 
 \begin{prooftree}
@@ -767,7 +770,7 @@ Para construir essa prova, partimos também de onde queremos chegar: $Q \land S$
 
 É possível obter o $S$ a partir de qualquer uma das hipóteses. O $Q$ só é possível obter a partir de $(P \land Q) \land S$. Logo, a partir de uma série de operações de exclusão do $\land$, constrói-se a parte restante da prova. 
 
-No Lean, essa prova poderia ser feita da seguinte forma no modo termo: 
+No Lean, essa prova poderia ser feita no modo termo da seguinte forma: 
 
 \begin{lstlisting}
 variables P Q R S T: Prop
@@ -789,7 +792,7 @@ have h2: S, from h2.left,
 exact and.intro h1 h2
 end
 \end{lstlisting}
-
+\bigbreak
 \textbf{3. Prova de $(A \rightarrow (B \rightarrow C)) \rightarrow (A \land B \rightarrow C)$} :
 \begin{prooftree}
     \AxiomC{}
@@ -810,16 +813,19 @@ end
                                                       \RightLabel{\scriptsize(2)}
                                                       \UnaryInfC{$(A \rightarrow (B \rightarrow C)) \rightarrow (A \land B \rightarrow C) $}
 \end{prooftree}
-No lean essa prova pode ser feita no mod termo da seguinte forma:
+A construção dessa prova em dedução natural pode ser realizada de modo semelhante às provas descritas anteriormente. No Lean, ela pode ser escrita no modo termo da seguinte forma:
+
 \begin{lstlisting}
 variables A B C: Prop
 example: (A → (B → C)) → (A ∧ B → C) :=
 assume h₁: A → (B → C),
 assume h₂: A ∧ B,
-show C, from h₁(h₂.left) h₂.right 
+show C, from h₁ (h₂.left) h₂.right 
 \end{lstlisting}
 
-E no modo táticas como:
+Note que para rotular as hipóteses é possível utilizar números subscritos, que são digitados a partir de uma barra invertida. Como exemplo, é possível escrever h₁ digitando \verb|h \ 1|.
+
+No modo táticas, a prova acima pode ser escrita como:
 \begin{lstlisting}
 variables A B C: Prop
 example: (A → (B → C)) → (A ∧ B → C) :=
@@ -830,7 +836,7 @@ have h₂ :B, from a_1.right,
 exact (a h₁) h₂  
 end
 \end{lstlisting}
-
+\bigbreak
 \textbf{4. Prova de $A \land B \iff B \land A$:}
 \begin{prooftree}
     \AxiomC{}
@@ -877,7 +883,7 @@ Para construir essa prova, partimos do $A \land B \iff B \land A$ ao final da pr
 
 Para formar $A \land B$ e $B \land A$ precisamos de $A$ e $B$ separadamente. Estes podem ser obtidos a partir das hipóteses. Logo, repetindo as hipóteses e realizando a exclusão do $\land$, formamos a árvore final.
 
-No Lean, essa prova poderia ser construída da seguinte forma no modo termo:
+No Lean, essa prova poderia ser construída no modo termo da seguinte forma:
 \begin{lstlisting}
 variables A B C: Prop
 example: A ∧ B ↔ B ∧ A :=
@@ -901,7 +907,7 @@ apply iff.intro
     and.intro (and.right h₂) (and.left h₂))
 end
 \end{lstlisting}
-
+\bigbreak
 \textbf{5. Prova de $A \land (B \lor C) \rightarrow (A \land B) \lor (A \land C)$:}
 
 \begin{prooftree}
@@ -951,9 +957,9 @@ Para escrever essa prova, podemos partir, como nas outras, do objetivo final: $A
     \UnaryInfC{$A \land (B \lor C) \rightarrow (A \land B) \lor (A \land C)$}
 \end{prooftree}
 
-Como proceder a partir dessa estrutura? Para formar o $(A \land B) \lor (A \land C)$ será necessário o $A \land B$ isoladamente ou o $A \land C$ (a partir de qualquer um dos dois é possível realizar a introdução do $\lor$ e assim chegar em $(A \land B) \lor (A \land C)$). Independente de qual dos dois serão utilizados, nota-se que, para formar o ``e'', será necessário: o $A$ e também o $B$ ou o $C$. O $A$ pode ser facilmente obtido  a partir da hipótese. Para obter $B$ ou $C$ isoladamente, será necessário realizar a exclusão do $B \lor C$ contido no ``e'' da hipótese. Nota-se que para realizar a exclusão do ``ou'', é necessário considerar $B$ e $C$ como hipótese. Assim, podemos formar tanto $A \land B$, quanto $A \land C$. Dessa forma, é possível chegar no resultado final descrito acima. 
+Como proceder a partir dessa estrutura? Para formar o $(A \land B) \lor (A \land C)$ será necessário o $A \land B$ isoladamente ou o $A \land C$ (a partir de qualquer um dos dois é possível realizar a introdução do $\lor$ e assim chegar em $(A \land B) \lor (A \land C)$). Independente de qual dos dois serão utilizados, nota-se que, para formar o ``e'', será necessário: o $A$ e também o $B$ ou o $C$. O $A$ pode ser facilmente obtido  a partir da hipótese. Para obter $B$ ou $C$ isoladamente, será necessário realizar a exclusão do $B \lor C$ contido no ``e'' da hipótese. Nota-se que, para realizar a exclusão do ``ou'', é necessário considerar $B$ e $C$ como hipótese. Assim, podemos formar tanto $A \land B$, quanto $A \land C$. Dessa forma, é possível chegar no resultado final descrito acima. 
 
-No Lean, essa prova poderia ser construída da seguinte forma no modo termo:
+No Lean, essa prova poderia ser construída no modo termo da seguinte forma:
 \begin{lstlisting}
 variables A B C: Prop
 example: (A ∧ (B ∨ C)) → ((A ∧ B) ∨ (A ∧ C)) :=
@@ -980,8 +986,8 @@ cases h₂ with ha hb,
     exact or.inr (and.intro h₁ hb) 
 end
 \end{lstlisting}
-
-\textbf{6.Prova de $A \rightarrow \neg (\neg A \land B)$}
+\bigbreak
+\textbf{6. Prova de $A \rightarrow \neg (\neg A \land B)$}
 \begin{prooftree}
  \AxiomC{}
  \RightLabel{\scriptsize(1)}
@@ -997,9 +1003,9 @@ end
  \UnaryInfC{$A \rightarrow \neg(\neg A \land B)$}
 \end{prooftree}
 
-Como ja visto anteriormente, quando precisamos provar uma implicação partimos do objetivo final $A → ¬ (¬ A ∧ B)$ e como este é uma implicação, deveremos chegar em $ ¬ (¬ A ∧ B)$ tendo $A$ como hipótese. Pela regra da introdução da negação, sabemos que precisamos supor como hipótese $(¬ A ∧ B)$ e chegar em um absurdo para obter o resultado desejado. Com as hipóteses obtidas conseguimos montar a estrutura $\neg A $ $A$ que resulta em absurdo, que por sua vez nos possibilita chegar no objetivo final
+Como ja visto anteriormente, quando precisamos provar uma implicação partimos do objetivo final $A → ¬ (¬ A ∧ B)$, de forma que devemos chegar em $ ¬ (¬ A ∧ B)$ tendo $A$ como hipótese. Pela regra da introdução da negação, sabemos que para chegar em $ ¬ (¬ A ∧ B)$, precisamos supor $(¬ A ∧ B)$ como hipótese para chegar em um absurdo e obter o resultado desejado. Com as hipóteses descritas, conseguimos chegar em $\neg A $ e $A$, o que resulta em absurdo, que por sua vez nos possibilita chegar no objetivo final.
 
-Em Lean, essa prova poderia ser construída da seguinte forma no modo termo:
+No Lean, essa prova poderia ser construída no modo termo da seguinte forma:
 
 \begin{lstlisting}
 variables A B : Prop
@@ -1047,7 +1053,7 @@ end
 
 \end{prooftree}
 
-Para construir a prova acima podemos começar deduzindo o passo anterior ao resultado final que é a negação de $(A \leftrightarrow \neg A) $. Essa será nossa hipótese inicial e com ela queremos chegar à uma contradição. A seguir:
+Para construir a prova acima podemos começar deduzindo o passo anterior ao resultado final que é a negação de $(A \leftrightarrow \neg A) $. Essa será nossa hipótese inicial e com ela queremos chegar à uma contradição. Assim, termemos a seguinte estrutura para a prova:
 
 \begin{prooftree}
  \AxiomC{}
@@ -1064,9 +1070,9 @@ Para construir a prova acima podemos começar deduzindo o passo anterior ao resu
 
 \end{prooftree}
 
-Observe que a dupla implicação aparece duas vezes como hipótese, pois utilizaremos a implicação nas direções esquerda e direita para chegar à um absurdo. Parece razoável considerar que podemos chegar de algum modo em $\neg A$ e $A$, um em cada galho (\textit{ou branch}),  e a partir daí obter $\bot$.
+Observe que a dupla implicação aparece duas vezes como hipótese, pois utilizaremos a implicação nas direções esquerda e direita para chegar a um absurdo. Com isso, em cada coluna da árvore (ou \textit{branch}), podemos chegar em $\neg A$ e $A$, obtendo assim uma contradição. 
 
-Temos no código a seguir um modo de construir essa prova com o auxílio do \verb|have|. É importante ressaltar que existem diferentes modos de escrever no Lean uma mesma prova em dedução natural, aconselhamos que você tente reproduzir à seu modo as demonstrações aqui expostas!
+Temos, no código a seguir, um modo de construir a prova acima no Lean, com o auxílio do $have$. É importante ressaltar que existem diferentes modos de escrever no Lean uma mesma prova em dedução natural. Assim, aconselhamos que você tente reproduzir a seu modo as demonstrações aqui expostas!
 
 \begin{lstlisting} 
 variable A : Prop
@@ -1082,6 +1088,7 @@ show false, from
 
 \end{lstlisting}
 
+\bigbreak
 \textbf{8. Prova de $ \neg A \lor \neg B$ a partir de $\neg (A \land B)$} % exercicio
 %Mencionar o escopo das variáveis
 \begin{prooftree}
@@ -1113,7 +1120,7 @@ show false, from
  
 \end{prooftree}
 
-No Lean, essa prova poderia ser escrita da seguinte forma:
+Essa prova pode ser construída de forma semelhante às provas descritas anteriormente. No Lean, ela poderia ser escrita no modo termo da seguinte forma:
 \begin{lstlisting} 
 variables A B : Prop
 open classical
@@ -1131,30 +1138,31 @@ example (h: ¬ (A ∧ B)): ¬ A ∨ ¬ B :=
     show false, from h₁ h₆)
 \end{lstlisting}
 
-Um dos recursos sintáticos extras do Lean que costumam ser convenientes e, às vezes, tornam as provas mais bonitas é o uso do \verb|this|.
+Um dos recursos sintáticos extras do Lean que costumam ser convenientes é o uso do $this$. O $this$ pode ser utilizado quando se omite o rótulo (ou seja, o nome) de uma hipótese assumida. Assim, ao escrevê-lo, o Lean busca a última hipótese que não foi nomeada e a utiliza no local da prova onde o $this$ foi escrito. 
 
-Para rotular uma hipótese você pode usar números subscritos com uma barra invertida. Por exemplo, você pode escrever h₁ digitando \verb|h \ 1|. Os rótulos são irrelevantes para o Lean, você pode omitir o rótulo em uma declaração assumida, fornecendo uma hipótese "anônima". É possível consultar a última suposição anônima usando a palavra-chave this. Assim, o mesmo exemplo acima fica do seguinte modo a partir da linha 7:
+Dessa forma, o mesmo exemplo acima poderia ser escrito da seguinte forma:
 
 \begin{lstlisting}
+example (h: ¬ (A ∧ B)): ¬ A ∨ ¬ B := 
+    by_contradiction 
+    (assume h₁ : ¬ (¬ A ∨ ¬ B),
     have ¬ A, from 
-        assume h₁ : A,
+        assume  h₃ : A,
         have ¬ B, from
-            (assume h₂ : B, show false, from h (and.intro h₁ h₂)),
-        have h₄ : ¬ A ∨ ¬ B, from or.inr this,
-        show false, from h₃ h₄,   
+            (assume  h₅ : B, show false, from h (and.intro h₃ h₅)),
+        have h₅ : ¬ A ∨ ¬ B, from or.inr this,
+        show false, from h₁ h₅,   
     have ¬ A ∨ ¬ B, from or.inl this, 
-    show false, from h₃ this)
-
+    show false, from h₁ this)
 \end{lstlisting}
 
-No entanto, ao passo que a prova possa parecer \textit{mais bonita}, note que o entendimento imediato de alguns passos é dificultado, por isso cuidado ao utilizar esses recursos.
-
+No entanto, ao passo que possa parecer mais conveniente escrever a prova assim, note que o entendimento imediato de alguns passos é dificultado, por isso é necessário cuidado ao utilizar esse recurso.
 \bigbreak
 \textbf{9. Prova do Princípio da Casa dos Pombos (PHP-3):}
     O princípio da casa dos pombos afirma que se $n$ pombos devem ser postos em $m$ casas, e se $n > m$, então pelo menos uma casa irá conter mais de um pombo. Apesar desse princípio  generalizado ser muito amplo para ser provado por árvores dedutivas, conseguimos provar o caso de 3 pombos e 2 casas de pombo utilizando árvores dedutivas.
     %tentaremos por a árvore?%
 
-No Lean, essa prova poderia ser construída no modo termo seguinte forma: 
+No Lean, essa prova poderia ser construída no modo termo da seguinte forma: 
 \begin{lstlisting}
 variables P11 P12 P21 P22 P31 P32 : Prop
 
