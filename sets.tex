@@ -491,7 +491,7 @@ sorry
 
 Nessa seção, falaremos brevemente sobre Identidades de conjuntos.
 
-Iniciaremos com um exemplo simples: a regra da distributividade para conjuntos, $A \cup (B \cap C)$ = $(A \cup B) \cap (A \cup C)$. Uma maneira de prova-la é:
+Iniciaremos com um exemplo simples: a regra da distributividade para conjuntos: $A \cup (B \cap C)$ = $(A \cup B) \cap (A \cup C)$. Uma maneira de prova-la é:
 
 
 \begin{lstlisting}
@@ -532,6 +532,55 @@ eq_of_subset_of_subset
         show x ∈ A ∪ (B ∩ C), from or.inr h₅)))
 \end{lstlisting}
 
-Outra identidade que usaremos como exemplo aqui é a Lei de Absorção: $A \cup (A \cap B) = A$
+Outra identidade que usaremos como exemplo aqui é a Lei de Absorção:  
 
-No template abaixo temos duas formas de escrever a prova: a que estamos utilizando; e em forma de lógica booleana, trocando o sinal de igual pelo de equivalência, ou ``se e somente se", ($\leftrightarrow$). (Você consegue reprentá-lo no Lean escrevendo: $\backslash$iff)
+\begin{center}
+    $A \cup (A \cap B) = A$
+\end{center}
+
+Nos templates abaixo temos duas formas de escrever a prova: a que estamos utilizando ao longo deste capítulo; e em forma de lógica booleana, trocando o sinal de igual pelo de equivalência, ou ``se e somente se", ($\leftrightarrow$). (Você consegue reprentá-lo no Lean escrevendo: $\backslash$iff ou $\backslash$lr)
+
+\begin{lstlisting}
+import data.set
+open set
+
+theorem inter_subseq (H : Type)(P Q : set H) : P ∩ (P ∪ Q) = P :=
+eq_of_subset_of_subset
+  (assume x,
+    assume h : x ∈ P ∩ (P ∪ Q),
+    show x ∈ P, from h.left)
+  (assume x,
+    assume h : x ∈ P,
+    have h₁ : x ∈ P ∪ Q, from or.inl h,
+    show x ∈ P ∩ (P ∪ Q), from and.intro h h₁)
+
+variable  U : Type
+variables A B : set U
+
+example : A ∪ (A ∩ B) = A :=
+calc
+  A ∪ (A ∩ B) = (A ∪ A) ∩ (A ∪ B) : by rw union_distrib_left
+           ... = A ∩ (A ∪ B)       : by rw union_self
+           ... = A                 : by rw inter_subseq
+\end{lstlisting}
+
+\begin{lstlisting}
+import logic.basic
+open classical
+
+theorem left_of_and (P Q : Prop) : P ∧ (P ∨ Q) ↔ P :=
+iff.intro
+  (assume h : P ∧ (P ∨ Q),
+  show P, from h.left)
+  (assume h : P,
+  have h₁ : P ∨ Q, from or.inl h,
+  show P ∧ (P ∨ Q), from and.intro h h₁)
+
+variables A B : Prop
+
+example : A ∨ (A ∧ B) ↔ A :=
+calc
+  A ∨ (A ∧ B) ↔ (A ∨ A) ∧ (A ∨ B) : by rw or_and_distrib_left
+          ... ↔ A ∧ (A ∨ B)        : by rw or_self
+          ... ↔ A                  : by rw left_of_and
+\end{lstlisting}
