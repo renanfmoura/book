@@ -1216,27 +1216,12 @@ cases h₂ with ha hb,
 end
 \end{lstlisting}
 
-\section{Exercícios}
+\bigbreak
+\textbf{10. Prova de $\neg (A \land B) \rightarrow (A \rightarrow \neg B)$:}
 
-
-%Exemplos adicionais que eu tenho em Lean (temos que decidir quais vamos colocar como exercício, quais como exemplo e quais vamos fazer a árvore de dedução natural -- acho que faltam árvores contendo negação e contradição):
-
-% possivel exercicio
+No Lean, é possível escrever essa prova da seguinte forma:
 \begin{lstlisting}
-open classical
-variables {A B C D E F P Q R : Prop}
-
-example : A ∧ (A → B) → B :=
-assume h: A ∧ (A → B),
-have h2: A → B, from and.right h,
-have h3: A, from and.left h,
-h2 h3
-\end{lstlisting}
-
- % possivel exemplo 
-\begin{lstlisting}
-open classical
-variables {A B C D E F P Q R : Prop}
+variables {A B: Prop}
 example : ¬ (A ∧ B) → (A → ¬ B) :=
 assume h1: ¬ (A ∧ B),
 assume h2: A,
@@ -1245,16 +1230,10 @@ have h4: A ∧ B, from and.intro h2 h3,
 false.elim (h1 h4)
 \end{lstlisting}
 
-% possivel exercicio
-\begin{lstlisting}
-example (h1 : A ∨ B) (h2 : A → C) (h3 : B → D) : C ∨ D :=
-or.elim h1
-    (assume h: A, show C ∨ D, from or.inl (h2 h))
-    (assume h: B, show C ∨ D, from or.inr (h3 h))
+\bigbreak
+\textbf{11. Prova de $\neg (A \lor B)$ a partir de $\neg A \and \neg B$:}
 
-\end{lstlisting}
-
-%possivel exemplo
+No Lean, é possível escrever essa prova da seguinte forma:
 \begin{lstlisting}
 example (h : ¬ A ∧ ¬ B) : ¬ (A ∨ B) :=
 assume h1: A ∨ B,
@@ -1263,20 +1242,67 @@ or.elim h1
     (assume h2: B, false.elim((and.right h) h2))
 \end{lstlisting}
 
-%possivel exercicio
+\bigbreak
+\textbf{12. Prova de $\neg A \lor B$ a partir de $A \rightarrow B$:}
+
+No Lean, é possível escrever essa prova da seguinte forma:
 \begin{lstlisting}
+example (h8:A → B):¬ A ∨ B:=
+or.elim(em A)
+    (assume he: A,
+    show (¬ A ∨ B),from or.inr (h8 he) )
+    (assume hi: ¬ A,
+    show(¬ A ∨ B),from or.inl hi)
+
+\end{lstlisting}
+
+\section{Exercícios}
+\begin{enumerate}
+\bigbreak
+\item Construa a árvore de dedução natural e prove no Lean que $A \land (A \rightarrow B) \rightarrow B$.
+    
+Gabarito no Lean:
+\begin{lstlisting}
+variables {A B : Prop}
+
+example : A ∧ (A → B) → B :=
+assume h: A ∧ (A → B),
+have h2: A → B, from and.right h,
+have h3: A, from and.left h,
+h2 h3
+\end{lstlisting}
+
+\bigbreak
+\item Construa a árvore de dedução natural e prove no Lean $C \lor D$, a partir de $ A \lor B$, $ A \rightarrow C$ e $B \rightarrow D$.
+    
+Gabarito no Lean:
+\begin{lstlisting}
+variables {A B C D: Prop}
+example (h1 : A ∨ B) (h2 : A → C) (h3 : B → D) : C ∨ D :=
+or.elim h1
+    (assume h: A, show C ∨ D, from or.inl (h2 h))
+    (assume h: B, show C ∨ D, from or.inr (h3 h))
+\end{lstlisting}
+\bigbreak
+\item Construa a árvore de dedução natural e prove no Lean $A$, a partir de $A \lor \neg A$ e $\neg A \rightarrow false$.
+    
+Gabarito no Lean: 
+\begin{lstlisting}
+variables {A: Prop}
 example (h1 : A ∨ ¬ A) (h2: ¬ A → false) : A := 
 or.elim h1
     (assume h: A, 
     show A, from h)
     (assume h: ¬ A, 
     show A, from false.elim (h2 h))
+\end{lstlisting}    
+\bigbreak
+\item Construa a árvore de dedução natural e prove no Lean $\neg A \lor \neg B$, a partir de $\neg (A \land B)$ e $A$.
 
-\end{lstlisting}
-
-
-%possivel exercicio
+Gabarito no Lean:
 \begin{lstlisting}
+open classical
+variables {A B: Prop}
 lemma stepA (h₁ : ¬ (A ∧ B)) (h₂ : A) : ¬ A ∨ ¬ B :=
 have ¬ B, from (assume hk:B,
 show false, from h₁ (and.intro h₂ hk)),
@@ -1293,11 +1319,14 @@ theorem stepC (h : ¬ (A ∧ B)) : ¬ A ∨ ¬ B :=
 by_contradiction
   (assume h' : ¬ (¬ A ∨ ¬ B),
     show false, from stepB h h')
-
 \end{lstlisting}
+\bigbreak
+\item Construa a árvore de dedução natural e prove no Lean $P$, a partir de $\neg P \rightarrow (Q \lor R)$, $\neg Q$ e $\neg R$. 
 
-%possivel exercicio
+Gabarito no Lean:
 \begin{lstlisting}
+open classical
+variables {P Q R: Prop}
 example (h5: ¬P →(Q ∨ R)) (h6:¬ Q) (h7:¬ R) :P:=
 by_contradiction(
 assume hp: ¬ P,
@@ -1310,20 +1339,13 @@ show false, from
     show false, from h7 hii))
 
 \end{lstlisting}
+\bigbreak
+\item Construa a árvore de dedução natural e prove no Lean $A \rightarrow (A \land B) \lor (A \land \neg B)$. 
 
-%possivel exemplo
+Gabarito no Lean: 
 \begin{lstlisting}
-example (h8:A → B):¬ A ∨ B:=
-or.elim(em A)
-    (assume he: A,
-    show (¬ A ∨ B),from or.inr (h8 he) )
-    (assume hi: ¬ A,
-    show(¬ A ∨ B),from or.inl hi)
-
-\end{lstlisting}
-
-%possivel exercicio
-\begin{lstlisting}
+open classical
+variables {A B: Prop}
 example :A → (A ∧ B) ∨ (A ∧ ¬ B):=
 assume h9: A,
 show (A ∧ B) ∨  (A ∧ ¬ B), from
@@ -1334,9 +1356,13 @@ or.elim(em B)
     show (A ∧ B) ∨  (A ∧ ¬ B), from or.inr(and.intro h9 hw))
 
 \end{lstlisting}
+\bigbreak
+\item Prove no Lean que $(A  \lor  B) \land (C \lor D) \land (E \lor F) \rightarrow (A \land E \land C) \lor (F \land B \land D) \lor (A \land F \land C) \lor (A \land E \land D) \lor (A \land F \land D) \lor (B \land E \land C) \lor (B \land F \land C) \lor (B \land E \land D)$.
 
-%possivel exercicio (qual é esse? Livro?)
+Gabarito:
+
 \begin{lstlisting}
+variables {A B C D E F: Prop}
 example: ((A ∨ B) ∧ (C ∨ D)) ∧ (E ∨ F) →  (((((((((A ∧ E) ∧ C) ∨ ((F ∧ B) ∧ D)) ∨ ((A ∧ F) ∧ C)) ∨ ((A ∧ E) ∧ D)) ∨ ((A ∧ F) ∧ D)) ∨ ((B ∧ E) ∧ C)) ∨ ((B ∧ F) ∧ C)) ∨ ((B ∧ E) ∧ D)) :=
 assume h: ((A ∨ B) ∧ (C ∨ D)) ∧ (E ∨ F),
 have ha: A ∨ B, from and.left (and.left h),
@@ -1361,21 +1387,27 @@ or.elim ha
         or.elim hc
             (assume h3: E, or.inr (and.intro (and.intro h1 h3) h2))
             (assume h3: F, or.inl (or.inl (or.inl (or.inl (or.inl (or.inl (or.inr (and.intro (and.intro h3 h1) h2))))))))))
-
-
 \end{lstlisting}
+\bigbreak
+\item Prove no Lean $A \rightarrow B$, a partir de $\neg B \rightarrow \neg A$.
 
-%possivel exercicio
+Gabarito:
 \begin{lstlisting}
+open classical
+variables {A B: Prop}
 example (hl : ¬ B → ¬ A) : A → B :=
 assume h10: A, show B,from
 by_contradiction(
     assume hnb: ¬ B,
     show false, from (hl hnb) h10)
 \end{lstlisting}
+\bigbreak
+\item Prove no Lean $\neg A \lor B$, a partir de $A \rightarrow B$.
 
-%possivel exercicio
+Gabarito:
 \begin{lstlisting}
+open classical
+variables {A B: Prop}
 example (hp : A → B) : ¬ A ∨ B :=
 show ¬ A ∨ B, from
 or.elim (em A)
@@ -1384,12 +1416,10 @@ or.elim (em A)
     (assume ha2: ¬ A,
     show ¬A ∨ B, from or.inl ha2)
 \end{lstlisting}
+\bigbreak
+\item Prove no Lean o problema dos vestidos descrito na introdução.
 
-
-%% Acredito que os abaixo deveriam estar entre os exercicios então arrumei com título
-
-\textbf{Exercício dos vestidos}
-
+Gabarito:
 \begin{lstlisting}
 variables AA AB AP MA MB MP CA CB CP : Prop 
 variable h1: AA ∨ (AB ∨ AP)
@@ -1434,8 +1464,11 @@ or.elim h22
 
 and.intro h24 h21
 \end{lstlisting}
+\bigbreak
+\item Escolha um grafo e prove que há um caminho hamiltoniano nele. 
 
-\textbf{Caminho hamiltoniano}
+Possível gabarito:
+
 \begin{lstlisting}
 open classical 
 variables {x11 x12 x13 x14 x21 x22 x23 x24 x31 x32 x33 x34 x41 x42 x43 x44 : Prop}
@@ -1743,3 +1776,5 @@ lemma rule_5_edge24 (h2: ¬x12 ∧ ¬x24 ∧ ¬x34 ∧ ¬x32 ∧  x11 ∧ x22  �
                     (or.inl h2.right.left))
           (or.inl h2.right.right.left)
 \end{lstlisting}
+
+\end{enumerate}
