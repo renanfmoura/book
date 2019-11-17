@@ -193,10 +193,85 @@
     
     É inegável que para muitos exemplos isso se torna inviável.
 
+\section{Teoremas e Exemplos}
+    
+    Nesta seção iremos tratar de formalizar definições e Teoremas. Ao contrário da seção anterior, onde o foco era transmitir a notação e uma ideia geral dos conceitos.
+    
+    Aqui serão apresentadas algumas provas em Lean para o conteúdo apresentado. Não se preocupe, caso não entenda sobre o que o código quer dizer ignore ele por enquanto e após ler as próximas duas seções (que falam de conjuntos em Lean), volte e tente compreender o que foi feito. Já que o foco principal nesta parte são as provas matemáticas tradicionais e as definições mais precisas.
+    
+\subsection{Definições}
+
+    Seja $A$ e $B$ conjuntos ($\mathbb{U}$ nosso universo e $\emptyset$ o conjunto vazio, como definidos anteriormente). Assim temos, formalmente:
+
+    \begin{itemize}
+  
+        \item \textbf{Diferença}: $A \ B = \{x | x \in A \land x \notin B\}$
+    
+        \item \textbf{Complementar}: $\overline A = \mathbb{U} \ A = \{x | x \in \mathbb{U} \land x \notin A\}$
+    \end{itemize}    
+
+\subsection{Propriedades}
+    
+    A seguir teremos algumas propriedades e a prova do porque estão corretas.
+    
+    \begin{itemize}  
+        \item $A \cup \overline A = \mathbb{U}$
+    \end{itemize} 
+    
+        \textbf{Prova:} Seja $x$ um elemento de $A \cup \overline A$, assim temos que 
+        \[x \in (A \cup \overline A)\]
+        \[ \iff x \in A \vee x \in \overline A\]
+        
+    \begin{itemize}
+        \item $A \cap \overline A = \empty{U}$
+    \end{itemize} 
+    
+        \textbf{Prova:} Seja $x$ um elemento de $A \cap \overline A$, assim:
+        
+        $(i)$ Provaremos que $ \forall x (x \in A \cap \overline A) \rightarrow \forall x  (x \in \emptyset) $ :
+        
+        \begin{center}
+            \AxiomC{}
+            \RightLabel{\scriptsize $1$}
+            \UnaryInfC{$ \forall x (x \in A \cap \overline A)$}
+            \UnaryInfC{$t \in A \cap \overline A$}
+            \UnaryInfC{$t \in A \land t \in \overline A $}
+            \UnaryInfC{$t \in A $}
+            \AxiomC{}
+            \RightLabel{\scriptsize $1$}
+            \UnaryInfC{$ \forall x (x \in A \cap \overline A)$}
+            \UnaryInfC{$t \in A \cap \overline A$}
+            \UnaryInfC{$t \in A \land t \in \overline A $}
+            \UnaryInfC{$t \in \overline A $}
+            \UnaryInfC{$t \in \mathbb{U} \land t \notin A $}
+            \UnaryInfC{$t \notin A $}
+            \BinaryInfC{$\perp$}
+            \UnaryInfC{$t \in \emptyset$}
+            \UnaryInfC{$\forall x  (x \in \emptyset)$}
+            \RightLabel{\scriptsize $1$}
+            \UnaryInfC{$ \forall x (x \in A \cap \overline A) \rightarrow \forall x  (x \in \emptyset) $}
+            \DisplayProof
+        \end{center}
+        
+        $(ii)$ Provaremos que $ \forall x  (x \in \emptyset) \rightarrow \forall x (x \in A \cap \overline A)$ :
+        \begin{center}
+            \AxiomC{}
+            \RightLabel{\scriptsize $1$}
+            \UnaryInfC{$\forall x  (x \in \emptyset)$}
+            \UnaryInfC{$\perp$}
+            \UnaryInfC{$t \in A \cap \overline A$}
+            \UnaryInfC{$ \forall x (x \in A \cap \overline A)$}
+            \RightLabel{\scriptsize $1$}
+            \UnaryInfC{$\forall x  (x \in \emptyset) \rightarrow \forall x (x \in A \cap \overline A)$}
+            \DisplayProof
+        \end{center}
+        
+        Portanto, de $(i)$ e $(ii)$, concluímos que $ \forall x (x \in A \cap \overline A) \iff \forall x  (x \in \emptyset) $, ou seja, $A \cap \overline A$.
+        
 \section{Conjuntos em Lean}
     
     Ao longo deste capítulo, observamos que, embora na teoria axiomática dos conjuntos se considere conjuntos de objetos distintos, em matemática é mais comum considerar subconjuntos de algum dominio fixo ($\mathcal U $). É assim que os conjuntos são tratados no Lean. Para qualquer dado do tipo $U$, Lean nos retorna um novo dado tipo $conjunto$ $U$, que consiste nos conjuntos dos elementos de $U$. Assim, por exemplo, podemos raciocinar sobre conjuntos de números naturais, conjuntos de números inteiro ou conjuntos de pares de números naturais.
-
+    
 \subsection{Primeiros Passos}
     Dado {\fontencoding{U}\fontfamily{cmtt}\selectfont A : set U} e $x : U$, é possível escrever $x \in A$ para afirmar que $x$ é um elemento do conjunto $A$. O carácter $\in$ pode ser escrito em Lean usando $\backslash$in .
 
@@ -587,13 +662,13 @@ calc
 
 A função calc, já apresentada em outras frentes desse livro, aparece novamente, agora para conjuntos. A próxima seção explanará como aplicar calc em conjuntos no Lean e mostrará a diferença entre resolver questões da forma clássica e com calc.
 
-\subsection{Aplicação de calc em Conjuntos}
+\section{Aplicação de calc em Conjuntos}
 
-\subsection{Famílias Indexadas}
+\section{Famílias Indexadas}
 
-\subsection{Power Set}
+\section{Power Set}
 
-\subsection{Exercícios}
+\section{Exercícios}
 
 \begin{enumerate}
     
@@ -616,6 +691,13 @@ section
   example : A \ (B ∩ C) = (A \ B) ∪ (A \ C) := sorry
 end
 \end{lstlisting}
+
+\item Prove que $A \cup \overline A = \mathcal U$. (Fornecendo uma prova tradicional e uma em Lean.)
+
+\textbf{Resposta} 
+
+
+
 
 \item Questões com calc
     
