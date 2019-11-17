@@ -422,7 +422,7 @@ or.elim h1
 (assume h2: B, sorry)
 \end{lstlisting}
 
-Como exemplo mais concreto, sem o uso do ``sorry'', é possível observar a prova abaixo, na qual utiliza-se as hipóteses $A \rightarrow C$ e $B \rightarrow C$ para se chegar à C a partir de $A$ e $B$:
+Como exemplo mais concreto, sem o uso do ``sorry'', é possível observar a prova abaixo, na qual utiliza-se as hipóteses $A \rightarrow C$ e $B \rightarrow C$ para se chegar à C a partir de $A \lor B$:
 
 \begin{lstlisting} 
 variables A B C D : Prop
