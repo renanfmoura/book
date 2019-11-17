@@ -672,10 +672,134 @@ end
 As funções \lstinline{mem_of_mem_diff, not_mem_of_mem_diff} e \lstinline{mem_diff_of_mem}
 tem o objetivo de lidar com a diferença esua relação com a interseção. Note que usar táticas
 auxilia o passo a passo, porém dificulta o posterior entendimento. Por isso, é recomendável,
-nesses exemplos, utilizar alguma ferramenta para Lean.
+nesses exemplos, utilizar alguma ferramenta para Lean. 
+Essas funções e outras já apresentadas, encontram-se na biblioteca do Lean e grande parte delas está 
+disponível quando você abre o namespace \lstinline{function}.
 
-\subsection{Definindo a inversa Classicamente}
+\begin{lstlisting}
+open function 
+
+#check @comp 
+#check @has_left_inverse
+-- A right_inverse tem duas definicoes para Lean. Apenas uma
+-- esta no namespace function. Por isso e importante especificar. 
+#check @function.right_inverse    
+\end{lstlisting}
 
 \section{Lógica de Segunda ou Mais Alta Ordem}
 
+Até agora, formalmente, definimos lógica de primeira ordem, onde iniciamoscom um estoque 
+fixo de símbolos de funções e relações, nos últimos tópicos que  consideramos, ocorre a motivação 
+de extender a linguagem para funções e relações. Por exemplo, ao afirmar que $f: X \to Y$ possui 
+inversa a esquerda pode ser dito como: $$\exists g, \forall x, g(f(x)) = x.$$
+Outro exemplo é o seguinte teorema, descrito em linguagem lógica 
+$$\forall x_1, x_2, (f(x_1) = f(x_2) \to x_1 = x_2) \to \exists g, \forall x, g(f(x)) = x.$$
+Isto é, se $f: X \to Y$ é injetiva, então existe inversa à sua esquerda.
+
+Nesse sentido, existe uma quantificação sobre as funções e relações, o que se distancia do que a lógica 
+de primeira ordem cobre. Como forma de resolver esse impasse, podemos desenvolver uma teoria na linguagem 
+de lógica de primeira ordem no qual o universo contém funções e relações como objetos ou extender essa linguagem
+para envolver novos tipos de quantificadores e variáveis, que é o caso descrito nessa sessão. Isto é o que Lógica
+de Ordem mais Alta faz. 
+
+Alonzo Church (1903 - 1995) foi um matemático e lógico estadunidense, conhecido pelo cálculo lambda, formula a ideia
+de ordens mais altas na lógica. Isso é algumas vezes descrito como Teoria Simples dos Tipos.
+
+
+
+\subsection{Definindo a inversa Classicamente}
+
+Para definir funções inversas, é necessário que utilizemos o racionínio clássico. 
+
+\begin{lstlisting}
+open classical 
+
+#check @axiom_of_choice
+#check @some_spec
+
+variables A B : Type
+variable P : A → Prop   
+variable R : A → B → Prop
+
+example : (∀ x, ∃ y, R x y) → ∃ f : A → B, ∀ x, R x (f x) :=
+axiom_of_choice
+
+example (h : ∃ x, P x) : P (some h) :=
+some_spec h    
+\end{lstlisting}
+
+O axioma da escolha fala que se para todo \lstinline{x : X}, existe \lstinline{y: Y} com 
+\lstinline{R x y}, então existe uma função \lstinline{f: X → Y} que para todo \lstinline{x},
+escolhe-se \lstinline{y}. Em Lean, é utilizada a função \lstinline{some} para mostrar este a 
+axioma, através da construção clássica. Podemos, portanto, definir a inversa como: 
+
+\begin{lstlisting}
+open classical function
+local attribute [instance] prop_decidable
+
+variables {X Y : Type}
+
+noncomputable def inverse (f : X → Y) (default : X) : Y → X :=
+λ y, if h : ∃ x, f x = y then some h else default   
+\end{lstlisting}
+
+Observe que a definição é não computacional, visto que como já argumentamos, para uma determinada função, essa 
+hipótese \lstinline{h} pode não ser possível de validar algoritmicamente e, se a hipótese for válida, pode não 
+ser possível encontrar um valor de \lstinline{x} adequado, também algoritmicamente. Também observe que essa inversa é 
+definida assumindo \lstinline{y}, logo ela é definida para todo valor que ele assume e retorna algum valor qye cumpre 
+essa propriedade \lstinline{f x = y}, quando a hipótese é válida, ou um valor padrão dado inicialmente, caso não exista. 
+O comando \lstinline{local attribute} fala para a instância que a regra \lstinline{prop_decidable} vai ser utilizada no 
+arquivo que se segue. Nesse caso, importamos os axiomas clássicos e tornamos disponível a instância genérica da decição.   
+
+Podemos, então, demonstrar os seguintes teoremas. 
+
+\begin{lstlisting}
+open classical function
+local attribute [instance] prop_decidable
+
+variables {X Y : Type}
+
+noncomputable def inverse (f : X → Y) (default : X) : Y → X :=
+λ y, if h : ∃ x, f x = y then some h else default
+
+theorem inverse_of_exists (f : X → Y) (default : X) (y : Y)
+    (h : ∃ x, f x = y) : f (inverse f default y) = y :=
+    have h₁ : inverse f default y = some h, from dif_pos h,
+    have h₂ : f (some h) = y, from some_spec h,
+eq.subst (eq.symm h₁) h₂
+
+#check @dite
+#check @dif_pos 
+
+-- Using Term Mode 
+theorem is_left_inverse_of_injective (f : X → Y) (default : X)
+    (injf : injective f) : left_inverse (inverse f default) f :=
+let finv := (inverse f default) in
+    assume x,
+    have h1 : ∃ x', f x' = f x, from exists.intro x rfl,
+    have h2 : f (finv (f x)) = f x, 
+        from inverse_of_exists f default (f x) h1,
+    show finv (f x) = x, from injf h2
+
+-- Using Tatic Mode 
+theorem is_left_inverse_of_injective2 (f : X → Y) (default : X)
+    (injf : injective f) : left_inverse (inverse f default) f :=
+begin 
+    intro x,
+    apply injf, 
+    apply inverse_of_exists,
+    apply exists.intro x,
+    exact eq.refl (f x), 
+end
+\end{lstlisting}
+
+Observado o significado de \lstinline{dite}, que expressa a validade de um 
+\lstinline{α : Sort}, independente de \lstinline{c: Prop} e o significado 
+de \lstinline{dif_pos}, que expressa a igualdade entre uma expressão do formato 
+\lstinline{dite} e outra do mesmo \lstinline{Sort}, podemos entender o siginificado
+dessa prova. A versão em Táticas foi inserida como instrução de aplicação em comparação
+como o modo em termos. 
+
 \section{Funções e Relações}
+
+\section{Exercícios}
