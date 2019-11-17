@@ -101,4 +101,133 @@ Apenas discutimos brevemente como e porque Equivalencia e Igualdade são animais
 
 \section{Relações em Lean}
 
-\section{Exercícios}
+\section{Exemplos}
+Os exemplos abaixo serão eventuais exercícios.
+Mas já são dados com as soluções. Alguns poderão ser retirados e postos no interior do capítulo para ser usados como exemplos.
+
+\begin{enumerate}
+\item Dada uma relação de ordem estrita \textit{R}, definimos \textit{R'}, parcial. Dê uma prova para os seguintes resultados sobre \textit{R'}:
+
+\vspace{5mm}
+\begin{lstlisting}
+section
+-- Inicio da Sessao
+
+parameters {A : Type} {R : A → A → Prop}
+parameter (irreflR : irreflexive R)
+parameter (transR : transitive R)
+
+local infix < := R
+
+def R' (a b : A) : Prop := R a b ∨ a = b
+local infix ≤ := R'
+
+-- Reflexividade de R'
+example (a : A) : a ≤ a :=
+  have h2 : a = a, from rfl,
+  show a ≤ a, from (or.inr h2)
+
+-- Transitividade de R'
+example {a b c : A} (h1 : a ≤ b) (h2 : b ≤ c): a ≤ c :=
+  or.elim h1
+    (assume s1 : a < b,
+      or.elim h2
+        (assume s2 : b < c,
+          or.inl (transR s1 s2))
+        (assume s2 : b = c,
+          or.inl (eq.subst s2 s1)))
+    (assume s1 : a = b,
+      eq.subst s1.symm h2)
+
+-- Antissimetria de R'
+example {a b : A} (h1 : a ≤ b) (h2 : b ≤ a) : a = b :=
+  or.elim h1
+    (assume s1 : a < b,
+      or.elim h2
+        (assume s2 : b < a,
+          have s3: a < a, from transR s1 s2,
+          false.elim (irreflR a s3))
+        (assume s2 : b = a, s2.symm))
+    (assume s1 : a = b, s1)
+
+-- Fim da Sessao
+end
+\end{lstlisting}
+\vspace{5mm}
+
+\item Dada uma relação \textit{R}, definimos uma relação \textit{S} supostamente transitiva. Dê uma prova para esse fato.
+
+\vspace{5mm}
+\begin{lstlisting}
+section
+parameters {A : Type} {R : A → A → Prop}
+parameter (reflR : reflexive R)
+parameter (transR : transitive R)
+
+def S (a b : A) : Prop := R a b ∧ R b a
+
+example : transitive S :=
+  assume a b c,
+  assume h1 : S a b,
+  assume h2 : S b c,
+  show S a c, from
+    have l1 : R a b, from h1.left,
+    have l2 : R b c, from h2.left,
+    have r1 : R b a, from h1.right,
+    have r2 : R c b, from h2.right,
+    ⟨transR l1 l2, transR r2 r1⟩
+end
+\end{lstlisting}
+\vspace{5mm}
+
+\item Apenas um dos teoremas é verdadeiro. Defina qual o verdadeiro, e dê uma prova para a sua resposta.
+
+\vspace{5mm}
+\begin{lstlisting}
+section
+  parameters {A : Type} {a b c : A} {R : A → A → Prop}
+  parameter (Rab : R a b)
+  parameter (Rbc : R b c)
+  parameter (nRac : ¬ R a c)
+
+  -- R e parcial estrita
+  theorem R_strict : irreflexive R ∧ transitive R :=
+  sorry
+
+  -- R nao e parcial estrita
+  theorem R_not_strict : ¬(irreflexive R ∧ transitive R) :=
+    assume h : irreflexive R ∧ transitive R,
+    have h1 : transitive R, from h.right,
+    have h2 : R a c, from h1 Rab Rbc,
+    show false, from nRac h2
+end
+\end{lstlisting}
+\vspace{5mm}
+
+\item Prove o fato a seguir utilizando paradigma \textit{calc}. Tente o mesmo apenas através de \textit{tatic mode} e \textit{term mode}.
+
+\vspace{5mm}
+\begin{lstlisting}
+open nat
+
+-- utilizando modo calc
+example : 1 ≤ 4 :=
+calc
+    1 ≤ 2 : le_succ 1
+  ... ≤ 3 : le_succ 2
+  ... ≤ 4 : le_succ 3
+
+-- utilizando term mode
+example : 1 ≤ 4 :=
+  have h1 : 1 ≤ 2, from le_succ 1,
+  have h2 : 2 ≤ 3, from le_succ 2,
+  have h3 : 3 ≤ 4, from le_succ 3,
+
+  le_trans h1 (le_trans h2 h3)
+
+-- utilizando tatic mode
+example : 1 ≤ 4 := sorry
+\end{lstlisting}
+\vspace{5mm}
+
+\end{enumerate}
