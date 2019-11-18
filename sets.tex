@@ -72,8 +72,17 @@
     
     Lembre-se: os diagramas apresentados servem como ferramenta auxiliar para ajudar a entender os conceitos, mas não devem ser vistos como a única ferramenta para compreender as definições e  a teoria exposta.
     
-    \subsection{Axiomas}
+    \subsection{Definições}
+    Seja $A$ e $B$ conjuntos ($\mathbb{U}$ nosso universo e $\emptyset$ o conjunto vazio, como definidos anteriormente). Assim temos, formalmente:
+
+    \begin{itemize}
+  
+        \item \textbf{Diferença}: $A \ B = \{x | x \in A \land x \notin B\}$
     
+        \item \textbf{Complementar}: $\overline A = \mathbb{U} \ A = \{x | x \in \mathbb{U} \land x \notin A\}$
+    \end{itemize} 
+
+    \subsection{Axiomas}
     Agora iremos apresentar alguns axiomas que servirão como base para todo o desenvolvimento dos conteúdos aqui propostos. Quando utilizarmos a palavra elemento, estaremos utilizando-a com a ideia de que um conjunto que pertença a outro é um elemento do segundo, para evitar repetir o uso excessivo da palavra conjunto.
     
     \textbf{Axioma da Completude:} Dois conjuntos são iguais, se e somente se, todo conjunto que pertence ao primeiro conjunto pertence ao segundo e, todo conjunto que pertence ao segundo também pertence ao primeiro, ou seja:
@@ -129,7 +138,7 @@
     
     Mas como se pode ver em ..., podemos reduzir uma grande gama de coisas a conjuntas, assim podemos tratá-las na Teoria dos Conjuntos. Para saber mais sobre Teoria dos Conjuntos dê uma olhada em ... .
 
-    \section{Diagrama de Venn}
+\section{Diagrama de Venn}
     A maneira mais simples de entender a Teoria de Conjuntos, talvez seja o Diagrama de Venn. Criado por John Venn em 1880, esse sistema de representar graficamente conjuntos auxilia imensamente quem está começando a aprender esse assunto, principalmente para entender sobre a parte inicial de notações. Basicamente, consiste em representar num plano, o universo $\mathcal U$ como sendo um retângulo e cada conjunto $A,B,...$ como uma curva fechada simples (geralmente, círculo).
     
     \subsection{Para 1 ou 2 conjuntos}
@@ -204,91 +213,29 @@
     %    \label{fig:figure_set_01_08}
     %\end{figure}
 
+    \subsection{Para 3 conjuntos ou mais}    
     Já foi bastante falado sobre Diagrama de Venn, mas nem chegamos a trabalhar com mais de $2$ conjuntos, o que é importante, dado que a Teoria de Conjuntos não se resume a $A$ e $B$. Mas antes de partirmos para mais conjuntos, vamos pensar numa generalização de quantas regiões diferentes devemos ter para que o diagrama seja um Diagrama de Venn. Dado $n$ conjuntos diferentes, tomamos um elemento qualquer $x$, e para cada um dos $n$ conjuntos existem duas possibilidades: $x \in $ conjunto e $x \notin $ conjunto. Logo, concluímos que existem $\underbrace{\begin{matrix} 2\cdot2\cdots2\cdot2\end{matrix}}_{n} = 2^n$ possibilidades de pertencimento de $x$ nos conjuntos, equivalente à dizer que existem $2^n$ regiões diferentes. Isso bate perfeitamente com o caso anterior pra $2$ conjuntos, pois vimos que era necessário ter $4=2^2$ regiões diferentes.
 
     Agora, com $3$ conjuntos $A$, $B$ e $C$, o número de regiões diferentes é $2^3=8$, mas como iremos representá-las? A primeira ideia que vem a cabeça é adicionar um círculo representando o conjunto $C$ no diagrama da figura $\ref{fig:sets-02-00}$, intersectando as regiões já existentes, resultando na figura abaixo:
 
     Fazendo uma rápida contagem, obtemos $8$ regiões diferentes, exatamente como deve ser (lembrete: A região fora dos conjuntos mas dentro do universo $\mathcal U$, também é considerada na contagem). E da mesma forma que representamos bla bla bla
 
-\section{Teoremas e Exemplos}
-    
+    \subsection{Aplicações}
+    Ainda vai ter algo escrito
+
+\section{Prova de Teoremas}
     Nesta seção iremos tratar de formalizar definições e Teoremas. Ao contrário da seção anterior, onde o foco era transmitir a notação e uma ideia geral dos conceitos.
     
     Aqui serão apresentadas algumas provas em Lean para o conteúdo apresentado. Não se preocupe, caso não entenda sobre o que o código quer dizer ignore ele por enquanto e após ler as próximas duas seções (que falam de conjuntos em Lean), volte e tente compreender o que foi feito. Já que o foco principal nesta parte são as provas matemáticas tradicionais e as definições mais precisas.
-    
-\subsection{Definições}
 
-    Seja $A$ e $B$ conjuntos ($\mathbb{U}$ nosso universo e $\emptyset$ o conjunto vazio, como definidos anteriormente). Assim temos, formalmente:
+  \subsection{Prova Matemática Formal}
 
-    \begin{itemize}
-  
-        \item \textbf{Diferença}: $A \ B = \{x | x \in A \land x \notin B\}$
-    
-        \item \textbf{Complementar}: $\overline A = \mathbb{U} \ A = \{x | x \in \mathbb{U} \land x \notin A\}$
-    \end{itemize}    
+\subsection{Dedução Natural}
+Ainda vai ter algo escrito aqui
 
-\subsection{Propriedades}
-    
-    A seguir teremos algumas propriedades e a prova do porque estão corretas.
-    
-    \begin{itemize}  
-        \item $A \cup \overline A = \mathbb{U}$
-    \end{itemize} 
-    
-        \textbf{Prova:} Seja $x$ um elemento de $A \cup \overline A$, assim temos que 
-        \[x \in (A \cup \overline A)\]
-        \[ \iff x \in A \vee x \in \overline A\]
-        
-    \begin{itemize}
-        \item $A \cap \overline A = \empty{U}$
-    \end{itemize} 
-    
-        \textbf{Prova:} Seja $x$ um elemento de $A \cap \overline A$, assim:
-        
-        $(i)$ Provaremos que $ \forall x (x \in A \cap \overline A) \rightarrow \forall x  (x \in \emptyset) $ :
-        
-        \begin{center}
-            \AxiomC{}
-            \RightLabel{\scriptsize $1$}
-            \UnaryInfC{$ \forall x (x \in A \cap \overline A)$}
-            \UnaryInfC{$t \in A \cap \overline A$}
-            \UnaryInfC{$t \in A \land t \in \overline A $}
-            \UnaryInfC{$t \in A $}
-            \AxiomC{}
-            \RightLabel{\scriptsize $1$}
-            \UnaryInfC{$ \forall x (x \in A \cap \overline A)$}
-            \UnaryInfC{$t \in A \cap \overline A$}
-            \UnaryInfC{$t \in A \land t \in \overline A $}
-            \UnaryInfC{$t \in \overline A $}
-            \UnaryInfC{$t \in \mathbb{U} \land t \notin A $}
-            \UnaryInfC{$t \notin A $}
-            \BinaryInfC{$\perp$}
-            \UnaryInfC{$t \in \emptyset$}
-            \UnaryInfC{$\forall x  (x \in \emptyset)$}
-            \RightLabel{\scriptsize $1$}
-            \UnaryInfC{$ \forall x (x \in A \cap \overline A) \rightarrow \forall x  (x \in \emptyset) $}
-            \DisplayProof
-        \end{center}
-        
-        $(ii)$ Provaremos que $ \forall x  (x \in \emptyset) \rightarrow \forall x (x \in A \cap \overline A)$ :
-        \begin{center}
-            \AxiomC{}
-            \RightLabel{\scriptsize $1$}
-            \UnaryInfC{$\forall x  (x \in \emptyset)$}
-            \UnaryInfC{$\perp$}
-            \UnaryInfC{$t \in A \cap \overline A$}
-            \UnaryInfC{$ \forall x (x \in A \cap \overline A)$}
-            \RightLabel{\scriptsize $1$}
-            \UnaryInfC{$\forall x  (x \in \emptyset) \rightarrow \forall x (x \in A \cap \overline A)$}
-            \DisplayProof
-        \end{center}
-        
-        Portanto, de $(i)$ e $(ii)$, concluímos que $ \forall x (x \in A \cap \overline A) \iff \forall x  (x \in \emptyset) $, ou seja, $A \cap \overline A$.
-        
 \section{Conjuntos em Lean}
-    
     Ao longo deste capítulo, observamos que, embora na teoria axiomática dos conjuntos se considere conjuntos de objetos distintos, em matemática é mais comum considerar subconjuntos de algum dominio fixo ($\mathcal U $). É assim que os conjuntos são tratados no Lean. Para qualquer dado do tipo $U$, Lean nos retorna um novo dado tipo $conjunto$ $U$, que consiste nos conjuntos dos elementos de $U$. Assim, por exemplo, podemos raciocinar sobre conjuntos de números naturais, conjuntos de números inteiro ou conjuntos de pares de números naturais.
-    
+
 \subsection{Primeiros Passos}
     Dado {\fontencoding{U}\fontfamily{cmtt}\selectfont A : set U} e $x : U$, é possível escrever $x \in A$ para afirmar que $x$ é um elemento do conjunto $A$. O carácter $\in$ pode ser escrito em Lean usando $\backslash$in .
 
@@ -679,11 +626,105 @@ calc
 
 A função calc, já apresentada em outras frentes desse livro, aparece novamente, agora para conjuntos. A próxima seção explanará como aplicar calc em conjuntos no Lean e mostrará a diferença entre resolver questões da forma clássica e com calc.
 
-\section{Aplicação de calc em Conjuntos}
+\section{Cálculo em Conjuntos}
+
+\subsection{Cálculo Matemático}
+Ainda vai ter algo escrito aqui
+
+\subsection{Calc em Lean}
+Ainda vai ter algo escrito aqui
+
+\section{Propriedades}
+A seguir teremos algumas propriedades e a prova do porque estão corretas.
+    
+    \begin{itemize}  
+        \item $A \cup \overline A = \mathbb{U}$
+    \end{itemize} 
+    
+        \textbf{Prova:} Seja $x$ um elemento de $A \cup \overline A$, assim temos que 
+        \[x \in (A \cup \overline A)\]
+        \[ \iff x \in A \vee x \in \overline A\]
+        
+    \begin{itemize}
+        \item $A \cap \overline A = \empty{U}$
+    \end{itemize} 
+    
+        \textbf{Prova:} Seja $x$ um elemento de $A \cap \overline A$, assim:
+        
+        $(i)$ Provaremos que $ \forall x (x \in A \cap \overline A) \rightarrow \forall x  (x \in \emptyset) $ :
+        
+        \begin{center}
+            \AxiomC{}
+            \RightLabel{\scriptsize $1$}
+            \UnaryInfC{$ \forall x (x \in A \cap \overline A)$}
+            \UnaryInfC{$t \in A \cap \overline A$}
+            \UnaryInfC{$t \in A \land t \in \overline A $}
+            \UnaryInfC{$t \in A $}
+            \AxiomC{}
+            \RightLabel{\scriptsize $1$}
+            \UnaryInfC{$ \forall x (x \in A \cap \overline A)$}
+            \UnaryInfC{$t \in A \cap \overline A$}
+            \UnaryInfC{$t \in A \land t \in \overline A $}
+            \UnaryInfC{$t \in \overline A $}
+            \UnaryInfC{$t \in \mathbb{U} \land t \notin A $}
+            \UnaryInfC{$t \notin A $}
+            \BinaryInfC{$\perp$}
+            \UnaryInfC{$t \in \emptyset$}
+            \UnaryInfC{$\forall x  (x \in \emptyset)$}
+            \RightLabel{\scriptsize $1$}
+            \UnaryInfC{$ \forall x (x \in A \cap \overline A) \rightarrow \forall x  (x \in \emptyset) $}
+            \DisplayProof
+        \end{center}
+        
+        $(ii)$ Provaremos que $ \forall x  (x \in \emptyset) \rightarrow \forall x (x \in A \cap \overline A)$ :
+        \begin{center}
+            \AxiomC{}
+            \RightLabel{\scriptsize $1$}
+            \UnaryInfC{$\forall x  (x \in \emptyset)$}
+            \UnaryInfC{$\perp$}
+            \UnaryInfC{$t \in A \cap \overline A$}
+            \UnaryInfC{$ \forall x (x \in A \cap \overline A)$}
+            \RightLabel{\scriptsize $1$}
+            \UnaryInfC{$\forall x  (x \in \emptyset) \rightarrow \forall x (x \in A \cap \overline A)$}
+            \DisplayProof
+        \end{center}
+
+        Portanto, de $(i)$ e $(ii)$, concluímos que $ \forall x (x \in A \cap \overline A) \iff \forall x  (x \in \emptyset) $, ou seja, $A \cap \overline A$.
+
+  \subsection{Básicas}
+  %Pode ser separada em: Básicas, Sobre o conjunto vazio, Sobre o Universo
+  Ainda vai ter algo escrito aqui
+
+  \subsection{Comutatividade}
+  Ainda vai ter algo escrito aqui
+
+  \subsection{Associatividade}
+  Ainda vai ter algo escrito aqui
+
+  \subsection{Distributividade}
+  Ainda vai ter algo escrito aqui
+
+  \subsection{Complementar/Lei de Demorgan}
+  Ainda vai ter algo escrito aqui
+
+  \subsection{Extras}
+  Ainda vai ter algo escrito aqui
 
 \section{Famílias Indexadas}
 
+\subsection{Definição}
+Ainda vai ter algo escrito aqui
+
+\subsection{Em Lean}
+Ainda vai ter algo escrito aqui
+
 \section{Power Set}
+
+\subsection{Definição}
+Ainda vai ter algo escrito aqui
+
+\subsection{Em Lean}
+Ainda vai ter algo escrito aqui
 
 \section{Exercícios}
 
