@@ -1,11 +1,10 @@
 \chapter{Conjuntos}
-
 \section{Introdução}
 Para tratar de conjuntos iremos tentar uma abordagem que não deixe de lado o rigor matemático necessário, mas que ao mesmo tempo permita utilizar o Lean e contextualizar exemplos do dia a dia. 
 
 Caro leitor, como você definiria conjunto? Vamos, pense um pouco. No século XIX, o matemático Georg Cantor, no jornal acadêmico Mathematische Annalen, descreveu um conjunto (ou utilizando sua terminologia, \textit{Menge}) como, em tradução livre: “Por conjunto nós entendemos qualquer coleção $M$ de objetos deteminados e distintos (chamados de elementos de $M$) da nossa intuição ou do nosso pensamento em um todo."
 
-Ou seja, mesmo um conjunto podendo ser algo tão abstrato quanto os números naturais ($\mathbb{N}$), os números reais ($\mathbb{R}$) e o Conjuntor de Cantor, podemos ter coisas menos abstratas como o conjunto das palavras desse texto, o dos planetas do Sistema Solar ou até dos alunos de sua turma. A questão é, todos esses conjuntos podem ser mais intuitivos ou abstratos (além de como são definidos) dependendo da pessoa que irá interpretá-los, por exemplo o conjunto dos naturais pode ser definido como $\mathbb{N} = \{1,2,3,...\}$ ou $\mathbb{N}=\{0,1,2,3,...\}$ (para não desagradar ninguém), o planetas do Sistema Solar $ P = \{ Mercurio, Venus, Terra, \\ Marte, Jupiter, Saturno, Urano, Netuno \}$ (lembramos que se este livro fosse escrito a uns 15 anos Plutão, na época, ainda seria considerado como um planeta, isto é, estaria no conjunto), por consequência, vemos que a interpretação do que determinado conjunto representa varia de pessoa para pessoa, mesmo que a ideia principal continue a mesma.
+Ou seja, mesmo um conjunto podendo ser algo tão abstrato quanto os números naturais ($\mathbb{N}$), os números reais ($\mathbb{R}$) e o Conjuntor de Cantor, podemos ter coisas menos abstratas como o conjunto das palavras desse texto, o dos planetas do Sistema Solar ou até dos alunos de sua turma. A questão é, todos esses conjuntos podem ser mais intuitivos ou abstratos (além de como são definidos) dependendo da pessoa que irá interpretá-los, por exemplo o conjunto dos naturais pode ser definido como $\mathbb{N} = \{1,2,3,...\}$ ou $\mathbb{N}=\{0,1,2,3,...\}$ (para não desagradar ninguém), o de planetas do Sistema Solar $ P = \{ Mercurio, Venus, Ter$-$\\ra, Marte, Jupiter, Saturno, Urano, Netuno \}$ (lembramos que se este livro fosse escrito a uns 15 anos atrás, Plutão ainda seria considerado como um planeta, isto é, estaria no conjunto), por consequência, vemos que a interpretação do que determinado conjunto representa varia de pessoa para pessoa, mesmo que a ideia principal continue a mesma.
 
 Nosso intuito, durante essa aventura pelo mundo dos conjuntos será entender melhor certos conceitos e definições (como o fato do conjunto vazio estar contido em todos os conjuntos, ou se chegarmos até lá, porque o intervalo [0,1] nos reais não é enumerável), através de demosntrações, exemplos e exercícios, aumentando sua capacidade de abstração e a nossa também, já que para escrever esse capítulo nós teremos que ir além, pois não queremos apenas entender o que está aqui, mas que você entenda e aprenda também.
 
@@ -33,7 +32,7 @@ Nosso intuito, durante essa aventura pelo mundo dos conjuntos será entender mel
       \label{fig:sets-02-01}
   \end{figure}
   
-  \textbf{União :}Já se estamos interessados nos conjuntos/elementos que fazem parte de $A$ ou de $B$ dizemos que, nosso objetivo é a união de $A$ e $B$ ($A \cup B$)$^{\ref{fig:sets-02-02}}$.
+  \textbf{União:} Já se estamos interessados nos conjuntos/elementos que fazem parte de $A$ ou de $B$ dizemos que, nosso objetivo é a união de $A$ e $B$ ($A \cup B$)$^{\ref{fig:sets-02-02}}$.
   
   \begin{figure}[hbt!]
       \centering      
@@ -72,28 +71,28 @@ Nosso intuito, durante essa aventura pelo mundo dos conjuntos será entender mel
   Lembre-se: os diagramas apresentados servem como ferramenta auxiliar para ajudar a entender os conceitos, mas não devem ser vistos como a única ferramenta para compreender as definições e  a teoria exposta.
     
   \subsection{Definições}
-  Seja $A$ e $B$ conjuntos ($\mathbb{U}$ nosso universo e $\emptyset$ o conjunto vazio, como definidos anteriormente). Assim temos, formalmente:
+  Seja $A$ e $B$ conjuntos ($\mathcal{U}$ nosso universo e $\emptyset$ o conjunto vazio, como definidos anteriormente). Assim temos, formalmente:
 
   \begin{itemize}
-    \item \textbf{Diferença}: $A \ B = \{x | x \in A \land x \notin B\}$
+    \item \textbf{Diferença}: $A \backslash B = \{x | x \in A \land x \notin B\}$
   
-    \item \textbf{Complementar}: $\overline A = \mathbb{U} \ A = \{x | x \in \mathbb{U} \land x \notin A\}$
+    \item \textbf{Complementar}: $\overline A = \mathcal{U} \backslash A = \{x | x \in \mathcal{U} \land x \notin A\}$
   \end{itemize} 
 
   \subsection{Axiomas}
   Agora iremos apresentar alguns axiomas que servirão como base para todo o desenvolvimento dos conteúdos aqui propostos. Quando utilizarmos a palavra elemento, estaremos utilizando-a com a ideia de que um conjunto que pertença a outro é um elemento do segundo, para evitar repetir o uso excessivo da palavra conjunto.
   
-  \textbf{Axioma da Completude:} Dois conjuntos são iguais, se e somente se, todo conjunto que pertence ao primeiro conjunto pertence ao segundo e, todo conjunto que pertence ao segundo também pertence ao primeiro, ou seja:
+  \textbf{Axioma da Completude:} Dois conjuntos são iguais, se e somente se, todo elemento que pertence ao primeiro conjunto pertence ao segundo e, todo elemento que pertence ao segundo também pertence ao primeiro, ou seja:
   
-  \[\forall a \hspace{1.5mm} \forall b \hspace{1.5mm} (a = b) \iff (\forall x \hspace{1.5mm} (x \in a \iff x \in b))\] 
+  \[\forall A \hspace{1.5mm} \forall B \hspace{1.5mm} (A = B) \iff (\forall x \hspace{1.5mm} (x \in A \iff x \in B))\] 
   
   Através desse axioma fica mais claro de entender duas propriedades dos conjuntos. 
   
-  Deste axioma, vem a explicação do motivo de que a ordem dos elementos de um conjunto não importa. Pois dado dois conjuntos com os mesmos elementos, mas em ordem diferente (por exemplo, $X=\{a,b,c,d,e,f\}$ e o conjunto $Y=\{e,c,f,b,a,d\}$) eles ainda satisfazem a propriedade de que se $t$ pertence a um deles implica $t$ pertencer ao outro. Outro ponto interessante é que não importa se um conjunto possui elementos repetidos ele continuará igual ao que possui apenas um elemento, isto é, $X=\{a,b,d,e\}$ é igual ao $Y=\{b,a,d,a,e,b,b\}$. Ou seja, em um conjunto não importa a ordem dos elementos, nem as repetições de elementos.
+  Deste axioma, vem a explicação do motivo de que a ordem dos elementos de um conjunto não importa. Pois dado dois conjuntos com os mesmos elementos, mas em ordem diferente (por exemplo, $X=\{a,b,c,d,e,f\}$ e o conjunto $Y=\{e,c,f,b,a,d\}$) eles ainda satisfazem a propriedade de que se $t$ pertence a um deles implica $t$ pertencer ao outro. Outro ponto interessante é que não importa se um conjunto possui elementos repetidos ele continuará igual ao que possui apenas um elemento, isto é, $X=\{a,b,d,e\}$ é igual ao $Y=\{b,a,d,a,e,b,b\}$. Ou seja, em um conjunto não importa a ordem e nem as repetições de elementos.
   
   \textbf{Axioma da Existencia do Conjunto Vazio: } Diremos que no nosso universo ($\mathbb{U}$), existe um conjunto tal que ele não contém ninguém, ou seja, ele é vazio, daí seu nome, Conjunto Vazio (denotado por $\emptyset$). O axioma é:
       
-    \[\exists a \hspace{1.5mm} \forall x \hspace{1.5mm} \neg\hspace{0.5mm} (x \in a)\]
+    \[\exists A \hspace{1.5mm} \forall x \hspace{1.5mm} \neg\hspace{0.5mm} (x \in A)\]
   
   \textbf{Unicidade do Conjunto Vazio}
   
@@ -128,7 +127,7 @@ Nosso intuito, durante essa aventura pelo mundo dos conjuntos será entender mel
 
   \textbf{Axioma do Par: } Este axioma nos diz que para todos os conjuntos $A$ e $B$, existe um conjunto conjunto que é $\{A,B\}$. Ou seja,
   
-    \[\forall a \hspace{1.5mm} \forall b \hspace{1.5mm} \exists c \hspace{1.5mm} \forall x \hspace{1.5mm} (x \in c \leftrightarrow x = a \vee x = b\]
+    \[\forall A \hspace{1.5mm} \forall B \hspace{1.5mm} \exists C \hspace{1.5mm} \forall x \hspace{1.5mm} (x \in C \leftrightarrow x = A \vee x = B)\]
       
   Vale ressaltar que se $A=B$, teremos $\{A,B\}=\{A,A\}=\{A\}$. A aplicação sucessiva deste axioma nos permite criar uma infinidade de conjuntos finitos. Por exemplo, $A=\emptyset$ e seja $B=\emptyset$, assim teremos $\{\emptyset\}$, sendo $B=\{\emptyset\}$, teremos agora $\{\emptyset,\{\emptyset\}\}$, agora fazendo $A=\{\emptyset\}$, teremos $\{\{\emptyset\}\}$.
   
@@ -222,7 +221,7 @@ A maneira mais simples de entender a Teoria de Conjuntos, talvez seja o Diagrama
   Ainda vai ter algo escrito
 
 \section{Prova de Teoremas}
-Nesta seção iremos tratar de formalizar definições e Teoremas. Ao contrário da seção anterior, onde o foco era transmitir a notação e uma ideia geral dos conceitos.
+Nesta seção iremos tratar de formalizar definições e Teoremas. Ao contrário da seção $5.2$, onde o foco era transmitir a notação e uma ideia geral dos conceitos.
 
 Aqui serão apresentadas algumas provas em Lean para o conteúdo apresentado. Não se preocupe, caso não entenda sobre o que o código quer dizer ignore ele por enquanto e após ler as próximas duas seções (que falam de conjuntos em Lean), volte e tente compreender o que foi feito. Já que o foco principal nesta parte são as provas matemáticas tradicionais e as definições mais precisas.
 
@@ -233,31 +232,21 @@ Aqui serão apresentadas algumas provas em Lean para o conteúdo apresentado. N�
   Ainda vai ter algo escrito aqui
 
 \section{Conjuntos em Lean}
-Ao longo deste capítulo, observamos que, embora na teoria axiomática dos conjuntos se considere conjuntos de objetos distintos, em matemática é mais comum considerar subconjuntos de algum dominio fixo ($\mathcal U $). É assim que os conjuntos são tratados no Lean. Para qualquer dado do tipo $U$, Lean nos retorna um novo dado tipo $conjunto$ $U$, que consiste nos conjuntos dos elementos de $U$. Assim, por exemplo, podemos raciocinar sobre conjuntos de números naturais, conjuntos de números inteiro ou conjuntos de pares de números naturais.
+Embora na teoria axiomática dos conjuntos se considere conjuntos de objetos distintos, em matemática é mais comum considerar subconjuntos de algum dominio fixo ($\mathcal U $). É assim que os conjuntos são tratados em Lean. Para qualquer dado do tipo $U$, Lean nos retorna um novo dado tipo $conjunto$ $U$, que consiste no conjunto dos elementos de $U$. Assim, por exemplo, podemos raciocinar sobre conjuntos de números naturais, conjuntos de números inteiro ou conjuntos de pares de números naturais.
 
-  \subsection{Primeiros Passos}
-  Dado {\fontencoding{U}\fontfamily{cmtt}\selectfont A : set U} e $x : U$, é possível escrever $x \in A$ para afirmar que $x$ é um elemento do conjunto $A$. O carácter $\in$ pode ser escrito em Lean usando $\backslash$in .
+  \subsection{Notações}
+  O lean possui uma biblioteca padrão para lidar com conjuntos chamada set e, sempre que formos utilizar um comando que pertence à ela, é necessário escrever {\fontencoding{U}\fontfamily{cmtt}\selectfont set.comando}. Entretanto, pra facilitar nossa vida, podemos escrever {\fontencoding{U}\fontfamily{cmtt}\selectfont open set} no início do código, o que permite escrevermos somente {\fontencoding{U}\fontfamily{cmtt}\selectfont comando}, e o lean já entende que ele pertence a biblioteca set.
+  
+  Além disso, para trabalharmos com conjuntos, também é essencial definirmos um tipo {\fontencoding{U}\fontfamily{cmtt}\selectfont U} e sabermos utilizar conjuntos e elementos desse tipo. Para isso, utilizamos o código abaixo:
 
   \begin{lstlisting}
-  import data.set
   open set
 
   variable {U : Type}
   variables A B C : set U
-  variable x : U
+  variable x : U \end{lstlisting}
 
-  #check x ∈ A
-  #check A ∪ B
-  #check B \ C
-  #check C ∩ A
-  #check -C
-  #check ∅ ⊆ A
-  #check B ⊆ univ
-      
-  \end{lstlisting}
-
-
-  Abaixo temos uma pequena lista de como se representa os principais caractéres da parte de conjuntos no Lean: 
+  Temos aqui uma pequena lista de como se representa os principais caractéres da parte de conjuntos em Lean: 
 
   \begin{itemize}
       \item $\in$ $\rightarrow$ $\backslash$in
@@ -272,47 +261,57 @@ Ao longo deste capítulo, observamos que, embora na teoria axiomática dos conju
     
       \item $\cup$ $\rightarrow$ $\backslash$un \ ou \ $\backslash$cup \ ou \ $\backslash$union
     
-      \item $\cap$ $\rightarrow$ $\backslash$i \ ou \ $\backslash$cap \ ou \ $\backslash$intersction
+      \item $\cap$ $\rightarrow$ $\backslash$i \ ou \ $\backslash$cap \ ou \ $\backslash$intersection
   \end{itemize}
 
-  Obs$^{1}$.: O conjunto universal é denotado {\fontencoding{U}\fontfamily{cmtt}
-  \selectfont univ}.
+  Obs$^{1}$.: O conjunto universal é denotado {\fontencoding{U}\fontfamily{cmtt} \selectfont univ}.
 
-  Obs$^{2}$.: O complementar de um conjunto é denotada com um símbolo de negação antes de seu símbolo, assim: $-A$
+  Obs$^{2}$.: O complementar de um conjunto é denotado com um símbolo de negação antes de seu símbolo, assim: $-A$
 
-  $\qquad$
+  Podemos ver alguns exemplos abaixo:
+  \begin{lstlisting}
+    open set
+    variable {U : Type}
+    variables A B C : set U
+    variable x : U
 
-  Noções básicas da teoria dos conjuntos são definidas na biblioteca principal do Lean, mas teoremas e notações adicionais estão disponíveis em uma biblioteca auxiliar que é carregada com o comando 
-  {\fontencoding{U}\fontfamily{cmtt}
-  \selectfont import data.set}, que deve aparecer no início do arquivo.
+    #check x ∈ A
+    #check A ∪ B
+    #check B \ C
+    #check C ∩ A
+    #check -C
+    #check ∅ ⊆ A
+    #check B ⊆ univ \end{lstlisting}
 
-  $\qquad$
-
-  O template abaixo serve para mostrar que o conjunto $A$ é um subconjunto de $B$:
+  Noções básicas da teoria dos conjuntos são definidas na biblioteca principal do Lean, mas teoremas e notações adicionais que iremos utilizar nesse capítulo, estão disponíveis em uma biblioteca auxiliar que é carregada com o comando 
+  {\fontencoding{U}\fontfamily{cmtt} \selectfont import data.set}, o qual deve aparecer no início do arquivo.
 
   \begin{lstlisting}
-  import data.set
-  open set
+    import data.set
+    open set
+    variable {U : Type}
+    variables A B C : set U
+    variable x : U \end{lstlisting}
 
-  variable {U : Type}
-  variables A B C : set U
+  A partir desse momento, para evitar repetição, iremos omitir as $4$ primeiras linhas do código, no entanto \textbf{você deve lembrar que elas existem para seu código funcionar.} Já sobre a linha $5$, não é necessário escrever nos próximos exemplos, pois sempre iremos se referenciar a um elemento do tipo{\fontencoding{U}\fontfamily{cmtt} \selectfont U}, dentro de {\fontencoding{U}\fontfamily{cmtt}\selectfont example, lemma} ou {\fontencoding{U}\fontfamily{cmtt}\selectfont theorem}.
 
+  \subsection{Primeiros Passos}
+
+  Relembrando a definição de subconjunto, podemos utilizar o template abaixo para mostrar que o conjunto $A$ é um subconjunto de $B$:
+
+  \begin{lstlisting}
   example : A ⊆ B :=
-  assume x,
+  assume x : U,
   assume h : x ∈ A,
-  show x ∈ B, from sorry
+  show x ∈ B, from sorry \end{lstlisting}
 
-  \end{lstlisting}
+  Obs: Na linha $2$ poderíamos ter escrito somente {\fontencoding{U}\fontfamily{cmtt}\selectfont assume x}, pois já inferiria que {\fontencoding{U}\fontfamily{cmtt}\selectfont x} é do tipo {\fontencoding{U}\fontfamily{cmtt}\selectfont U}.
 
-  E o template a seguir pode ser usado para mostrar que $A$ e $B$ são iguais:
+  Já para mostrar que $A$ e $B$ são iguais, temos dois comandos diferentes: {\fontencoding{U}\fontfamily{cmtt}\selectfont eq\_of\_subset\_of\_subset} e {\fontencoding{U}\fontfamily{cmtt}\selectfont ext}.
+
+  \textbf{eq\_of\_subset\_of\_subset:} Ele funciona interpretando a seguinte expressão $(A \subseteq B \wedge B \subseteq A) \Rightarrow A=B$, ou seja, obtém a equivalência dos conjuntos a partir do fato de que o primeiro é subconjunto do segundo, e vice-vera. Veja o código:
 
   \begin{lstlisting}
-  import data.set
-  open set
-
-  variable {U : Type}
-  variables A B C : set U
-
   example : A = B :=
   eq_of_subset_of_subset
     (assume x,
@@ -320,154 +319,96 @@ Ao longo deste capítulo, observamos que, embora na teoria axiomática dos conju
       show x ∈ B, from sorry)
     (assume x,
       assume h : x ∈ B,
-      show x ∈ A, from sorry)
-      
-  \end{lstlisting}
+      show x ∈ A, from sorry) \end{lstlisting}
 
-  Opcionalmente, nós podemos mostrar a mesma prova de outra forma:
+  \textbf{ext:} É uma sigla para "extensionality", ou seja, extensionalidade. Matemáticamente, isso representa a expressão $\forall x \ (x \in A \leftrightarrow x \in B) \Rightarrow A=B$. Veja o código:
 
   \begin{lstlisting}
-  import data.set
-  open set
-
-  variable {U : Type}
-  variables A B C : set U
-
   example : A = B :=
   ext (assume x, iff.intro
     (assume h : x ∈ A,
       show x ∈ B, from sorry)
     (assume h : x ∈ B,
-      show x ∈ A, from sorry))
+      show x ∈ A, from sorry)) \end{lstlisting}
 
-  \end{lstlisting}
-
-  Aqui, {\fontencoding{U}\fontfamily{cmtt}
-  \selectfont ext} é uma sigla para ``extensionality", ou seja, extensionalidade. Matemáticamente, isso é representado desta forma:
-
-  \begin{center}
-      $\forall x$ ; ($x \in A$ $\leftrightarrow$ $x \in B$) $\rightarrow$ $A = B$.  
-  \end{center}
-
-  Reduzindo assim a prova $A = B$ para a prova: $\forall x$ ; ($x \in A$ $\leftrightarrow$ $x \in B$), que nós podemos realizar usando $\forall$ e $\leftrightarrow$ introdução.
-
-  $\qquad$
-
-  Além disso, o Lean possui interpretação ambígua para regras de união, interseção e outras operações em conjuntos que são consideradas “definições”. Isso significa que as expressões $x$ $\in$ $A$ $\cap$ $B$ e $x$ $\in$ $A$ $\wedge$ $x$ $\in$ $B$ possuem a mesma interpretação no Lean. Isso também é válido para outras construções em conjuntos, como: $x$ $\in$ $A$ $\backslash $ $B$ e $x$ $\in$ $A$ $\wedge$ $\neg$ $(x$ $\in$ $B)$. O termo $\neg$ $(x$ $\in$ $B)$ que acabara de ser apresentado é outra forma de escrever $x$ $\notin$ $B$. Abaixo são apresentadas algumas aplicações dessa interpretação em Lean:
+  Além disso, o Lean possui interpretação ambígua para regras de união, interseção e outras operações em conjuntos que são consideradas “definições”. Isso significa que as expressões $x$ $\in$ $A$ $\cap$ $B$ e $x$ $\in$ $A$ $\wedge$ $x$ $\in$ $B$ possuem a mesma interpretação no Lean. Isso também é válido para outras construções em conjuntos, como: $x$ $\in$ $A$ $\backslash $ $B$ e $x$ $\in$ $A$ $\wedge$ $\neg$ $(x$ $\in$ $B)$. O termo $\neg$ $(x$ $\in$ $B)$ é somente outra forma de escrever $x$ $\notin$ $B$. Abaixo são apresentadas algumas aplicações dessa interpretação:
 
   \begin{lstlisting}
-  import data.set
-  open set
-
-  variable {U : Type}
-  variables A B C : set U
-
   example : ∀ x, x ∈ A → x ∈ B → x ∈ A ∩ B :=
   assume x,
   assume h₁ : x ∈ A,
   assume h₂ : x ∈ B,
   show x ∈ A ∩ B, from and.intro h₁ h₂
+
   example : A ⊆ A ∪ B :=
   assume x,
   assume h : x ∈ A,
   show x ∈ A ∪ B, from or.inl h
+
   example : ∅ ⊆ A  :=
   assume x,
   assume h : x ∈ (∅ : set U),
-  show x ∈ A, from false.elim h
+  show x ∈ A, from false.elim h \end{lstlisting}
 
-  \end{lstlisting}
+  Observe no último exemplo a necessidade de usar a notação {\fontencoding{U}\fontfamily{cmtt} \selectfont ($\emptyset$ : set U)}, dizendo ao nosso provador que o $\emptyset$ é um conjunto de {\fontencoding{U}\fontfamily{cmtt}
+  \selectfont U}. Isso acontece pois ele não consegue inferir que tipo é o conjunto vazio, dado que por definição, esse conjunto existe em qualquer universo, ou seja, pode ser de qualquer tipo.
 
-  Observe no último exemplo a necessidade de usar a notação {\fontencoding{U}\fontfamily{cmtt}
-  \selectfont ($\emptyset$ : set U)}, dizendo ao Lean que o $\emptyset$ é um conjunto de {\fontencoding{U}\fontfamily{cmtt}
-  \selectfont (U)}. O Lean pode, em algumas situações, inferir informações como essa dentro do contexto (por exemplo, quando queremos mostrar que $x$ $\in$ $A$, onde $A$ é do tipo {\fontencoding{U}\fontfamily{cmtt}
-  \selectfont (set U)}), mas para isso acontecer, é necessário o uso de alguns comandos.
-
-  $\qquad$
-
-  Opcionalmente, podemos usar alguns teoremas da biblioteca do Lean, projetados especificamente para uso em conjuntos:
+  Opcionalmente, podemos usar alguns teoremas da biblioteca {\fontencoding{U}\fontfamily{cmtt}
+  \selectfont data.set}, projetados especificamente para uso em conjuntos:
 
   \begin{lstlisting}
-  import data.set
-  open set
-
-  variable {U : Type}
-  variables A B C : set U
-
   example : ∀ x, x ∈ A → x ∈ B → x ∈ A ∩ B :=
   assume x,
   assume : x ∈ A,
   assume : x ∈ B,
   show x ∈ A ∩ B, from mem_inter ‹x ∈ A› ‹x ∈ B›
+
   example : A ⊆ A ∪ B :=
   assume x,
   assume h : x ∈ A,
   show x ∈ A ∪ B, from mem_union_left B h
+
   example : ∅ ⊆ A  :=
   assume x,
   assume : x ∈ ∅,
-  show x ∈ A, from absurd this (not_mem_empty x)
-  
-  \end{lstlisting}
-
-  $\qquad$
+  show x ∈ A, from absurd this (not_mem_empty x) \end{lstlisting}
 
   Lembre-se que o comando{\fontencoding{U}\fontfamily{cmtt}
   \selectfont absurd} pode ser usado para provar qualquer fato a partir de duas hipóteses contrárias: $h_1$ : $P$ e $h_2$ : $\neg$ $P$. 
 
   Aqui, o teorema {\fontencoding{U}\fontfamily{cmtt}
-  \selectfont not\_mem\_empty x} significa $x$ $\notin$ $\emptyset$. Você pode ver a declaração de teoremas disponíveis no Lean com o comando{\fontencoding{U}\fontfamily{cmtt}
+  \selectfont not\_mem\_empty x} significa $x$ $\notin$ $\emptyset$. Para ver a declaração de teoremas disponíveis, utilize o comando{\fontencoding{U}\fontfamily{cmtt}
   \selectfont \#check}:
 
   \begin{lstlisting}
-  import data.set
-  open set
-
   #check @mem_inter
   #check @mem_of_mem_inter_left
   #check @mem_of_mem_inter_right
   #check @mem_union_left
   #check @mem_union_right
   #check @mem_or_mem_of_mem_union
-  #check @not_mem_empty
+  #check @not_mem_empty \end{lstlisting}
 
-  \end{lstlisting}
+  Neste caso, o símbolo{\fontencoding{U}\fontfamily{cmtt}
+  \selectfont @} impede que ele tente preencher argumentos implícitos automaticamente, forçando-o a exibir a declaração completa do teorema.
 
-  Aqui, o símbolo{\fontencoding{U}\fontfamily{cmtt}
-  \selectfont @} no Lean impede que ele tente preencher argumentos implícitos automaticamente, forçando-o a exibir a declaração completa do teorema.
-
-  $\qquad$
-
-  Como o Lean pode identificar conjuntos com suas definições lógicas, auxilia a comprovação de inclusões entre conjuntos:
+  Já que podemos relacionar conjuntos com suas definições lógica, isso auxilia a comprovação de inclusões entre conjuntos:
 
   \begin{lstlisting}
-  import data.set
-  open set
-
-  variable {U : Type}
-  variables A B C : set U
-
   example : A \ B ⊆ A :=
   assume x,
   assume : x ∈ A \ B,
   show x ∈ A, from and.left this
+
   example : A \ B ⊆ -B :=
   assume x,
   assume : x ∈ A \ B,
   have x ∉ B, from and.right this,
-  show x ∈ -B, from this
+  show x ∈ -B, from this \end{lstlisting}
 
-  \end{lstlisting}
-
-  Outra vez, é possível usar versões dos teoremas projetados especificamente para conjuntos:
+  Novamente, é possível usar versões dos teoremas projetados especificamente para conjuntos:
 
   \begin{lstlisting}
-  import data.set
-  open set
-
-  variable {U : Type}
-  variables A B C : set U
-
   example : A \ B ⊆ A :=
   assume x,
   assume : x ∈ A \ B,
@@ -477,151 +418,9 @@ Ao longo deste capítulo, observamos que, embora na teoria axiomática dos conju
   assume x,
   assume : x ∈ A \ B,
   have x ∉ B, from not_mem_of_mem_diff this,
-  show x ∈ -B, from this
+  show x ∈ -B, from this \end{lstlisting}
 
-  \end{lstlisting}
-
-  $\qquad$
-
-  Como o Lean tem que desenvolver definições, ele pode acabar se confundindo às vezes. Por exemplo, na prova a seguir, se você subtituir a última linha por{\fontencoding{U}\fontfamily{cmtt}
-  \selectfont sorry}, o Lean terá problemas tentando entender que você quer que ele desenvolva o símbolo de subconjunto:
-
-  \begin{lstlisting}
-  variable  {U : Type}
-  variables A B : set U
-  example : A ∩ B ⊆ B ∩ A :=
-  assume x,
-  assume h : x ∈ A ∩ B,
-  have h₁ : x ∈ A, from and.left h,
-  have h₂ : x ∈ B, from and.right h,
-  and.intro h₂ h₁
-
-  \end{lstlisting}
-
-  $\qquad$
-
-  Uma solução alternativa é usar o comando{\fontencoding{U}\fontfamily{cmtt}
-  \selectfont show}. Na maioria das vezes, fornecer informações adicionais para o Lean pode ser útil. Outra solução é nomear um teorema, o que leva o Lean a usar um método um pouco diferente de processar a prova, corrigindo o problema como um efeito colateral de sorte.
-
-  \begin{lstlisting}
-  variable  {U : Type}
-  variables A B : set U
-
-  example : A ∩ B ⊆ B ∩ A :=
-  assume x,
-  assume h : x ∈ A ∩ B,
-  have h₁ : x ∈ A, from and.left h,
-  have h₂ : x ∈ B, from and.right h,
-  show x ∈ B ∩ A, from sorry
-
-  theorem my_example : A ∩ B ⊆ B ∩ A :=
-  assume x,
-  assume h : x ∈ A ∩ B,
-  have h₁ : x ∈ A, from and.left h,
-  have h₂ : x ∈ B, from and.right h,
-  sorry
-
-  \end{lstlisting}
-
-  \subsection{Identidades de conjuntos}
-
-  Nessa seção, falaremos brevemente sobre Identidades de conjuntos.
-
-  Iniciaremos com um exemplo simples: a regra da distributividade para conjuntos: $A \cup (B \cap C)$ = $(A \cup B) \cap (A \cup C)$. Uma maneira de prova-la é:
-
-
-  \begin{lstlisting}
-  import data.set
-  open set
-
-  variable {U : Type}
-  variables A B C : set U
-
-  example : A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C) :=
-  eq_of_subset_of_subset
-    (assume x,
-      assume h : x ∈ A ∪ (B ∩ C),
-      or.elim h
-        (assume h₁ : x ∈ A,
-          have h₂ : x ∈ A ∪ B, from or.inl h₁,
-          have h₃ : x ∈ A ∪ C, from or.inl h₁,
-          show x ∈ (A ∪ B) ∩ (A ∪ C), from and.intro h₂ h₃)
-        (assume h₁ : x ∈ B ∩ C,
-          have h₂ : x ∈ B, from and.left h₁,
-          have h₃ : x ∈ C, from and.right h₁,
-          have h₄ : x ∈ A ∪ B, from or.inr h₂,
-          have h₅ : x ∈ A ∪ C, from or.inr h₃,
-          show x ∈ (A ∪ B) ∩ (A ∪ C), from and.intro h₄ h₅))
-    (assume x,
-      assume h : x ∈ (A ∪ B) ∩ (A ∪ C),
-      have h₁ : x ∈ A ∪ B, from and.left h,
-      have h₂ : x ∈ A ∪ C, from and.right h,
-      or.elim h₁
-        (assume h₃ : x ∈ A,
-          show x ∈ A ∪ (B ∩ C), from or.inl h₃)
-        (assume h₃ : x ∈ B,
-        or.elim h₂
-          (assume h₄ : x ∈ A,
-          show x ∈ A ∪ (B ∩ C), from or.inl h₄)
-          (assume h₄ : x ∈ C,
-          have h₅ : x ∈ B ∩ C, from and.intro h₃ h₄, 
-          show x ∈ A ∪ (B ∩ C), from or.inr h₅)))
-  \end{lstlisting}
-
-  Outra identidade que usaremos como exemplo aqui é a Lei de Absorção:  
-
-  \begin{center}
-      $A \cup (A \cap B) = A$
-  \end{center}
-
-  Nos templates abaixo temos duas formas de escrever a prova: a que estamos utilizando ao longo deste capítulo; e em forma de lógica booleana, trocando o sinal de igual pelo de equivalência, ou ``se e somente se", ($\leftrightarrow$). (Você consegue reprentá-lo no Lean escrevendo: $\backslash$iff ou $\backslash$lr)
-
-  \begin{lstlisting}
-  import data.set
-  open set
-
-  theorem inter_subseq (H : Type)(P Q : set H) : P ∩ (P ∪ Q) = P :=
-  eq_of_subset_of_subset
-    (assume x,
-      assume h : x ∈ P ∩ (P ∪ Q),
-      show x ∈ P, from h.left)
-    (assume x,
-      assume h : x ∈ P,
-      have h₁ : x ∈ P ∪ Q, from or.inl h,
-      show x ∈ P ∩ (P ∪ Q), from and.intro h h₁)
-
-  variable  U : Type
-  variables A B : set U
-
-  example : A ∪ (A ∩ B) = A :=
-  calc
-    A ∪ (A ∩ B) = (A ∪ A) ∩ (A ∪ B) : by rw union_distrib_left
-            ... = A ∩ (A ∪ B)       : by rw union_self
-            ... = A                 : by rw inter_subseq
-  \end{lstlisting}
-
-  \begin{lstlisting}
-  import logic.basic
-  open classical
-
-  theorem left_of_and (P Q : Prop) : P ∧ (P ∨ Q) ↔ P :=
-  iff.intro
-    (assume h : P ∧ (P ∨ Q),
-    show P, from h.left)
-    (assume h : P,
-    have h₁ : P ∨ Q, from or.inl h,
-    show P ∧ (P ∨ Q), from and.intro h h₁)
-
-  variables A B : Prop
-
-  example : A ∨ (A ∧ B) ↔ A :=
-  calc
-    A ∨ (A ∧ B) ↔ (A ∨ A) ∧ (A ∨ B) : by rw or_and_distrib_left
-            ... ↔ A ∧ (A ∨ B)        : by rw or_self
-            ... ↔ A                  : by rw left_of_and
-  \end{lstlisting}
-
-  A função calc, já apresentada em outras frentes desse livro, aparece novamente, agora para conjuntos. A próxima seção explanará como aplicar calc em conjuntos no Lean e mostrará a diferença entre resolver questões da forma clássica e com calc.
+  %Acho que a partir desse ponto, não é necessário ter nesse capítulo. Talvez seja melhor deixar só pro capítulo de propriedades. Por isso, já copiei e colei no outro capítulo. Se ainda sim quiser falar sobre como lidar com sorry, pegue algum dos exemplos já citados acima. E se quiser colocar mais coisas teóricas ou explicativas, está totalmente livre. Mas deixe as propriedades/identidades pro capítulo delas.
 
 \section{Cálculo em Conjuntos}
 Ainda vai ter algo escrito aqui
@@ -689,6 +488,131 @@ $(ii)$ Provaremos que $ \forall x  (x \in \emptyset) \rightarrow \forall x (x \i
 
 Portanto, de $(i)$ e $(ii)$, concluímos que $ \forall x (x \in A \cap \overline A) \iff \forall x  (x \in \emptyset) $, ou seja, $A \cap \overline A$.
 
+Renan: Como o Lean tem que desenvolver definições, ele pode acabar se confundindo às vezes. Por exemplo, na prova a seguir, se você subtituir a última linha por{\fontencoding{U}\fontfamily{cmtt}
+\selectfont sorry}, o Lean terá problemas tentando entender que você quer que ele desenvolva o símbolo de subconjunto:
+
+\begin{lstlisting}
+example : A ∩ B ⊆ B ∩ A :=
+assume x,
+assume h : x ∈ A ∩ B,
+have h₁ : x ∈ A, from and.left h,
+have h₂ : x ∈ B, from and.right h,
+and.intro h₂ h₁ \end{lstlisting}
+
+Uma solução alternativa é usar o comando{\fontencoding{U}\fontfamily{cmtt}
+\selectfont show}. Na maioria das vezes, fornecer informações adicionais para o Lean pode ser útil. Outra solução é nomear um teorema, o que leva o Lean a usar um método um pouco diferente de processar a prova, corrigindo o problema como um efeito colateral de sorte.
+
+\begin{lstlisting}
+example : A ∩ B ⊆ B ∩ A :=
+assume x,
+assume h : x ∈ A ∩ B,
+have h₁ : x ∈ A, from and.left h,
+have h₂ : x ∈ B, from and.right h,
+show x ∈ B ∩ A, from sorry
+
+theorem my_example : A ∩ B ⊆ B ∩ A :=
+assume x,
+assume h : x ∈ A ∩ B,
+have h₁ : x ∈ A, from and.left h,
+have h₂ : x ∈ B, from and.right h,
+sorry \end{lstlisting}
+
+Parte de Identidade de Conjuntos: Nessa seção, falaremos brevemente sobre Identidades de conjuntos.
+
+Iniciaremos com um exemplo simples: a regra da distributividade para conjuntos: $A \cup (B \cap C)$ = $(A \cup B) \cap (A \cup C)$. Uma maneira de prova-la é:
+
+
+\begin{lstlisting}
+import data.set
+open set
+
+variable {U : Type}
+variables A B C : set U
+
+example : A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C) :=
+eq_of_subset_of_subset
+  (assume x,
+    assume h : x ∈ A ∪ (B ∩ C),
+    or.elim h
+      (assume h₁ : x ∈ A,
+        have h₂ : x ∈ A ∪ B, from or.inl h₁,
+        have h₃ : x ∈ A ∪ C, from or.inl h₁,
+        show x ∈ (A ∪ B) ∩ (A ∪ C), from and.intro h₂ h₃)
+      (assume h₁ : x ∈ B ∩ C,
+        have h₂ : x ∈ B, from and.left h₁,
+        have h₃ : x ∈ C, from and.right h₁,
+        have h₄ : x ∈ A ∪ B, from or.inr h₂,
+        have h₅ : x ∈ A ∪ C, from or.inr h₃,
+        show x ∈ (A ∪ B) ∩ (A ∪ C), from and.intro h₄ h₅))
+  (assume x,
+    assume h : x ∈ (A ∪ B) ∩ (A ∪ C),
+    have h₁ : x ∈ A ∪ B, from and.left h,
+    have h₂ : x ∈ A ∪ C, from and.right h,
+    or.elim h₁
+      (assume h₃ : x ∈ A,
+        show x ∈ A ∪ (B ∩ C), from or.inl h₃)
+      (assume h₃ : x ∈ B,
+      or.elim h₂
+        (assume h₄ : x ∈ A,
+        show x ∈ A ∪ (B ∩ C), from or.inl h₄)
+        (assume h₄ : x ∈ C,
+        have h₅ : x ∈ B ∩ C, from and.intro h₃ h₄, 
+        show x ∈ A ∪ (B ∩ C), from or.inr h₅)))
+\end{lstlisting}
+
+Outra identidade que usaremos como exemplo aqui é a Lei de Absorção:  
+
+\begin{center}
+    $A \cup (A \cap B) = A$
+\end{center}
+
+Nos templates abaixo temos duas formas de escrever a prova: a que estamos utilizando ao longo deste capítulo; e em forma de lógica booleana, trocando o sinal de igual pelo de equivalência, ou ``se e somente se", ($\leftrightarrow$). (Você consegue reprentá-lo no Lean escrevendo: $\backslash$iff ou $\backslash$lr)
+
+\begin{lstlisting}
+import data.set
+open set
+
+theorem inter_subseq (H : Type)(P Q : set H) : P ∩ (P ∪ Q) = P :=
+eq_of_subset_of_subset
+  (assume x,
+    assume h : x ∈ P ∩ (P ∪ Q),
+    show x ∈ P, from h.left)
+  (assume x,
+    assume h : x ∈ P,
+    have h₁ : x ∈ P ∪ Q, from or.inl h,
+    show x ∈ P ∩ (P ∪ Q), from and.intro h h₁)
+
+variable  U : Type
+variables A B : set U
+
+example : A ∪ (A ∩ B) = A :=
+calc
+  A ∪ (A ∩ B) = (A ∪ A) ∩ (A ∪ B) : by rw union_distrib_left
+          ... = A ∩ (A ∪ B)       : by rw union_self
+          ... = A                 : by rw inter_subseq
+\end{lstlisting}
+
+\begin{lstlisting}
+import logic.basic
+open classical
+
+theorem left_of_and (P Q : Prop) : P ∧ (P ∨ Q) ↔ P :=
+iff.intro
+  (assume h : P ∧ (P ∨ Q),
+  show P, from h.left)
+  (assume h : P,
+  have h₁ : P ∨ Q, from or.inl h,
+  show P ∧ (P ∨ Q), from and.intro h h₁)
+
+variables A B : Prop
+
+example : A ∨ (A ∧ B) ↔ A :=
+calc
+  A ∨ (A ∧ B) ↔ (A ∨ A) ∧ (A ∨ B) : by rw or_and_distrib_left
+          ... ↔ A ∧ (A ∨ B)        : by rw or_self
+          ... ↔ A                  : by rw left_of_and
+\end{lstlisting}
+
   \subsection{Básicas}
   %Pode ser separada em: Básicas, Sobre o conjunto vazio, Sobre o Universo
   Ainda vai ter algo escrito aqui
@@ -703,6 +627,9 @@ Portanto, de $(i)$ e $(ii)$, concluímos que $ \forall x (x \in A \cap \overline
   Ainda vai ter algo escrito aqui
 
   \subsection{Complementar/Lei de Demorgan}
+  Ainda vai ter algo escrito aqui
+
+  \subsection{Lei da Absorção}
   Ainda vai ter algo escrito aqui
 
   \subsection{Extras}
