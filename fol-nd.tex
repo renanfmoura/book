@@ -1,32 +1,33 @@
 \section{Dedução Natural}
-Como visto na seção anterior, devemos estabelecer as regras de dedução para os quantificadores e para a igualdade. Listamos elas inicialmente:
+Como visto na seção anterior, devemos estabelecer as regras de inclusão e exclusão
+de dedução para os quantificadores e para a igualdade. Listamos elas inicialmente:
 \newline \textbf{Quantificador universal:}
  \newline 
  \begin{center}
+ \begin{bprooftree}
     \AxiomC{$A(y)$}
     \RightLabel{\scriptsize $\forall I$}
     \UnaryInfC{$\forall x A(x)$}
-    \DisplayProof
-\end{center}
-    Para inserir o quantificador universal devemos ter que a variável $y$ não deve estar atrelada em nenhuma hipótese, isto é, em todas as hipóteses não canceladas ela não pode ser livre. 
-\begin{center}
-
-   
+\end{bprooftree}
+\begin{bprooftree}
     \AxiomC{$\forall x A(x)$}
     \RightLabel{\scriptsize $\forall E$}
-    \UnaryInfC{$A(t)$}
-    \DisplayProof   
- \end{center}
+    \UnaryInfC{$A(t)$} 
+\end{bprooftree}
+\end{center}
 
+Para inserir o quantificador universal devemos ter que a variável $y$ não deve estar 
+atrelada em nenhuma hipótese, isto é, em todas as hipóteses não canceladasela não pode ser livre. 
+\newline \textbf{Quantificador existencial:}
 
- \textbf{Quantificador existencial:}
  \begin{center}
-     \AxiomC{$A(t)$}
-     \RightLabel{\scriptsize $\exists I$}
-     \UnaryInfC{$\exists x A(x)$}
-     \DisplayProof
-
-     \AxiomC{$\exists x A(x)$}
+    \begin{bprooftree}
+        \AxiomC{$A(t)$}
+        \RightLabel{\scriptsize $\exists I$}
+        \UnaryInfC{$\exists x A(x)$}
+    \end{bprooftree}
+    \begin{bprooftree}
+        \AxiomC{$\exists x A(x)$}
         \AxiomC{}
         \UnaryInfC{$A(t)$}
         \alwaysNoLine
@@ -35,44 +36,52 @@ Como visto na seção anterior, devemos estabelecer as regras de dedução para 
         \alwaysSingleLine
         \RightLabel{\scriptsize $\exists E$}
         \BinaryInfC{$B$}
-     \DisplayProof
-\end{center}
+    \end{bprooftree}
+ \end{center}
 
-Para retirarmmos o quantificador existencial, a variável $t$ não pode estar livre em $B$, isto é, ela não deve estar livre em qualquer hipótese não cancelada.
+Para retirarmmos o quantificador existencial, a variável $t$ não pode estar livre em $B$, isto é, ela não 
+deve estar livre em qualquer hipótese não cancelada.
 
 \textbf{Igualdade:}
 \begin{center}
-    \AxiomC{}
-    \RightLabel{\scriptsize refl}
-    \UnaryInfC{$t=t$}
-    \DisplayProof
-
-    \AxiomC{$t=s$}
-    \RightLabel{\scriptsize sim}
-    \UnaryInfC{$s=t$}
-    \DisplayProof
-
-    \AxiomC{$t=s$}
-    \AxiomC{$s=v$}
-    \RightLabel{\scriptsize trans}
-    \BinaryInfC{$t=v$}
-    \DisplayProof
-
-    \AxiomC{$t=s$}
-    \RightLabel{\scriptsize subs}
-    \UnaryInfC{$r(t) = r(s)$}
-    \DisplayProof
-
-    \AxiomC{$t=s$}
-    \AxiomC{$P(t)$}
-    \RightLabel{\scriptsize subs}
-    \BinaryInfC{$P(s)$}
-    \DisplayProof
+    \begin{bprooftree}
+        \AxiomC{}
+        \RightLabel{\scriptsize refl}
+        \UnaryInfC{$t=t$}
+    \end{bprooftree}
+    \begin{bprooftree}
+        \AxiomC{$t=s$}
+        \RightLabel{\scriptsize sim}
+        \UnaryInfC{$s=t$} 
+    \end{bprooftree}
+\end{center}
+\begin{center}
+    \begin{bprooftree}
+        \AxiomC{$t=s$}
+        \AxiomC{$s=v$}
+        \RightLabel{\scriptsize trans}
+        \BinaryInfC{$t=v$}  
+    \end{bprooftree}
+    \begin{bprooftree}
+        \AxiomC{$t=s$}
+        \RightLabel{\scriptsize subs}
+        \UnaryInfC{$r(t) = r(s)$}
+    \end{bprooftree}
+    \begin{bprooftree}
+        \AxiomC{$t=s$}
+        \AxiomC{$P(t)$}
+        \RightLabel{\scriptsize subs}
+        \BinaryInfC{$P(s)$}
+    \end{bprooftree}
 \end{center}
 Iremos passar por cada um destas regras para apresentá-las com o auxílio de exemplos.
 
 \subsection{Quantificador universal}
-Como primeiro exemplo segue abaixo uma dedução natural de $(\forall x P(x) \to \forall x Q(x)) \to \forall x (P ( x) \to Q (x))$. Note que apesar de parecer uma implicação de duas fórmulas idênticas, na premissa a propriedade $P$ recebe uma variável e a propriedade $Q$ pode receber outra variável, enquanto que na conclusão o valor que $x$ assume é o mesmo para $P$ e $Q$.
+Como primeiro exemplo segue abaixo uma dedução natural de 
+$(\forall x P(x) \to \forall x Q(x)) \to \forall x (P ( x) \to Q (x))$. 
+Note que apesar de parecer uma implicação de duas fórmulas idênticas, na premissa a propriedade
+ $P$ recebe uma variável e a propriedade $Q$ pode receber outra variável, enquanto que na conclusão
+  o valor que $x$ assume é o mesmo para $P$ e $Q$.
 
 \begin{center}
     \AxiomC{}
@@ -89,39 +98,291 @@ Como primeiro exemplo segue abaixo uma dedução natural de $(\forall x P(x) \to
     \DisplayProof
 \end{center}
 
-O primeiro passo da demonstração será a exclusão da implicação (a implicação principal da fórmula), assumindo $\forall x P(x) \to \forall x Q(x)$ como nossa hipótese. Aplicamos uma primeira exclusão do universal em $\forall x P(x)$ e novamente aplicamos a exclusão do universal em $\forall x Q(x)$. Note que ao definirmos a variável com o mesmo nome $t$ em ambas as exclusões do universal foi o que permitiu inserir um universal que englobe ambas variáveis, que é o passa seguinte.
-\newline Vamos para um outro exemplo, utilizando as hipóteses $\forall x (\neg Q(x) \to R(x))$ e $\forall x(P(x) \land \neg Q(x))$ provaremos $\forall x R(x)$:
+O primeiro passo será a exclusão da implicação (a implicação principal da fórmula), 
+assumindo $\forall x P(x) \to \forall x Q(x)$ como nossa hipótese. Aplicamos uma primeira exclusão do
+ universal em $\forall x P(x)$ e novamente aplicamos a exclusão do universal em $\forall x Q(x)$. Note que 
+ ao definirmos a variável com o mesmo nome $t$ em ambas as exclusões do universal foi o que permitiu inserir 
+ um universal que englobe ambas variáveis, que é o passa seguinte.
+\newline Vamos para um outro exemplo, utilizando as hipóteses 
+$\forall x (\neg Q(x) \to R(x))$ e $\forall x(P(x) \land \neg Q(x))$ provaremos $\forall x R(x)$:
 
 \begin{center}
     \AxiomC{$\forall x(P(x) \land \neg Q(x))$}
-    \RightLabel{\scriptsize $\forall E_1$}
+    \RightLabel{\scriptsize $\forall E$}
     \UnaryInfC{$P(t) \land \neg Q(t)$}
-    \RightLabel{\scriptsize $\land E_2$}
     \UnaryInfC{$\neg Q(t)$}
     \AxiomC{$\forall x (\neg Q(x) \to R(x))$}
-    \RightLabel{\scriptsize $\forall E_3$}
+    \RightLabel{\scriptsize $\forall E$}
     \UnaryInfC{$\neg Q(t) \to R(t)$}
-    \RightLabel{\scriptsize $\to E_4$}
     \BinaryInfC{$R(t)$}
-    \RightLabel{\scriptsize $\forall I_5$}
+    \RightLabel{\scriptsize $\forall I$}
     \UnaryInfC{$\forall x R(x)$}
     \DisplayProof
 \end{center}
-Vamos inicialmente utilizar de nossas hipóteses, em $\forall E_1$ nós executamos a primeira exclusão do universal, utilizando a variável $t$ e em seguida executamos a exclusão do $\land$ visto que não é necessário o $P(t)$ na dedução. Do outro lado executamos mais uma exclusão do universal em $\forall E_3$ e atribuímos novamente a mesma variável $t$. Com $\neg Q(t)$ e $\neg Q(t) \to R(t)$ podemos realizar uma exclusão da implicação em $\to E_4$ e por fim incluímos o universal em $\forall I_5$.
+Vamos inicialmente utilizar de nossas hipóteses, em $\forall x(P(x) \land \neg Q(x))$ nós executamos a primeira 
+exclusão do universal, utilizando a variável $t$ e em seguida executamos a exclusão do $\land$ 
+visto que não é necessário o $P(t)$ na dedução. Do outro lado executamos mais uma exclusão do universal
+ em $\forall x (\neg Q(x) \to R(x))$ e atribuímos novamente a mesma variável $t$. Com $\neg Q(t)$ e $\neg Q(t) \to R(t)$ 
+ podemos realizar uma exclusão da implicaçã e por fim incluímos o universal em $\forall 
+ I$.
 
 \subsection{Quantificador existencial}
-Utilizando as propriedades $homem$, $mortal$, $socrates$ e as premissas $\forall x (homem(x) \to mortal(x)$ e $\exists x(socrates(x) \land homem(x))$ para provar $\exists x socrates(x) \land mortal(x)$.
+Lembrando a regra de exclusão do existencial, o que fazemos é que com $\exists x A(x)$, supomos um $y$
+arbitrário que satisfaça $A(y)$, a partir desta premissa chegamos até $B$, uma fórmula que não contém
+$y$ ou qualquer outra variável aberta em alguma hipótese não cancelada, e podemos concluir $B$.
+\newline Já a regra da inclusão do existencial, se uma propriedade vale para um $y$ arbitrário, então
+existe uma váriavel em que ela é válida.
+\newline Iniciemos com uma demosntração simples de que se existe $x$ que satisfaça $A$ e $B$, então 
+existe $x$ que satisfaça $A$.
+
 \begin{center}
-    \AxiomC{$\forall x (homem (x) \to mortal(x))$}
-    \UnaryInfC{$homem(t) \to mortal(t)$}
-    \AxiomC{$\exists x (socrates(x) \land homem(x))$}
-    \UnaryInfC{$ socrates(t) \land homem(t)$}
-    \UnaryInfC{$homem(t)$}
-    \BinaryInfC{$mortal(t)$}
-    \AxiomC{$\exists x (socrates(x) \land homem(x))$}
-    \UnaryInfC{$socrates(t) \land homem(t)$}
-    \UnaryInfC{$socrates(t)$}
-    \BinaryInfC{$mortal(t) \land socrates(t)$}
-    \UnaryInfC{$\exists x (mortal(x) \land socrates(x))$}
+    \AxiomC{}
+    \RightLabel{\scriptsize 1}
+    \UnaryInfC{$\exists x (A(x) \land B(x))$}
+    \AxiomC{}
+    \RightLabel{\scriptsize 2}
+    \UnaryInfC{$A(t) \land B(t)$}
+    \UnaryInfC{$A(t)$}
+    \UnaryInfC{$\exists x A(x)$}
+    \RightLabel{\scriptsize 2}
+    \BinaryInfC{$\exists x A(x)$}
+    \RightLabel{\scriptsize 1}
+    \UnaryInfC{$\exists x (A(x) \land B(x)) \to \exists x A(x)$}
     \DisplayProof
 \end{center}
+A primeira etapa foi a retirada da implicação, passando $\exists x (A(x) \land B(x))$ como uma
+hipótese, e utilizando ela aplicamos a regra de exclusão do existencial, criando uma variável
+$t$ arbitrária em que $A(x) \land B(x)$ sejá válido, com isso podemos concluir $A(t)$, note que em $2$
+não podemos concluir $A(t)$, pois a variável ainda está aberta em $A(t)\land B(t)$, por isso inserimos
+o existencial e concluímos $\exists x A(x)$, resultado que queríamos obter.
+\newline O próximo exemplo relaciona os quantificadores universal e existencial, se para todo $x$ $A$
+é válido, então existe algum $x$ que $A$ sejá válido.
+\begin{center}
+    \AxiomC{$\forall x A(x)$}
+    \UnaryInfC{$A(t)$}
+    \UnaryInfC{$\exists x A(x)$}
+    \DisplayProof
+\end{center}
+Note que se $A(x)$ vale para todo $x$, também vale para um $t$ específico e no passo seguinte poderíamos
+tanto utilizar a regra da inclusão do universal ou do existencial. Outro comentário relevante é que não
+necessariamente precisávamos concluir o existencial utilizando a mesma variável $x$.
+\newline Vamos provar mais uma relação entre os quantificadores, iremos que provar que se para todo $x$ 
+não vale $A$, então não existe $x$ tal que $A$ valha:
+\begin{center}
+    \AxiomC{}
+    \RightLabel{\scriptsize 2}
+    \UnaryInfC{$\exists x A(x)$}
+    \AxiomC{}
+    \RightLabel{\scriptsize 3}
+    \UnaryInfC{$A(t)$}
+    \AxiomC{}
+    \RightLabel{\scriptsize 1}
+    \UnaryInfC{$\forall x \neg A(x)$}
+    \UnaryInfC{$ \neg A(t)$}
+    \BinaryInfC{$\bot $}
+    \RightLabel{\scriptsize 3}
+    \BinaryInfC{$\bot$}
+    \RightLabel{\scriptsize 2}
+    \UnaryInfC{$\neg \exists x A(x)$}
+    \RightLabel{\scriptsize 1}
+    \UnaryInfC{$\forall x \neg A(x) \to \neg \exists x A(x)$}
+    \DisplayProof
+\end{center}
+Para a nossa dedução a primeira etapa foi desmontar a implicação, passando $\forall x \neg A(x)$ como
+uma de nossas hipóteses, em seguida, como temos uma negação devemos chegar até ao falso. Utilizamos 
+$\exists x A(x)$ como mais uma de nossas hipóteses e aplicamos a regra de exclusão do existencial,
+dessa forma obtemos no mesmo ramo $A(t)$ e $\neg A(t)$, obtendo a contradição que estávamos procurando.
+\subsection{Igualdade}
+TO DO 
+\subsection{Exercícios}
+TO DO
+\subsection{Dedução natural no LEAN}
+No Lean a dedução ocorre de forma similar a dedução em primeira ordem, apenas devemos utilizar de novos símbolos e das 
+regras de exclusão e inclusão dos quantificadores. Os símbolos $\exists $ e $\forall $ são escritos no Lean como \textbackslash exist 
+e  \textbackslash all. Para a regra de exclusão do universal apenas passamos para uma proposição $\forall x A(x)$ uma letra,
+por exemplo $t$, para termos $A(t)$. Para a inclusão do universal, devemos assumir uma letra, por exemplo $t$, utilizando o
+"assume" e com esta letra livre de qualquer hipótese provamos $A(t)$, dessa forma o Lean é capaz de inferir $\forall x A(x)$.
+\newline Vamos utilizando o Lean provar o nosso primeiro exemplo do quantificador universal, $\forall xP(x) \to \forall x Q(x) \to \forall x(P(x) \land Q(x))$:
+\begin{lstlisting}
+ variable U : Type
+ variables P Q : Type $\to$ Prop
+
+ example : ($\forall$x, P x) $\to$ ($\forall$x, Q x) $\to \forall$x P x $\land$ Q x :=  
+ assume h$_1$ : $\forall$x, P x,
+ assume h$_2$ : $\forall$x, Q x,
+ assume t,
+ have h$_3$ : P t, from h$_1$ t,
+ have h$_4$ : Q t, from h$_2$ t,
+ show P t $\land$ Q t, from and.intro h$_3$ h$_4$ 
+\end{lstlisting}
+Note que na linha 4 utilizamos da inclusão do universal, assumimos um $t$ e desejamos provar $P(t) \land Q(t)$ 
+sem que $t$ possua qualquer restrição e nas linhas 5 e 6 utilizamos a exclusão do universal, temos fórmulas do
+tipo $\forall x P(x)$ e passamos a letra $t$, obtendo $P(t)$. Além disso note nesse exemplo a importância da utilização
+dos parenteses para delimitar a ação do quantificador, quando definimos o exemplo, caso não tivessemos colocado
+o parenteses em  $(\forall x, P x)$, o primeiro quantificador $\forall x$ seria interpretado como se valesse para toda
+a expressão, incluindo as duas implicações.
+\newline Vamos também provar o segundo exemplo em Lean:
+\begin{lstlisting}
+variable U : Type
+variables P Q R : U $\to$ Prop
+
+example (h$_1$ : $\forall$ x, P x $\land \neg$ Q x) (h$_2$ : $\forall$ x, $\neg$ Q x $\to$ R x) :
+$\forall$ x, R x :=
+assume t,
+have h$_3$ : P t $\land$ $\neg$ Q t, from h$_1$ t,
+have h$_4$ : $\neg$ Q t $\to$ R t, from h$_2$ t,
+show R t, from h$_4$ h$_3$.right
+\end{lstlisting}
+Note que neste simples exemplo, apesar de possuirmos fórmulas maiores, apenas realizamos simples regras de inclusão e exclusão
+do universal.
+\newline Para as regras do existencial, na exclusão utilizamos "exists.elim" seguida por uma proposição do tipo $\forall x A(x)$,
+para provarmos $B$, devemos provar $ A y \to B$, ou seja, assumimos um $y$ e $A y$ e chegamos até $B$, concluindo assim a exclusão
+do existencial. Para a inclusão do existencial utilizamos "exists.intro", devemos passar uma letra, por exemplo $t$, e uma prova
+de que $A(t)$ vale.
+\newline Vamos provar o nosso primeiro exemplo existencial com o Lean, $\exists x (A(x) \land B(x)) \to \exists x A(x)$:
+\begin{lstlisting}
+variable U : Type
+variables A B : U $\to$ Prop
+
+example : ($\exists$x, A x $\land$ B x) $\to \exists$x, A x :=
+assume h$_1$ : $\exists$ x, A x $\land$ B x,
+exists.elim h$_1$
+    (assume t (h$_2$ : A t $\land$ B t)
+        show $\exists$ x, A x, from exists.intro t h$_2$.left) 
+\end{lstlisting}
+\subsection{Exercícios}
+\textbf{1.}Resolve as seguintes deduções naturais:
+\newline \textbf{a)} $\forall x A(x) \to \neg \exists x \neg A(x)$.
+\newline \textbf{SOLUÇÃO:}
+
+\begin{lstlisting}
+variable U : Type
+variables A : U → Prop
+    
+    
+--term mode
+example : (∀ x, A x) → (¬ ∃ x, ¬ A x) :=
+assume h1 : ∀ x, A x,
+assume h2 : ∃ x, ¬ A x, show false, from
+    (exists.elim h2
+        (assume t (h3 : ¬ P t), 
+            have h4 : A t, from h1 t, h3 h4))
+    
+--tatics
+example : (∀ x, A x) → (¬ ∃ x, ¬ A x) :=
+begin
+intros h1,
+intro h2,
+apply exists.elim h2,
+intro t,
+intro h3,
+exact h3 (h1 t)
+end 
+\end{lstlisting}
+\textbf{b)} $\exists x \neg A (x) \to \neg \forall x A(x)$.
+\newline \textbf{SOLUÇÃO:} 
+\begin{lstlisting}
+variable U : Type
+variable A : U → Prop
+
+--term mode
+example : (∃ x, ¬ A x) → ¬ ∀ x, A x :=
+assume h1 : ∃ x, ¬ A x,
+assume h2 : ∀ x, A x, 
+show false, from 
+    (exists.elim h1
+        (assume t (h3 : ¬ A t),
+            have h4 : A t, from h2 t,
+            h3 h4))
+        
+--tatics
+
+example : (∃ x, ¬ A x) → ¬ ∀ x, A x :=
+begin
+intro h1,
+intro h2,
+apply exists.elim h1,
+intro t,
+intro h3,
+exact h3 (h2 t)
+end
+\end{lstlisting}
+\textbf{c)}
+\textbf{d)}
+\textbf{e)}
+\newline \textbf{2.} Retornando ao capítulo anterior com o exercício de Ana, Cláudia e Maria e seus três vestidos
+agora podemos resolver o problema utilizando de proposição de primeira ordem. Na situação, temos: 
+\newline Três irmãs - Ana, Maria e Cláudia - foram a uma festa com vestidos de
+cores diferentes. Uma vestia azul, a outra branco e a Terceira
+preto. Chegando à festa, o anfitrião perguntou quem era cada uma
+delas. As respostas foram:
+\newline - A de azul respondeu: “Ana é a que está de branco”
+\newline - A de branco falou: “Eu sou Maria”
+\newline - A de preto disse:  “Cláudia é quem está de branco”
+\newline O anfitrião foi capaz de identificar corretamente quem era cada pessoa
+considerando que:
+\newline - Ana sempre diz a verdade
+\newline - Maria às vezes diz a verdade
+\newline - Cláudia nunca diz a verdade
+\newline Pensando um pouco sobre o problema, pode-se concluir que a Ana estava
+com o vestido preto, a Cláudia com o branco e a Maria com o
+azul.  
+\newline \textbf{a)} Escreva as fórmulas de primeira ordem necessárias para o problema.
+\newline \textbf{SOLUÇÃO:}
+\begin{lstlisting}
+section 
+variable {pessoa : Type} 
+variable {cor : Type}
+variables {Ana Maria Claudia : pessoa}
+variables {preto branco azul : cor}
+variable {veste : pessoa → cor → Prop}
+
+-- Restricoes:
+
+-- Se uma usa uma cor, as outras nao podem usar essa cor
+variable r1 : ∀c, ∀x, ∀y, (veste x c) ∧ ¬(x = y) → ¬(veste y c)
+-- Se uma pessoa usa tal cor, nao pode usar as outras cores
+variable r2 : ∀x, ∀c, ∀d, (veste x c) ∧ ¬(c = d) → ¬(veste x d)
+
+-- Raciocinios basicos:
+
+--Se Ana for a de azul, ela esta de branco
+variable h1 : (veste Ana azul) → (veste Ana branco)
+--Se Ana for a de branco, entao Maria esta de branco
+variable h2 : (veste Ana branco) → (veste Maria branco)
+--Se ana for de preto, entao Claudia esta de branco
+variable h3 : (veste Ana preto) → (veste Claudia branco)
+--Se Ana não usa azul e nem branco, ela esta de preto
+variable h4 : ¬ (veste Ana azul) ∧ ¬ (veste Ana branco)  →  (veste Ana preto)
+--Se Ana veste preto e Claudia veste branco, entao Maria esta de azul
+variable h5 : (veste Ana preto) ∧ (veste Claudia branco) →  (veste Maria azul)
+
+variable d1 : ¬ (azul = branco)
+variable d2 : ¬ (Ana = Maria)
+-- prova de que Ana veste preto
+lemma Ana_p : (veste Ana preto) :=
+have n1 : ¬ (veste Ana azul), from 
+assume m1 : veste Ana azul, show false, from 
+    have q1 : veste Ana branco, from h1 m1,
+    have q2 : ¬ veste Ana branco, from (r2 Ana azul branco (
+        and.intro m1 d1)),
+q2 q1,
+have n2 : ¬ (veste Ana branco), from
+assume m2 : veste Ana branco, show false, from
+    have q1 : veste Maria branco, from h2 m2,
+    have q2 : ¬ veste Maria branco, from (r1 branco Ana Maria (and.intro m2 d2)),
+q2 q1,
+show veste Ana preto, from h4 (and.intro n1 n2)
+
+theorem solution : (veste Ana preto) ∧ (veste Claudia branco) ∧ (veste Maria azul) :=
+have n1 : veste Ana preto, from (Ana_p r1 r2 h1 h2 h4 d1 d2),
+have n2 : veste Claudia branco, from h3 (Ana_p r1 r2 h1 h2 h4 d1 d2),
+have n3 : veste Maria azul, from h5 (and.intro n1 n2),
+and.intro n1 (and.intro n2 n3)
+
+end
+\end{lstlisting}
+\textbf{SOLUÇÃO COM TÁTICAS}:
+\begin{lstlisting}
+    
+\end{lstlisting}

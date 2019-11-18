@@ -1,5 +1,14 @@
+\newenvironment{bprooftree}
+{\leavevmode\hbox\bgroup}
+{\DisplayProof\egroup}
+  
 \chapter{Lógica de Primeira Ordem}
+    
+    Até agora, vimos Lógica Proposicional, em que variáveis proposicionais podem ser valoradas como verdadeiras ou falsas. Esse sistema lógico, porém, contém limitações. Considere, por exemplo, a afirmação de que todo natural é maior do que ou igual a zero.
+    Ou a afirmação de que existe número natural que é primo e é par. Como representar isso em Lógica Propocional? Precisamos de um sistema lógico que saiba lidar com objetos e suas propriedades e relações.
 
-\input{fol-syntax}
-\input{fol-semantics}
-\input{fol-nd}
+    Talvez esses exemplos não tenham demonstrado a necessidade de tal sistema lógico. Porém, acredite: ao final deste capítulo, essa necessidade ficará evidente.
+
+    \input{fol-syntax}
+    \input{fol-semantics}
+    \input{fol-nd}
