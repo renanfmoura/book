@@ -475,6 +475,42 @@ F          & V                            \\ \hline
 \end{tabular}
 \end{table}
 
+Saber negar definições e saber negar sentenças é importante, pois várias ideias matemáticas advêm dessas negações. Abaixo temos as tabelas-verdade para a negação de sentenças conjuntivas e disjuntivas:
+
+\begin{table}[htb]
+\centering
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+\textbf{P} & \textbf{Q} & \textbf{$\neg$ (P $\lor$ Q)} & \textbf{$\neg $ P} & \textbf{$\neg$ Q} & \textbf{$\neg$ P $\land \neg$ Q}
+\\ \hline
+V          & V          & F     &F      &F  &F    \\ \hline
+V          & F          & F     &F      &V  &F   \\ \hline
+F          & V          & F     &V      &F  &F    \\ \hline
+F          & F          & V     &V      &V  &V    \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[htb]
+\centering
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+\textbf{P} & \textbf{Q} & \textbf{$\neg$ (P $\land$ Q)} & \textbf{$\neg $ P} & \textbf{$\neg$ Q} & \textbf{$\neg$ P $\land \neg$ Q}
+\\ \hline
+V          & V          & F     &F      &F  &F    \\ \hline
+V          & F          & V     &F      &V  &V   \\ \hline
+F          & V          & V     &V      &F  &V    \\ \hline
+F          & F          & V     &V      &V  &V    \\ \hline
+
+\end{tabular}
+\end{table}
+
+Ao observar as tabelas anteriores, você pode constatar que:
+
+$\neg$ (P $\lor$ Q) $\equiv \neg$ P $\land \neg$ Q e $\neg$ (P $\land$ Q ) $\equiv \neg $P $\lor \neg$ Q    
+
+\bigbreak
+As equivalências acima são chamadas de Leis de De Morgan, e significam que a negação da disjunção (de duas sentenças) é a conjunção das negações e a negação da conjunção (de duas sentenças) é a disjunção das negações (destas sentenças). (Nos exercícios pedimos que você prove essas identidades). 
+
 Ao utilizarmos o Lean, as regras de inferência de eliminação e introdução da negação podem ser obtidas através dos comandos a seguir: 
 
 \begin{lstlisting} 
@@ -1465,10 +1501,35 @@ or.elim h22
 and.intro h24 h21
 \end{lstlisting}
 \bigbreak
-\item Escolha um grafo e prove que há um caminho hamiltoniano nele. 
+\item Escolha um grafo qualquer pequeno, e usando a codificação em lógica proposicional, tente provar no Lean que um dado caminho é mesmo um caminho hamiltoniano no grafo.
 
+Comentários:
+
+Um caminho hamiltoniano de um grafo é um caminho que visita cada nó do grafo exatamente uma vez.
+
+\textbf{xij} significa "que a in-ésima posição no caminho hamiltoniano é ocupado pelo nó j".
+Dado um grafo G, podemos construir um CNF R(G), de modo que R(G) é satisfatível se, e somente se, G possui um caminho hamiltoniano.
+
+As condições de R(G) são:
+\begin{enumerate}
+    \item Todos os nós j devem aparecer no caminho. 
+    \begin{itemize}
+    \item x1j $\lor$ x2j $\lor$ . . . $\lor$ xnj para cada j.
+    \end{itemize}
+    \item Nenhum nó j aparece duas vezes no caminho
+    \begin{itemize}
+    \item $\neg$ xij $\lor$ $\neg$ xkj para todos os i,j,k tais que i $\neq $ k.
+    \end{itemize}
+    \item Cada posição i no caminho deve estar ocupada.
+    \begin{itemize}
+    \item xi1 $\lor$ xi2 $\lor$ . . . $\lor$ xin para cada i.
+    \end{itemize}
+    \item Nenhum dos dois nós j e k ocupam  a mesma posição no caminho, onde j $\neq $ k.
+    \item Nós i e j não adjacentes não podem ser adjacentes no caminho. 
+\end{enumerate}
+
+\bigbreak
 Possível gabarito:
-
 \begin{lstlisting}
 open classical 
 variables {x11 x12 x13 x14 x21 x22 x23 x24 x31 x32 x33 x34 x41 x42 x43 x44 : Prop}
@@ -1482,10 +1543,7 @@ variables {x11 x12 x13 x14 x21 x22 x23 x24 x31 x32 x33 x34 x41 x42 x43 x44 : Pro
 
 --- REGRA 1 E 3 ---
 lemma rule_1and3 (h1: x11 ∧ x22 ∧ x33 ∧ x44):
-(((x11 ∨ x21 ∨ x31 ∨ x41)∧ 
-(x44 ∨ x14 ∨ x24 ∨ x34))∧
-(x33 ∨ x13 ∨ x23 ∨ x43))∧
-(x22 ∨ x12 ∨ x32 ∨ x42)
+(((x11 ∨ x21 ∨ x31 ∨ x41)∧ (x44 ∨ x14 ∨ x24 ∨ x34))∧ (x33 ∨ x13 ∨ x23 ∨ x43))∧ (x22 ∨ x12 ∨ x32 ∨ x42)
   :=
   show 
   (((x11 ∨ x21 ∨ x31 ∨ x41)∧ 
