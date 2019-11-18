@@ -10,7 +10,7 @@
             $x$ natural é par ou ímpar.            
         \end{center}
 
-        Nosso domínio, neste caso, são os números naturais ($\mathbb{N}$). Dizemos que \textit{par} é "algo" que recebe um número e retorna $V$ ou $F$. Chamamos isso de \textbf{predicado}. Sendo assim, podemos escrever:
+        Nosso domínio, neste caso, são os números naturais ($\mathbb{N}$). Dizemos que \textit{par} é ``algo"\space que recebe um número e retorna $V$ ou $F$. Chamamos isso de \textbf{predicado}. Sendo assim, podemos escrever:
 
         \begin{center}
             $par(x) \lor impar(x)$.
@@ -36,7 +36,7 @@
             \item $33+44$
         \end{itemize}
 
-        Observe que o símbolo para a função de adição está "infixo"; poderíamos ter representado como $+(33, 44)$ ou $adicao(33, 44)$.
+        Observe que o símbolo para a função de adição está ``infixo"; poderíamos ter representado como $+(33, 44)$ ou $adicao(33, 44)$.
         
         Expressões que retornam $V$ ou $F$ são chamadas \textbf{fórmulas}:
 
@@ -49,16 +49,15 @@
         O Lean é muito eficiente em expressar Lógica de Primeira Ordem. Vejamos nosso exemplo:
 
         \begin{lstlisting}
-    constant U : Type
+constant U : Type
+constant zero : U
+constant par : U → Prop
+constant primo : U → Prop
+constant igual : U → U → Prop
+constant adicao : U → U → U
+\end{lstlisting}
 
-    constant zero : U
-    constant par : U → Prop
-    constant primo : U → Prop
-    constant igual : U → U → Prop
-    constant adicao : U → U → U
-        \end{lstlisting}
-
-        Pelo fato de que o Lean é baseado em \textit{Teoria dos Tipos}, declaramos um novo tipo \lstinline{U}. Podemos intuitivamente considerá-lo como "universo" ou "domínio". Por exemplo, o conjunto dos naturais.
+        Pelo fato de que o Lean é baseado em \textit{Teoria dos Tipos}, declaramos um novo tipo \lstinline{U}. Podemos intuitivamente considerá-lo como ``universo"\space ou ``domínio". Por exemplo, o conjunto dos naturais.
 
         Foi declarado um objeto chamado \lstinline{zero} do tipo \lstinline{U} (nossa analogia com o zero natural).
         \lstinline{par} é um predicado, pois toma um elemento do tipo \lstinline{U} e retona um elemento do tipo proposição (\lstinline{Prop}).
@@ -66,40 +65,341 @@
         \lstinline{adicao} é uma função que toma dois elementos do tipo \lstinline{U} e retorna outro do mesmo tipo. Ora, podemos constatar:
 
         \begin{lstlisting}
-    #check par zero
-    #check adicao zero zero
-    #check par (adicao zero zero)
-        \end{lstlisting}
+#check par zero
+#check adicao zero zero
+#check par (adicao zero zero)
+\end{lstlisting}
 
-        \lstinline{#check} informa que a primeira expressão tem tipo \lstinline{Prop}, a segunda tem tipo \lstinline{U} e a terceira, \lstinline{Prop}. Importante observar o papel dos parênteses acima, para que \lstinline{par} receba apenas um elemento.
+        O \lstinline{#check} da linha $1$ informa que a expressão tem tipo \lstinline{Prop}; na linha $2$, tipo \lstinline{U}; e, na linha $3$, tipo \lstinline{Prop}. Importante observar o papel dos parênteses acima, para que \lstinline{par} receba apenas um elemento.
 
         Uma função (ou relação) que recebe mais de um elemento tem notação \lstinline{U → U → U}. A notação para predicados (\lstinline{U → Prop}) e relações (\lstinline{U → U → Prop}) funciona como se ambas fossem funções, porém retornassem \lstinline{Prop}. 
 
         Vários conjuntos estão nas bibliotecas padrão do Lean, como os naturais, utilizados nos exemplos anteriores. O comando para o símbolo \lstinline{ℕ} é \lstinline{\nat} ou \lstinline{\N}.
 
         \begin{lstlisting}
-    constant zero : ℕ
-    #check zero + zero
-        \end{lstlisting}
+constant zero : ℕ
+#check zero + zero
+\end{lstlisting}
 
-        O \lstinline{#check} acima retorna algo do tipo \lstinline{ℕ}.
+        O \lstinline{#check} da linha $2$ retorna algo do tipo \lstinline{ℕ}.
 
         Podemos misturar Lógica Proposicional com Lógica de Primeira Ordem:
 
         \begin{lstlisting}
-    constant U : Type
+constant U : Type
+constant zero : U
+constant par : U → Prop
+constant primo : U → Prop
+constant igual : U → U → Prop
+constant adicao : U → U → U
 
-    constant zero : U
-    constant par : U → Prop
-    constant primo : U → Prop
-    constant igual : U → U → Prop
-    constant adicao : U → U → U
+#check ¬ (par zero ∨ par (adicao zero zero)) ∧ primo zero
+\end{lstlisting}
 
-    #check ¬ (par zero ∨ par (adicao zero zero)) ∧ primo zero
-        \end{lstlisting}
+        E o \lstinline{#check} nos retorna algo do tipo \lstinline{Prop}.
 
-        E o \lstinline{#check} nos retorna:
+    \subsection{Quantificador Universal}
+
+        Grande parte do poder da Lógica Proposicional se deve aos quantificadores.
+        O símbolo $\forall$ é o quantificador universal, que representa ``para todo".
+        Quando ele é seguido de uma variável e de uma expressão, ele indica que aquela expressão é verdadeira para toda variável do domínio.
+        Por exemplo:
+
+        \begin{itemize}
+            \item $\forall x \ (par(x) \lor impar(x))$
+            \item $\forall y \ (par(y) \rightarrow impar(y + 1))$
+        \end{itemize}
+
+        A primeira expressão nos diz que todo número é par ou ímpar (no caso dos naturais).
+        A segunda diz que, para todo número, o fato dele ser par implica que seu sucessor é ímpar.
         
+        No Lean, é possível obter o símbolo \lstinline{∀} digitando \lstinline{\all}. Os exemplos anteriores ficam assim:
+
         \begin{lstlisting}
-    ¬(par zero ∨ par (adicao zero zero)) ∧ primo zero : Prop
-        \end{lstlisting}
+constant U : Type
+constant par : U → Prop
+constant impar : U → Prop
+constant sucessor : U → U
+
+#check ∀ x : U, par x ∨ impar x
+#check ∀ y : U, par y → impar (sucessor y)
+\end{lstlisting}
+
+        Os dois \lstinline{#check}'s nos retornam \lstinline{Prop}. Quando é utilizado o quantificador universal,
+        por padrão devemos dizer o tipo da variável que o acompanha. No exemplo, \lstinline{x : U}. Porém, o Lean é
+        esperto o suficiente pra inferir o tipo da variável sozinho, então na maioria dos casos não será um problema omiti-lo.
+
+        Observe as três sentenças:
+
+        \begin{itemize}
+            \item $\forall x \ (par(x) \lor impar(x))$
+            \item $\forall x \ par(x) \lor impar(x)$
+            \item $\forall x \ (par(x)) \lor impar(x)$
+        \end{itemize}
+
+        Por uma questão de convenção, as duas últimas sentenças são equivalentes, enquanto a primeira é diferente.
+        Neste contexto, estamos lidando com o \textbf{escopo} da variável $x$. A convenção diz, portanto, que o escopo da variável é o menor possível.
+        
+        Curiosamente, o modo como o Lean lida com escopo é diferente: \lstinline{∀ x : U, par x ∨ impar x} equivale a \lstinline{∀ x : U, (par x ∨ impar x)}.
+        Ou seja, o Lean busca o maior escopo possível.
+
+        Quando estamos lidando com quantificadores, a variável que o acompanha é dita \textbf{limitada} (\textit{bound}, em inglês).
+        Na expressão $\forall x \ A(x)$, a variável $x$ é limitada.
+        Isso significa que o $x$ não representa um valor em si, mas apenas um ``espaço reservado"\space para qualquer outra variável.
+        Observe que a expressão $\forall y \ A(y)$ representa exatamente a mesma coisa.
+
+        Uma variável que não é limitada é chamada \textbf{livre}. Por exemplo, considere a expressão $\forall x \ y \le x$.
+        Ora, sabemos que $x$ representa uma ``espaço reservado"\space para toda variável do domínio. O que representa $y$, portanto?
+        Um elemento específico do domínio. Digamos que o domínio é $\mathbb{N}$ e $y$ representa o elemento zero. Então a expressão é verdadeira.
+        Sendo assim, se trocarmos $y$ por $z$ (que representa, neste caso, outro elemento), então não vale a expressão $\forall x \ z \le x$.
+        Observe como trocar $y$ por $z$ fez toda a diferença!
+
+        No exemplo anterior, tanto $y$ quanto $z$ são variáveis livres. Quando uma expressão \textbf{não} contém variáveis livres, é chamada sentença.
+
+        Quantificadores também possuem regras de introdução e eliminação. Vejamos:
+        
+        \begin{center}
+            \begin{bprooftree}
+                \AxiomC{$A(y)$}
+                \RightLabel{\scriptsize $\forall I$}
+                \UnaryInfC{$\forall x \ A(x)$}
+            \end{bprooftree}
+            \begin{bprooftree}
+                \AxiomC{$\forall x \ A(x)$}
+                \RightLabel{\scriptsize $\forall E$}
+                \UnaryInfC{$A(t)$} 
+            \end{bprooftree}
+        \end{center}
+
+        A regra da esquerda demonstra a \textbf{introdução} do quantificador universal. Ela vale quando $y$ não é livre em nenhuma hipótese não cancelada.
+        A intuição neste caso é que, dado que vale $A(y)$ para algum $y$ qualquer, então podemos dizer que vale para todo $y$. Mudamos o nome da variável apenas
+        pra que a operação fique mais evidente e intuitiva.
+
+        A regra da direita demonstra a \textbf{eliminação} do quantificador universal. A intuição, neste caso,
+        é que, se $A(x)$ vale para todo $x$, então vale para algum $t$ qualquer do domínio.
+
+        Observe a semelhança dessas regras com aquelas relativas à implicação. No caso da introdução da implicação, assumimos $A$ e provamos $B$, então $A \rightarrow B$.
+        No caso da introdução do quantificador universal, assumimos $x$ e mostramos $A(x)$, então $\forall x \ A(x)$.
+        Para a eliminação da implicação, temos $A \rightarrow B$ e $A$, então temos $B$. Já no caso da eliminação do quantificador, temos $\forall x \ A(x)$ e $y$, então $A(y)$.
+
+        Vejamos um exemplo aplicando essas regras. Observe como derivar $\forall x \ A(x) \land B(x)$ a partir de $\forall x \ A(x)$ e $\forall x \ B(x)$:
+
+        \begin{center}
+            \begin{bprooftree}
+                \AxiomC{$\forall x \ A(x)$}
+                \RightLabel{\scriptsize $\forall E$}
+                \UnaryInfC{$A(y)$}
+                \AxiomC{$\forall x \ B(x)$}
+                \RightLabel{\scriptsize $\forall E$}
+                \UnaryInfC{$B(y)$}
+                \RightLabel{\scriptsize $\land I$}
+                \BinaryInfC{$A(y) \land B(y)$}
+                \RightLabel{\scriptsize $\forall I  $}
+                \UnaryInfC{$\forall x \ A(x) \land B(x)$}
+            \end{bprooftree}
+        \end{center}
+
+        Ora, e como representar isso em Lean? Vejamos a introdução:
+
+        \begin{lstlisting}
+constant U : Type
+constant A : U → Prop
+
+example : ∀ x, A x :=
+    assume y,
+    show A y, from sorry
+\end{lstlisting}
+
+        Estamos mostrando $\forall x \ A(x)$ da seguinte forma: assumimos um $y$ qualquer e provamos $A(y)$.
+Neste caso, necessitamos de uma prova de $A(y)$, o que justifica o uso do \lstinline{sorry}.
+
+        Observe, agora, a regra da eliminação:
+
+        \begin{lstlisting}
+constant U : Type
+constant A : U → Prop
+constant h1 : ∀ x, A x
+constant t : U
+
+example : A t :=
+    h1 t
+\end{lstlisting}
+
+        Dado que sabemos que $\forall x \ A(x)$ (por \lstinline{h1}), podemos ``aplicar"\space $t$ e obter $A(t)$.
+
+        Vejamos agora nosso exemplo que deriva $\forall x \ A(x) \land B(x)$ a partir de $\forall x \ A(x)$ e $\forall x \ B(x)$:
+
+        \begin{lstlisting}
+constant U : Type
+constants A B : U → Prop
+constant h1 : ∀ x, A x
+constant h2 : ∀ x, B x
+
+example : ∀ x, A x ∧ B x :=
+    assume y,
+        have h3 : A y, from h1 y,
+        have h4 : B y, from h2 y,
+    show A y ∧ B y, from and.intro h3 h4
+\end{lstlisting}
+
+    \subsection{Quantificador Existencial}
+
+        O quantificador existencial é representado pelo símbolo $\exists$ e representa ``existe algum".
+        Seguido de uma variável e uma expressão, ele significa que existe algum elemento no domínio tal que a expressão seja verdadeira.
+        Alguns exemplos para o domínio dos naturais:
+
+        \begin{itemize}
+            \item $\exists x \ x \times x = x$
+            \item $\exists y \ y \le 0$
+            \item $\forall x \ \exists y \ par(y) \land y > x$
+        \end{itemize}
+
+        Ora, as expressões significam:
+
+        \begin{itemize}
+            \item Existe número natural que é igual ao seu quadrado ($0$ e $1$)
+            \item Existe número menor do que ou igual a zero (o próprio zero)
+            \item Para todo natural, existe um número que é par e maior do que ele
+        \end{itemize}
+
+        Em Lean, pode-se inserir \lstinline{∃} digitando \lstinline{\ex}. Vejamos os exemplos:
+
+        \begin{lstlisting}
+constant U : Type
+constant par : U → Prop
+constant maiorDoQue : U → U → Prop
+
+#check ∃ x, x * x = x
+#check ∃ y, y ≤ 0
+#check ∀ x, ∃ y, par y ∧ maiorDoQue y x
+\end{lstlisting}
+
+        Como no caso do quantificador universal, a variável que acompanha o quantificador é dita \textbf{limitada}. Por exemplo, $x$ em $\exists x \ A(x)$.
+        Variáveis não limitadas são \textbf{livres}.
+
+        Vejamos as regras de introdução e eliminação desse quantificador:
+        
+        \begin{center}
+            \begin{bprooftree}
+                \AxiomC{$A(t)$}
+                \RightLabel{\scriptsize $\exists I$}
+                \UnaryInfC{$\exists x \ A(x)$}
+            \end{bprooftree}
+            \begin{bprooftree}
+                \AxiomC{$\exists x \ A(x)$}
+                \AxiomC{}
+                \UnaryInfC{$A(y)$}
+                \alwaysNoLine
+                \UnaryInfC{$\vdots$}
+                \UnaryInfC{$B$}
+                \alwaysSingleLine
+                \RightLabel{\scriptsize $\exists E$}
+                \BinaryInfC{$B$}
+            \end{bprooftree}
+        \end{center}
+
+        A primeira regra é a \textbf{introdução} do quantificador existencial. A intuição que segue é a de que, para mostrar que existe $x$ tal que  $A(x)$, basta mostrar que, para algum $t$, vale $A(t)$.
+
+        A segunda regra é a \textbf{eliminação} e vale quando $y$ não é livre em $B$ e em nenhuma hipótese não cancelada. É uma regra um pouco menos trivial de se entender. Vamos lá:
+        
+        \begin{itemize}
+            \item Digo que existe algum $x$ para o qual vale $A(x)$;
+            \item Sei que, independentemente do $y$ que eu escolher, de $A(y)$ é possível derivar $B$;
+            \item Concluo que vale B.
+        \end{itemize}
+
+        Outra forma de se interpretar essa regra é a seguinte: sei que existe $x$ tal que vale $A(x)$. A única maneira de eu ter certeza de que vale $B$ é mostrando que, pra qualquer $y$, $A(y)$ implica em $B$.
+        Tenho que assumir um $y$ qualquer, pois não sei para qual $y$ especificamente vale $A(y)$.
+
+        Tecnicamente, o que estamos fazendo é: dado que vale $\exists x \ A(x)$ e vale $\forall y \ (A(y) \to B)$, concluímos $B$, desde que $B$ não contenha $y$ livre. Para algumas pessoas,
+        a utilização do quantificador universal ($\forall$) pode ser muito conveniente. Porém, para outras, pode ser um pouco mais confuso.
+
+        Assim como as regras do quantificador universal se assemelham às da implicação, as regras mostradas acima se assemelham àquelas da introdução e eliminação do operador lógico ou. Observe:
+
+        \begin{itemize}
+            \item Assim como de $A$ eu derivo $A \lor B$, de $A(t)$ derivo $\exists x \ A(x)$. O que estamos derivando diz que pelo menos um dos argumentos é válido ou existe.
+            \item Para mostrar $C$ de $A \lor B$, assumo $A$ e mostro $C$ e depois assumo $B$ e mostro $C$. No caso do nosso quantificador, para saírmos de $\exists x \ A(x)$ e chegarmos em $B$, assumo qualquer valor de $y$ e mostro que de $A(y)$ chego em $B$.
+            Nos dois casos, estamos verificando se, em todas as possibilidades, conseguimos concluir o que queremos.
+        \end{itemize}
+
+        Vejamos um exemplo que utiliza as duas regras, mostrando $(\exists x \ A(x)) \land (\exists x \ B(x))$ a partir de $\exists x \ (A(x) \land B(x))$:
+
+        \begin{center}
+            \begin{bprooftree}
+                \AxiomC{$\exists x \ (A(x) \land B(x))$}
+                \AxiomC{}
+                \UnaryInfC{$A(y) \land B(y)$}
+                \RightLabel{\scriptsize $\land E$}
+                \UnaryInfC{$A(y)$}
+                \RightLabel{\scriptsize $\exists I$}
+                \UnaryInfC{$\exists x \ A(x)$}
+                \AxiomC{}
+                \UnaryInfC{$A(y) \land B(y)$}
+                \RightLabel{\scriptsize $\land E$}
+                \UnaryInfC{$B(y)$}
+                \RightLabel{\scriptsize $\exists I$}
+                \UnaryInfC{$\exists x \ B(x)$}
+                \RightLabel{\scriptsize $\land I$}
+                \BinaryInfC{$(\exists x \ A(x)) \land (\exists x \ B(x))$}
+                \RightLabel{\scriptsize $\exists E$}
+                \BinaryInfC{$(\exists x \ A(x)) \land (\exists x \ B(x))$}
+            \end{bprooftree}
+        \end{center}
+
+        Essas regras também podem ser utilizadas em Lean. Vejamos a introdução:
+
+        \begin{lstlisting}
+constant U : Type
+constant A : U → Prop
+constant t : U
+constant h1 : A t
+
+example : ∃ x, A x :=
+    exists.intro t h1
+\end{lstlisting}
+
+        Para a introdução do quantificador existencial, utilizamos \lstinline{exists.intro}, que requer dois argumentos:
+        um termo e uma prova de que a expressão vale para esse termo. É o que está sendo feito no código acima. Na linha $4$, sabemos que vale $A(t)$. Passando $t$ e $A(t)$
+        como argumentos para \lstinline{exists.intro}, temos $\exists x \ A(x)$.
+
+        Vejamos a regra da eliminação:
+
+        \begin{lstlisting}
+constant U : Type
+constant A : U → Prop
+constant h1 : ∃ x, A x
+constant B : Prop
+
+example : B :=
+    exists.elim h1
+        (assume y (h2 : A y),
+        show B, from sorry)
+\end{lstlisting}
+
+        Utilizamos \lstinline{exists.elim}, que toma dois argumentos: a expressão $\exists x \ A(x)$ e uma expressão que prova $B$ a partir de $y$ qualquer e $A(y)$.
+        
+        Observe como fica mais clara a consideração feita anteriormente com relação ao quantificador universal ($\forall$): estamos dando para \lstinline{exists.elim} as expressões $\exists x \ A(x)$ e $\forall y \ (A(y) \to B)$, e ela nos retorna $B$. Observe como o \lstinline{show} nos ajuda a mostrar isso:
+
+        \begin{lstlisting}
+example : B :=
+    exists.elim h1
+        (show ∀ y, A y → B, from
+            assume y (h2 : A y),
+            show B, from sorry)
+\end{lstlisting}
+
+        Vejamos nosso exemplo anterior, agora implementado em Lean, que mostra $(\exists x \ A(x)) \land (\exists x \ B(x))$ a partir de $\exists x \ (A(x) \land B(x))$:
+        \begin{lstlisting}
+constant U : Type
+constants A B : U → Prop
+constant h1 : ∃ x, A x ∧ B x
+
+example : (∃ x, A x) ∧ (∃ y, B y) :=
+    exists.elim h1
+        (assume y (h2 : A y ∧ B y),
+            have h3 : A y, from h2.left,
+            have h4 : B y, from h2.right,
+            have h5 : ∃ x, A x, from exists.intro y h3,
+            have h6 : ∃ x, B x, from exists.intro y h4,
+        show (∃ x, A x) ∧ (∃ y, B y), from and.intro h5 h6)
+\end{lstlisting}

@@ -1,2 +1,233 @@
 \chapter{Relações}
+Em capítulos anteriores, discutimos proposições que lidavam com a relação entre objetos matemáticos. Muitas vezes na matemática, e mesmo no contexto em que estamos inseridos, estamos interessados em definir e estudar relações entre objetos distintos. Por exemplo, podemos estar interessados em certas própriedades sobre a relação \textit{é vais velho que}, entre seres vivos, e diremos que essa é uma relação \textit{irreflexiva}, \textit{transitiva}, ou ainda, uma relação de \textit{ordem estrita}.
 
+Nesse capítulo discutimos exatamente essas noções, e definimos certos tipos de relaçõs mais comuns.
+
+\section{Semântica das Relações}
+Podemos abstrair a noção semântica de relação para um universo $R$ de tuplas de aridade definida, que contem a sequencia dos objetos relacionados. Por exemplo, considere que o elemento $a$ está relacionado a $b$ por uma relação $R$. Ppodemos denotar $aRb$, ou $R(a,b)$ significando que o par $(a,b)\in R$, está definido como existente no universo daquela relação. Como se pode esperar, a relação pode ter qualquer aridade necessária, e relacionar objetos de tipos distintos.
+
+Considere, a partir disso, o universo de objetos $u = \{Ana, Bia, Cid\}$, e a relação \textit{conhece}, definida por $U\times U \supseteq A = \{(Ana, Bia), (Bia, Cid)\}$. Podemos dizer que \textit{Bia conhece Ana}?
+
+%\section{Definições}
+\theoremstyle{definition}
+\newtheorem{definition}{Definição}[section]
+
+%\theoremstyle{definition}
+%\newtheorem{example}{Exemplo}[section]
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Proposição}[section]
+
+%\theoremstyle{plain}
+%\newtheorem{corollary}{Corolário}[section]
+
+Definimos uma série de tipos de relações importantes, frequentemente encontradas na literatura.
+Note que muitas das definições se aplicam a relações conhecidas como \textit{maior que}, nos naturais, ou \textit{pertence} para conjuntos.
+
+\section{Relações de Ordem}
+Discutimos uma classe de relações binárias importantes: as chamadas relações de ordem.
+Aqui, definimos relações de\textit{parciais} ou \textit{estritas}.
+Usaremos os símbolos $\leq$ e $<$ para nos referir a relações quaisquer entre elementos de alguma estrutura $A$, e os usamos infixados: $x \leq y$ ou $x < y$.
+
+\begin{definition}
+    \label{partial_order}
+    Seja $\leq$ uma relação. Dizemos que $\leq$ é de \textit{ordem parcial} se respeita as seguintes propriedades:
+
+    \begin{itemize}
+        \item \textbf{reflexividade:} para todo $x \in A$, $x\leq x$.
+        \item \textbf{transitividade:} para todo $xy,z \in A$, se $x\leq y$, e $yleq z$, então $x\leq z$.
+        \item \textbf{antissimetria:} para todo $x,y \in A$, se $x\leq y$ e $y \leq x$, então $x=y$.
+    \end{itemize}
+\end{definition}
+
+\noindent Note que se entendemos $\leq$ por um predicado binário, as definições acima são facilmente expressos em lógica de primeira ordem.
+Exemplos desse tipo são: $\leq$ em $\mathbb{N}$, $\mathbb{Z}$, $\mathbb{Q}$, e $\mathbb{R}$ ou a inclusão $\supseteq$ para a classe dos conjuntos.
+
+Há ainda uma classe especial de relações de ordem vistas a seguir:
+
+\begin{definition}
+    \label{partial_order_total}
+    Dizemos que a relação de \textit{ordem parcial} $\leq$ é \textit{total} se:
+
+    \begin{itemize}
+        \item para todo $x, y \in A$, $x\leq y$ ou $y\leq x$.
+    \end{itemize}
+\end{definition}
+
+\noindent Vale observar que nos exemplos anteriores, apenas $\leq$ é total.
+De fato, tome $A = \mathcal{P}(\mathbb{N}) $, os conjuntos $x={3}$ e $y={5}$ subconjuntos de $A$; claramente não vale a completude de $\subseteq$ em $A$. % Ainda, as relações \textit{divide}, $x|y$, nos inteiros, e outras...
+
+O que dizer, no entanto, das relações \textit{menor} ou \textit{pertence}? De fato, essas pertencem a classe a seguir, as chamadas relações de \textit{ordem estrita}:
+
+\begin{definition}
+    \label{estrict_order}
+    Considere $<$ relação em um conjunto $A$. Dizemos que a relação é de \textit{ordem estrita} $\leq$ é \textit{total} se:
+
+    \begin{itemize}
+        \item \textbf{transitividade: } para todo $x,y,z \in A$, se $x<y$ e $y<z$ então $x<z$.
+        \item \textbf{irreflexividade: } para todo $x\in A$, $x\nless x$.
+    \end{itemize}
+    dizemos, ainda, que essa relação estrita é total em $A$ se:
+    \begin{itemize}
+        \item \textbf{tricotomia:} para todo $x,y \in A$, vale $x<y$, $x>y$ ou $x=y$.
+    \end{itemize}
+\end{definition}
+
+\noindent Novamente, é facil ver como formalizar essas noções utilizando proposições em lógica de primiera ordem.
+
+% uma relação estrita é assimétrica: prova.
+
+A seguir, discutimos um resultado intuitivo que estabelece uma ligação importante entre as relações de ordem \textit{parciais} e \textit{estritas}:
+
+\begin{theorem}
+    \label{estrict_by_partial}
+    Considere $\leq$ parcial em $A$. Podemos definir uma relação estrita $<$ em $A$, em que $x<y$ significa que $x\leq y$ e $x \neq y$. Ainda, se $\leq $ for total, então $<$ também será total.
+\end{theorem}
+\begin{theorem}
+    \label{partial_by_estrict}
+    Considere $<$ estrita em $A$. Podemos definir a relação de ordem parcial $\leq $ em $A$, em que $x\leq y$ significa que $x < y$ ou $x = y$. Ainda, se $<$ for total, então $\leq$ também será total.
+\end{theorem}
+
+\begin{proof}
+    Exercício para o leitor!
+\end{proof}
+
+\section{Relações de Equivalência}
+%Descrevemos as propriedades que definem esse tipo de relação, e damos exemplos. Mostramos as notações $a\sim b $, $a\equiv b$. Sugiro as relações de equivalencia "paralelo a", "modulo n", "mesma idade".
+
+
+\subsection{Equivalencia e Igualdade}
+Apenas discutimos brevemente como e porque Equivalencia e Igualdade são animais completamente diferentes. Toma os exemplos acima pra discutir.
+
+\section{Relações em Lean}
+
+\section{Exemplos}
+Os exemplos abaixo serão eventuais exercícios.
+Mas já são dados com as soluções. Alguns poderão ser retirados e postos no interior do capítulo para ser usados como exemplos.
+
+\begin{enumerate}
+\item Dada uma relação de ordem estrita \textit{R}, definimos \textit{R'}, parcial. Dê uma prova para os seguintes resultados sobre \textit{R'}:
+
+\vspace{5mm}
+\begin{lstlisting}
+section
+-- Inicio da Sessao
+
+parameters {A : Type} {R : A → A → Prop}
+parameter (irreflR : irreflexive R)
+parameter (transR : transitive R)
+
+local infix < := R
+
+def R' (a b : A) : Prop := R a b ∨ a = b
+local infix ≤ := R'
+
+-- Reflexividade de R'
+example (a : A) : a ≤ a :=
+  have h2 : a = a, from rfl,
+  show a ≤ a, from (or.inr h2)
+
+-- Transitividade de R'
+example {a b c : A} (h1 : a ≤ b) (h2 : b ≤ c): a ≤ c :=
+  or.elim h1
+    (assume s1 : a < b,
+      or.elim h2
+        (assume s2 : b < c,
+          or.inl (transR s1 s2))
+        (assume s2 : b = c,
+          or.inl (eq.subst s2 s1)))
+    (assume s1 : a = b,
+      eq.subst s1.symm h2)
+
+-- Antissimetria de R'
+example {a b : A} (h1 : a ≤ b) (h2 : b ≤ a) : a = b :=
+  or.elim h1
+    (assume s1 : a < b,
+      or.elim h2
+        (assume s2 : b < a,
+          have s3: a < a, from transR s1 s2,
+          false.elim (irreflR a s3))
+        (assume s2 : b = a, s2.symm))
+    (assume s1 : a = b, s1)
+
+-- Fim da Sessao
+end
+\end{lstlisting}
+\vspace{5mm}
+
+\item Dada uma relação \textit{R}, definimos uma relação \textit{S} supostamente transitiva. Dê uma prova para esse fato.
+
+\vspace{5mm}
+\begin{lstlisting}
+section
+parameters {A : Type} {R : A → A → Prop}
+parameter (reflR : reflexive R)
+parameter (transR : transitive R)
+
+def S (a b : A) : Prop := R a b ∧ R b a
+
+example : transitive S :=
+  assume a b c,
+  assume h1 : S a b,
+  assume h2 : S b c,
+  show S a c, from
+    have l1 : R a b, from h1.left,
+    have l2 : R b c, from h2.left,
+    have r1 : R b a, from h1.right,
+    have r2 : R c b, from h2.right,
+    ⟨transR l1 l2, transR r2 r1⟩
+end
+\end{lstlisting}
+\vspace{5mm}
+
+\item Apenas um dos teoremas é verdadeiro. Defina qual o verdadeiro, e dê uma prova para a sua resposta.
+
+\vspace{5mm}
+\begin{lstlisting}
+section
+  parameters {A : Type} {a b c : A} {R : A → A → Prop}
+  parameter (Rab : R a b)
+  parameter (Rbc : R b c)
+  parameter (nRac : ¬ R a c)
+
+  -- R e parcial estrita
+  theorem R_strict : irreflexive R ∧ transitive R :=
+  sorry
+
+  -- R nao e parcial estrita
+  theorem R_not_strict : ¬(irreflexive R ∧ transitive R) :=
+    assume h : irreflexive R ∧ transitive R,
+    have h1 : transitive R, from h.right,
+    have h2 : R a c, from h1 Rab Rbc,
+    show false, from nRac h2
+end
+\end{lstlisting}
+\vspace{5mm}
+
+\item Prove o fato a seguir utilizando paradigma \textit{calc}. Tente o mesmo apenas através de \textit{tatic mode} e \textit{term mode}.
+
+\vspace{5mm}
+\begin{lstlisting}
+open nat
+
+-- utilizando modo calc
+example : 1 ≤ 4 :=
+calc
+    1 ≤ 2 : le_succ 1
+  ... ≤ 3 : le_succ 2
+  ... ≤ 4 : le_succ 3
+
+-- utilizando term mode
+example : 1 ≤ 4 :=
+  have h1 : 1 ≤ 2, from le_succ 1,
+  have h2 : 2 ≤ 3, from le_succ 2,
+  have h3 : 3 ≤ 4, from le_succ 3,
+
+  le_trans h1 (le_trans h2 h3)
+
+-- utilizando tatic mode
+example : 1 ≤ 4 := sorry
+\end{lstlisting}
+\vspace{5mm}
+
+\end{enumerate}
