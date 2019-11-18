@@ -711,8 +711,51 @@ section
         show x ∈ (A ∩ B) ∩ C, from and.intro h₂ h₁.right) 
 
 --De Morgan
-  example : A \ (B ∩ C) = (A \ B) ∪ (A \ C) := sorry
-end
+  open classical 
+  example : -(A ∩ B) = -A ∪ -B :=
+    ext $
+    assume x,
+    iff.intro
+        (assume h₁ : x ∈ -(A ∩ B),
+            have g₁ : x ∈ (A ∪ -A), from em (x ∈ A),
+            have g₂ : x ∈ (B ∪ -B), from em (x ∈ B),
+            or.elim g₁
+                (assume h₂ : x ∈ A, or.elim g₂
+                    (assume h₃ : x ∈ B, show x ∈ -A ∪ -B,
+                        from false.elim (h₁ ⟨h₂,h₃⟩))
+                    (assume h₃ : x ∈ -B, show x ∈ -A ∪ -B,
+                        from or.inr h₃))
+                (assume h₂ : x ∈ -A, show x ∈ -A ∪ -B,
+                    from or.inl h₂))
+
+        (assume h₁ : x ∈ -A ∪ -B,
+            assume h₂ : x ∈ (A ∩ B), show false,
+            from or.elim h₁
+                (assume h₃ : x ∈ -A, h₃ h₂.left )
+                (assume h₃ : x ∈ -B, h₃ h₂.right))
+
+  example : -(A ∪ B) = -A ∩ -B :=
+    ext $
+    assume x,
+    iff.intro
+        (assume h₁ : x ∈ -(A ∪ B),
+            have g₁ : x ∈ -A, from
+            assume h₂ : x ∈ A,
+                have h₃ : x ∈ A ∪ B,
+                from or.inl h₂, (h₁ h₃),
+            have g₂ : x ∈ -B, from
+            assume h₂ : x ∈ B,
+                have h₃ : x ∈ A ∪ B,
+                from or.inr h₂, (h₁ h₃),
+            show x ∈ -A ∩ -B, from ⟨g₁, g₂⟩)
+
+        (assume h₁ : x ∈ -A ∩ -B,
+            show x ∈ -(A ∪ B), from
+            assume h₂ : x ∈ A ∪ B,
+            or.elim h₂
+                (assume h3 : x ∈ A, h₁.left h3)
+                (assume h3 : x ∈ B, h₁.right h3))
+end 
 \end{lstlisting}
 
 \item Prove que $A \cup \overline A = \mathcal U$. (Fornecendo uma prova tradicional e uma em Lean.)
