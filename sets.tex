@@ -692,17 +692,57 @@ A função calc, já apresentada em outras frentes desse livro, aparece novament
 \item Questões de Identidades de conjuntos
     
 \begin{lstlisting}
+import data.set
+open set
+
 section
   variable U : Type
   variables A B C : set U
 
 --Comutatividade em ∩ e ∪ 
-  example : A ∩ B = A ∩ B := sorry
+  example : A ∩ B = B ∩ A := 
+  eq_of_subset_of_subset
+    (assume x,
+        assume h : x ∈ A ∩ B,
+        have h₁ : x ∈ A, from h.left,
+        have h₂ : x ∈ B, from h.right,
+        show x ∈ B ∩ A, from and.intro h₂ h₁)
+    (assume x,
+        assume h : x ∈ B ∩ A,
+        have h₁ : x ∈ B, from h.left,
+        have h₂ : x ∈ A, from h.right,
+        show x ∈ A ∩ B, from and.intro h₂ h₁)
 
-  example : A ∪ B = A ∪ B:= sorry
+  example : A ∪ B = B ∪ A:=
+  eq_of_subset_of_subset
+    (assume x,
+        assume h : x ∈ A ∪ B,
+        or.elim h
+        (assume h₁ : x ∈ A,
+        show x ∈ B ∪ A, from or.inr h₁)
+        (assume h₁ : x ∈ B,
+        show x ∈ B ∪ A, from or.inl h₁))
+    (assume x,
+        assume h : x ∈ B ∪ A,
+        or.elim h
+        (assume h₁ : x ∈ B,
+        show x ∈ A ∪ B, from or.inr h₁)
+        (assume h₁ : x ∈ A,
+        show x ∈ A ∪ B, from or.inl h₁))
 
 --Associatividade
-  example : (A ∩ B) ∩ C = (A ∩ B) ∩ C := sorry
+  example : (A ∩ B) ∩ C = A ∩ (B ∩ C) :=
+  eq_of_subset_of_subset
+    (assume x,
+        assume h : x ∈ (A ∩ B) ∩ C,
+        have h₁ : x ∈ A ∩ B, from h.left,
+        have h₂ : x ∈ B ∩ C, from and.intro h₁.right h.right,
+        show x ∈ A ∩ (B ∩ C), from and.intro h₁.left h₂) 
+    (assume x,
+        assume h : x ∈ A ∩ (B ∩ C),
+        have h₁ : x ∈ B ∩ C, from h.right,
+        have h₂ : x ∈ A ∩ B, from and.intro h.left h₁.left,
+        show x ∈ (A ∩ B) ∩ C, from and.intro h₂ h₁.right) 
 
 --De Morgan
   example : A \ (B ∩ C) = (A \ B) ∪ (A \ C) := sorry
